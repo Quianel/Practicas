@@ -52,12 +52,14 @@ public class VentanaLogin extends JFrame {
 		inputCorreo.setColumns(10);
 		
 		JTextPane CorreoTxt = new JTextPane();
+		CorreoTxt.setEditable(false);
 		CorreoTxt.setBackground(new Color(228, 228, 228));
 		CorreoTxt.setText("Correo (email):");
-		CorreoTxt.setBounds(61, 48, 83, 20);
+		CorreoTxt.setBounds(54, 48, 90, 20);
 		contentPane.add(CorreoTxt);
 		
 		JTextPane ContrasenaTxt = new JTextPane();
+		ContrasenaTxt.setEditable(false);
 		ContrasenaTxt.setText("Contraseña:");
 		ContrasenaTxt.setBackground(new Color(228, 228, 228));
 		ContrasenaTxt.setBounds(77, 79, 67, 20);

@@ -1,10 +1,14 @@
 package controlador;
 
+import vista.VentanaLogin;
+
 public class Principal {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		System.out.print("holaaaA");
+		VentanaLogin miVentana = new VentanaLogin();
+		miVentana.cargaVentana(miVentana);
+		
 	}
 
 }
