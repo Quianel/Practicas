@@ -10,13 +10,15 @@ import javax.swing.JTextPane;
 import java.awt.Color;
 import javax.swing.JCheckBox;
 import javax.swing.JButton;
+import javax.swing.JPasswordField;
+import java.awt.Font;
 
 public class VentanaLogin extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField inputCorreo;
-	private JTextField InputContrasena;
+	private JPasswordField InputContrasena;
 
 	/**
 	 * Launch the application.
@@ -53,6 +55,7 @@ public class VentanaLogin extends JFrame {
 		inputCorreo.setColumns(10);
 		
 		JTextPane CorreoTxt = new JTextPane();
+		CorreoTxt.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
 		CorreoTxt.setEditable(false);
 		CorreoTxt.setBackground(new Color(228, 228, 228));
 		CorreoTxt.setText("Correo (email):");
@@ -60,26 +63,28 @@ public class VentanaLogin extends JFrame {
 		contentPane.add(CorreoTxt);
 		
 		JTextPane ContrasenaTxt = new JTextPane();
+		ContrasenaTxt.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
 		ContrasenaTxt.setEditable(false);
 		ContrasenaTxt.setText("Contraseña:");
 		ContrasenaTxt.setBackground(new Color(228, 228, 228));
 		ContrasenaTxt.setBounds(77, 79, 67, 20);
 		contentPane.add(ContrasenaTxt);
 		
-		InputContrasena = new JTextField();
-		InputContrasena.setBounds(147, 79, 96, 20);
-		contentPane.add(InputContrasena);
-		InputContrasena.setColumns(10);
-		
 		JCheckBox RecordarTxt = new JCheckBox("Recordar Usuario");
+		RecordarTxt.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
 		RecordarTxt.setBackground(new Color(228, 228, 228));
 		RecordarTxt.setBounds(114, 106, 129, 22);
 		contentPane.add(RecordarTxt);
 		
 		JButton botonIS = new JButton("Iniciar Sesión");
+		botonIS.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
 		botonIS.setBackground(new Color(178, 178, 178));
 		botonIS.setBounds(109, 135, 119, 22);
 		contentPane.add(botonIS);
+		
+		InputContrasena = new JPasswordField();
+		InputContrasena.setBounds(147, 79, 96, 20);
+		contentPane.add(InputContrasena);
 
 	}
 }

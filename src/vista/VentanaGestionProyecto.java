@@ -7,6 +7,7 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import javax.swing.JTable;
+import java.awt.Font;
 
 public class VentanaGestionProyecto extends JPanel {
 
@@ -23,6 +24,7 @@ public class VentanaGestionProyecto extends JPanel {
 		setLayout(null);
 		
 		JTextPane BuscarTxt = new JTextPane();
+		BuscarTxt.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
 		BuscarTxt.setText("Buscar:");
 		BuscarTxt.setEditable(false);
 		BuscarTxt.setBackground(new Color(205, 205, 205));
@@ -41,7 +43,8 @@ public class VentanaGestionProyecto extends JPanel {
 		add(botonLupa);
 		
 		JButton botonProyecto = new JButton("Crear Proyecto");
-		botonProyecto.setBounds(322, 24, 105, 22);
+		botonProyecto.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
+		botonProyecto.setBounds(305, 24, 122, 22);
 		add(botonProyecto);
 		
 		tablaProyectos = new JTable();
