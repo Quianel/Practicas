@@ -1,6 +1,7 @@
 package controlador;
 
 import vista.VentanaLogin;
+import vista.VentanaMenuPrincipal;
 
 public class Principal {
 
@@ -8,6 +9,8 @@ public class Principal {
 		// TODO Auto-generated method stub
 		VentanaLogin miVentana = new VentanaLogin();
 		miVentana.cargaVentana(miVentana);
+		VentanaMenuPrincipal ventanaMenu = new VentanaMenuPrincipal();
+		ventanaMenu.ventanaPrincipal(ventanaMenu);
 		
 	}
 
