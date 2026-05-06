@@ -19,11 +19,16 @@ import java.awt.Font;
 import java.awt.Color;
 import javax.swing.JTextArea;
 import java.awt.CardLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class VentanaMenuPrincipal extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	private JPanel panelCardLCarga;
 
 	/**
 	 * Launch the application.
@@ -64,6 +69,14 @@ public class VentanaMenuPrincipal extends JFrame {
 		contentPane.add(mnuPrincipal,BorderLayout.WEST);
 		
 		JMenu mnDashboIni = new JMenu("Dashboard/Inicio");
+		mnDashboIni.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				CardLayout cl = (CardLayout)(panelCardLCarga.getLayout());
+				cl.show(panelCardLCarga, "Inicio");
+			}
+		});
+	
 		mnDashboIni.setIcon(new ImageIcon("img/inicio.png"));
 		mnDashboIni.setBackground(new Color(180, 180, 180));
 		mnDashboIni.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 12));
@@ -120,11 +133,20 @@ public class VentanaMenuPrincipal extends JFrame {
 		lblTimeorder.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(lblTimeorder, BorderLayout.NORTH);
 		
-		JPanel panelCardLCarga = new JPanel();
+		panelCardLCarga = new JPanel();
 		contentPane.add(panelCardLCarga, BorderLayout.CENTER);
 		panelCardLCarga.setLayout(new CardLayout(0, 0));
+		
+		Bienvenida b = new Bienvenida();
+		panelCardLCarga.add(b,"Inicio");
 			
-
 	}
+	public void nuevoPanel(JPanel panelActual) {
+		contentPane.removeAll();
+		contentPane.add(panelActual);
+		contentPane.repaint();
+		contentPane.revalidate();
+	}
+
 
 }
