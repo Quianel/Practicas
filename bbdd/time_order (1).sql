@@ -381,7 +381,7 @@ CREATE TABLE `trabajador` (
 --
 
 INSERT INTO `trabajador` (`id_trabajador`, `nombre`, `correo`, `password_hash`, `activo`, `id_rol`, `id_perfil`, `id_nivel`) VALUES
-(1, 'Trabajador Prueba 1', 'Trabajador1@prueba.com', '81dc9bdb52d04dc20036dbd8313ed055', 0, 2, 1, 1);
+(1, 'Trabajador Prueba 1', 'Trabajador1@prueba.com', '$2a$10$mRoX9DiV60RhP.r6xLNmJORNhzwJ0dpVSlK1GvxZlTlcVtHgNnHNO', 0, 2, 1, 1);
 
 --
 -- Índices para tablas volcadas

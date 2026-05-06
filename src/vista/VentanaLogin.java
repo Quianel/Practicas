@@ -18,7 +18,7 @@ public class VentanaLogin extends JFrame {
     private JPanel contentPane;
     private JTextField inputCorreo;
     private JPasswordField InputContrasena;
-    private JButton botonIS; // ← ahora es atributo
+    private JButton botonIS;
 
     /**
      * Launch the application.
