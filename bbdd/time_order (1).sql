@@ -21,6 +21,9 @@ SET time_zone = "+00:00";
 -- Base de datos: `time_order`
 --
 
+CREATE DATABASE `TIME_ORDER`;
+USE `TIME_ORDER`;
+
 -- --------------------------------------------------------
 
 --
