@@ -38,8 +38,9 @@ public class VentanaLogin extends JFrame {
 	 * Create the frame.
 	 */
 	public VentanaLogin() {
+		setTitle("Login");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 344, 234);
+		setBounds(100, 100, 326, 245);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(228, 228, 228));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
