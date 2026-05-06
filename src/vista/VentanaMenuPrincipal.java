@@ -83,6 +83,13 @@ public class VentanaMenuPrincipal extends JFrame {
 		mnuPrincipal.add(mnDashboIni);
 		
 		JMenu mnProyectos = new JMenu("Proyectos");
+		mnProyectos.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				CardLayout cl = (CardLayout)(panelCardLCarga.getLayout());
+				cl.show(panelCardLCarga,"CrearProyecto");
+			}
+		});
 		mnProyectos.setIcon(new ImageIcon("img/proyecto.png"));
 		mnProyectos.setBackground(new Color(180, 180, 180));
 		mnProyectos.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 12));
@@ -139,6 +146,9 @@ public class VentanaMenuPrincipal extends JFrame {
 		
 		Bienvenida b = new Bienvenida();
 		panelCardLCarga.add(b,"Inicio");
+		
+		VentanaCrearProyecto vProyecto = new VentanaCrearProyecto();
+		panelCardLCarga.add(vProyecto,"CrearProyecto");
 			
 	}
 	public void nuevoPanel(JPanel panelActual) {

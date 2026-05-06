@@ -1,0 +1,120 @@
+package modelo;
+
+import java.lang.reflect.Array;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+
+public class CrearProyectoDAO {
+	
+	public Proyecto obtenerProyecto() {
+		Proyecto p = new Proyecto();
+		
+		try {
+			Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/time_order", "root", "");
+			Statement consulta = conexion.createStatement();
+			ResultSet registro = consulta.executeQuery("select * from proyecto");
+			
+			if(registro.next()) {
+				p.setId_proyecto(registro.getInt("id_proyecto"));
+				p.setCodigo_interno(registro.getString("codigo_interno"));
+				p.setNombre(registro.getString("nombre"));
+				p.setDescripcion(registro.getString("descripcion"));
+				p.setEs_generico(registro.getBoolean("es_generico"));
+				
+				Tipo_proyecto tipo = new Tipo_proyecto();
+				tipo.setId_tipo_proyecto(registro.getInt("id_tipo_proyecto"));
+				p.setTipoproyec(tipo);
+				
+				Estado_proyecto estado = new Estado_proyecto();
+				estado.setId_estado_proyecto(registro.getInt("id_estado_proyecto"));
+				p.setEstadoproyec(estado);
+				
+				if(registro.getDate("fecha_inicio") != null) {
+					p.setFecha_inicio(registro.getDate("fecha_inicio").toLocalDate());
+				}
+				if(registro.getDate("fecha_limite") != null) {
+					p.setFecha_inicio(registro.getDate("fecha_limite").toLocalDate());
+				}
+				conexion.close();
+				return p;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+		
+	}
+	
+	public boolean insertarProyecto(Proyecto p) {
+		boolean correcto = true;
+		try {
+			Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/time_order", "root", "");
+			Statement consulta = conexion.createStatement();
+			consulta.executeUpdate("insert into proyecto (codigo_interno,nombre,descripcion,fecha_inicio,fecha_limite,"
+									+ "es_generico,id_tipo_proyecto,id_estado_proyecto) values("
+									+"'" + p.getCodigo_interno() + "',"
+									+"'" + p.getNombre() + "',"
+									+"'" + p.getDescripcion() + "',"
+									+"'" + java.sql.Date.valueOf(p.getFecha_inicio()) + "',"
+									+"'" + java.sql.Date.valueOf(p.getFecha_limite()) + "',"
+									+(p.isEs_generico() ? 1 : 0) + ","
+									+ p.getTipoproyec().getId_tipo_proyecto() + ","
+									+p.getEstadoproyec().getId_estado_proyecto()
+									+")");
+			consulta.close();
+		} catch (SQLException e) {
+			correcto = false;
+		}
+		return correcto;
+		
+	}
+	
+	public ArrayList<Tipo_proyecto> cargarTipos(){
+		ArrayList<Tipo_proyecto> lista = new ArrayList<>();
+		try {
+			Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/time_order", "root", "");
+			Statement consulta = conexion.createStatement();
+			ResultSet registro = consulta.executeQuery("select * from tipo_proyecto");
+			
+			while(registro.next()) {
+				Tipo_proyecto tp = new Tipo_proyecto();
+				tp.setId_tipo_proyecto(registro.getInt("id_tipo_proyecto"));
+				tp.setNombre(registro.getString("nombre"));
+				
+				lista.add(tp);
+			}
+			conexion.close();
+			return lista;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public ArrayList<Estado_proyecto> cargarEstado(){
+		ArrayList<Estado_proyecto> lista = new ArrayList<>();
+		try {
+			Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/time_order", "root", "");
+			Statement consulta = conexion.createStatement();
+			ResultSet registro = consulta.executeQuery("select * from estado_proyecto");
+			
+			while(registro.next()) {
+				Estado_proyecto ep = new Estado_proyecto();
+				ep.setId_estado_proyecto(registro.getInt("id_estado_proyecto"));
+				ep.setNombre(registro.getString("nombre"));
+				
+				lista.add(ep);
+			}
+			conexion.close();
+			return lista;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+}

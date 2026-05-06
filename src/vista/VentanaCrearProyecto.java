@@ -8,12 +8,23 @@ import javax.swing.UIManager;
 import javax.swing.JScrollBar;
 import javax.swing.JSpinner;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDayChooser;
+
+import modelo.CrearProyectoDAO;
+import modelo.Estado_proyecto;
+import modelo.Proyecto;
+import modelo.Tipo_proyecto;
+
 import javax.swing.JCheckBox;
 import javax.swing.JButton;
 import java.awt.Font;
+import java.util.ArrayList;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class VentanaCrearProyecto extends JPanel {
 
@@ -21,6 +32,11 @@ public class VentanaCrearProyecto extends JPanel {
 	private JTextField InputNombre;
 	private JTextField InputCodigo;
 	private JTextField textField;
+	private JComboBox inputTipo;
+	private JComboBox inputEstado;
+	private JCheckBox esGenericoBox;
+	private JDateChooser dateChooser;
+	private JDateChooser dateChooser_1;
 
 	/**
 	 * Create the panel.
@@ -63,9 +79,9 @@ public class VentanaCrearProyecto extends JPanel {
 		TipoTxt.setBounds(29, 87, 96, 20);
 		add(TipoTxt);
 		
-		JComboBox InputTipo = new JComboBox();
-		InputTipo.setBounds(133, 85, 143, 22);
-		add(InputTipo);
+		inputTipo = new JComboBox();
+		inputTipo.setBounds(133, 85, 143, 22);
+		add(inputTipo);
 		
 		JTextPane EstadoTxt = new JTextPane();
 		EstadoTxt.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
@@ -75,9 +91,9 @@ public class VentanaCrearProyecto extends JPanel {
 		EstadoTxt.setBounds(29, 114, 48, 20);
 		add(EstadoTxt);
 		
-		JComboBox InputEstado = new JComboBox();
-		InputEstado.setBounds(133, 112, 143, 22);
-		add(InputEstado);
+		inputEstado = new JComboBox();
+		inputEstado.setBounds(133, 112, 143, 22);
+		add(inputEstado);
 		
 		JTextPane FechaInicioTxt = new JTextPane();
 		FechaInicioTxt.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
@@ -87,7 +103,7 @@ public class VentanaCrearProyecto extends JPanel {
 		FechaInicioTxt.setBounds(29, 139, 75, 20);
 		add(FechaInicioTxt);
 		
-		JDateChooser dateChooser = new JDateChooser();
+		dateChooser = new JDateChooser();
 		dateChooser.setBounds(133, 139, 96, 20);
 		add(dateChooser);
 		
@@ -99,7 +115,7 @@ public class VentanaCrearProyecto extends JPanel {
 		FechaFinalTxt.setBounds(29, 164, 75, 20);
 		add(FechaFinalTxt);
 		
-		JDateChooser dateChooser_1 = new JDateChooser();
+		dateChooser_1 = new JDateChooser();
 		dateChooser_1.setBounds(133, 164, 96, 20);
 		add(dateChooser_1);
 		
@@ -116,17 +132,99 @@ public class VentanaCrearProyecto extends JPanel {
 		textField.setBounds(133, 199, 184, 76);
 		add(textField);
 		
-		JCheckBox EsGenericoBox = new JCheckBox("Es Generico");
-		EsGenericoBox.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
-		EsGenericoBox.setBackground(new Color(180, 180, 180));
-		EsGenericoBox.setBounds(385, 62, 98, 22);
-		add(EsGenericoBox);
+		esGenericoBox = new JCheckBox("Es Generico");
+		esGenericoBox.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
+		esGenericoBox.setBackground(new Color(180, 180, 180));
+		esGenericoBox.setBounds(385, 62, 98, 22);
+		add(esGenericoBox);
 		
 		JButton GuardarBoton = new JButton("Guardar");
+		GuardarBoton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Proyecto nuevoP = new Proyecto();
+				
+				nuevoP.setNombre(InputNombre.getText());
+				nuevoP.setCodigo_interno(InputCodigo.getText());
+				nuevoP.setDescripcion(textField.getText());
+				nuevoP.setEs_generico(esGenericoBox.isSelected());
+				
+				nuevoP.setTipoproyec((Tipo_proyecto) inputTipo.getSelectedItem());
+				nuevoP.setEstadoproyec((Estado_proyecto) inputEstado.getSelectedItem());
+				
+				if(dateChooser.getDate() != null) {
+					nuevoP.setFecha_inicio(new java.sql.Date(dateChooser.getDate().getTime()).toLocalDate());
+				}
+				
+				if(dateChooser_1.getDate() != null) {
+					nuevoP.setFecha_limite(new java.sql.Date(dateChooser_1.getDate().getTime()).toLocalDate());
+				}
+				
+				CrearProyectoDAO dao = new CrearProyectoDAO();
+				boolean exito = dao.insertarProyecto(nuevoP);
+				
+				if(exito) {
+					JOptionPane.showMessageDialog(null, "Proyecto guardado correctamente","EXITO",JOptionPane.INFORMATION_MESSAGE);
+				}else {
+					JOptionPane.showMessageDialog(null, "Error al guardar proyecto","ERROR",JOptionPane.ERROR_MESSAGE);
+				}
+				
+			}
+		});
 		GuardarBoton.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
 		GuardarBoton.setBounds(420, 250, 75, 22);
 		add(GuardarBoton);
+		
+		cargarCombosTipoyEstado();
+		
+		CrearProyectoDAO dao = new CrearProyectoDAO();
+		Proyecto p = dao.obtenerProyecto();
+		
+		mostrarCargaProyecto(p);
 
+	}
+	
+	public void cargarCombosTipoyEstado() {
+		CrearProyectoDAO cp = new CrearProyectoDAO();
+		ArrayList<Tipo_proyecto> listaTipos = cp.cargarTipos();
+		ArrayList<Estado_proyecto> listaEstado = cp.cargarEstado();
+		
+		if(listaTipos != null) {
+			for(Tipo_proyecto t : listaTipos) {
+				inputTipo.addItem(t);
+			}
+		}else {
+			JOptionPane.showMessageDialog(null, "No se ha podido cargar el tipo de proyecto", "ERROR DE CARGA",
+					JOptionPane.ERROR_MESSAGE);
+		}
+		if(listaEstado != null) {
+			for(Estado_proyecto e : listaEstado) {
+				inputEstado.addItem(e);
+			}
+		}else {
+			JOptionPane.showMessageDialog(null, "No se ha podido cargar el estado de proyecto", "ERROR DE CARGA",
+					JOptionPane.ERROR_MESSAGE);
+		}			
+	}
+	
+	public void mostrarCargaProyecto(Proyecto p) {
+		if(p != null) {
+			InputNombre.setText(p.getNombre());
+			InputCodigo.setText(p.getCodigo_interno());
+			textField.setText(p.getDescripcion());
+			esGenericoBox.setSelected(p.isEs_generico());
+			
+			if(p.getFecha_inicio() != null) {
+				dateChooser.setDate(java.sql.Date.valueOf(p.getFecha_inicio()));
+			}
+			
+			if(p.getFecha_limite() != null) {
+				dateChooser_1.setDate(java.sql.Date.valueOf(p.getFecha_limite()));
+			}
+			
+			inputTipo.setSelectedItem(p.getTipoproyec());
+			inputEstado.setSelectedItem(p.getEstadoproyec());
+			
+		}
 	}
 }
 
