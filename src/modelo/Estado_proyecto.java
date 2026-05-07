@@ -34,5 +34,18 @@ public class Estado_proyecto {
 		this.nombre = nombre;
 	}
 	
+	@Override
+	public String toString() {
+	    return nombre;
+	}
 
+	@Override
+	public boolean equals(Object obj) {
+	    if (this == obj) return true;
+	    if (obj == null || getClass() != obj.getClass()) return false;
+
+	    Estado_proyecto other = (Estado_proyecto) obj;
+	    return this.id_estado_proyecto == other.id_estado_proyecto;
+	}
+	
 }

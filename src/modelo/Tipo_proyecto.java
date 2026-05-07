@@ -28,6 +28,18 @@ public class Tipo_proyecto {
 		this.nombre = nombre;
 	}
 	
-	
+	@Override
+	public String toString() {
+	    return nombre;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+	    if (this == obj) return true;
+	    if (obj == null || getClass() != obj.getClass()) return false;
+
+	    Tipo_proyecto other = (Tipo_proyecto) obj;
+	    return this.id_tipo_proyecto == other.id_tipo_proyecto;
+	}
 
 }

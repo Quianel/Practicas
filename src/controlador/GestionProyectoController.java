@@ -144,7 +144,7 @@ public class GestionProyectoController {
             modeloTabla.addColumn("Estado");
             modeloTabla.addColumn("Fecha Inicio");
             modeloTabla.addColumn("Fecha Límite");
-            modeloTabla.addColumn("Acciones");
+            //modeloTabla.addColumn("Acciones");
 
             for (Proyecto p : lista) {
 
@@ -156,8 +156,8 @@ public class GestionProyectoController {
                         p.getTipoproyec().getNombre(),
                         p.getEstadoproyec().getNombre(),
                         p.getFecha_inicio(),
-                        p.getFecha_limite(),
-                        "Editar | Ver | Del"
+                        p.getFecha_limite()
+                        //"Editar | Ver | Del"
                 });
             }
 
