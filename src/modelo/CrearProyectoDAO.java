@@ -1,5 +1,6 @@
 package modelo;
 
+import java.lang.reflect.Array;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -88,12 +89,21 @@ public class CrearProyectoDAO {
 													+ "', codigo_interno = '"+ codigo_interno
 													+ "', id_tipo_proyecto = "+ tipoproyec.getId_tipo_proyecto()
 												    + ", id_estado_proyecto = "+ estadoproyec.getId_estado_proyecto()
-												    + ", fecha_inicio = '"+ fecha_inicio);
+												    + ", fecha_inicio = '"+ fecha_inicio
+												    + "', fecha_limite = '"+ fecha_limite
+												    + "', descripcion = '"+ descripcion
+												    + "', es_generico = "+ es_generico 
+												    + "where id_proyecto= "+ id_proyecto);
+				if(valor == 0) {
+					correcto = false;
+				}
 			}
+			conexion.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			correcto = false;
 		}
 		return correcto;
+		
 	}
 	
 	public ArrayList<Tipo_proyecto> cargarTipos(){
