@@ -56,9 +56,13 @@ public class VentanaGestionProyecto extends JPanel {
         // =========================
         // TABLA
         // =========================
+        tablaProyectos = new JTable() {
 
-        tablaProyectos = new JTable();
-
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         JScrollPane scrollPane = new JScrollPane(tablaProyectos);
         scrollPane.setBounds(10, 69, 650, 250);
 
@@ -68,7 +72,7 @@ public class VentanaGestionProyecto extends JPanel {
     // =========================
     // GETTERS
     // =========================
-
+    
     public JTable getTablaProyectos() {
         return tablaProyectos;
     }

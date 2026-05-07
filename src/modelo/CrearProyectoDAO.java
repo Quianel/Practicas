@@ -11,7 +11,8 @@ import java.util.ArrayList;
 
 public class CrearProyectoDAO {
 	
-	public Proyecto obtenerProyecto() {
+	/* YA NO HACE FALTA YA QUE AHORA SE BUSCA POR ID
+	 * public Proyecto obtenerProyecto() {
 		Proyecto p = new Proyecto();
 		
 		try {
@@ -38,7 +39,7 @@ public class CrearProyectoDAO {
 					p.setFecha_inicio(registro.getDate("fecha_inicio").toLocalDate());//convierto en lo que necesito para el DAO el modo fecha
 				}
 				if(registro.getDate("fecha_limite") != null) {
-					p.setFecha_inicio(registro.getDate("fecha_limite").toLocalDate());
+					p.setFecha_limite(registro.getDate("fecha_limite").toLocalDate());
 				}
 				conexion.close();
 				return p;
@@ -48,10 +49,13 @@ public class CrearProyectoDAO {
 		}
 		return null;
 		
-	}
+	}*/
 	
 	public boolean insertarProyecto(Proyecto p) {
 		boolean correcto = true;
+		if (p.getFecha_inicio() == null || p.getFecha_limite() == null) {
+		    return false;
+		}
 		try {
 			Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/time_order", "root", "");
 			Statement consulta = conexion.createStatement();
@@ -68,7 +72,8 @@ public class CrearProyectoDAO {
 									+")");
 			consulta.close();
 		} catch (SQLException e) {
-			correcto = false;
+		    e.printStackTrace();
+		    correcto = false;
 		}
 		return correcto;
 		
@@ -81,9 +86,9 @@ public class CrearProyectoDAO {
 		try {
 			Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/time_order", "root", "");
 			Statement consulta = conexion.createStatement();
-			ResultSet registro = consulta.executeQuery("select * from proyecto where id_proyecto= "+id_proyecto);
-			if(registro.next()) {
-				correcto = false;
+			ResultSet registro = consulta.executeQuery("select * from proyecto where id_proyecto= "+ id_proyecto);
+			if(!registro.next()) {
+			    correcto = false;
 			}else {
 				int valor = consulta.executeUpdate("update proyecto set nombre = '"+ nombre 
 													+ "', codigo_interno = '"+ codigo_interno
@@ -92,15 +97,16 @@ public class CrearProyectoDAO {
 												    + ", fecha_inicio = '"+ fecha_inicio
 												    + "', fecha_limite = '"+ fecha_limite
 												    + "', descripcion = '"+ descripcion
-												    + "', es_generico = "+ es_generico 
-												    + "where id_proyecto= "+ id_proyecto);
+												    + "', es_generico = "+ (es_generico ? 1 : 0)
+												    + " where id_proyecto= "+ id_proyecto);
 				if(valor == 0) {
 					correcto = false;
 				}
 			}
 			conexion.close();
 		} catch (SQLException e) {
-			correcto = false;
+		    e.printStackTrace();
+		    correcto = false;
 		}
 		return correcto;
 		
@@ -148,6 +154,61 @@ public class CrearProyectoDAO {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	public Proyecto obtenerProyectoPorId(int idProyecto) {
+
+	    Proyecto p = null;
+
+	    try {
+
+	        Connection conexion = DriverManager.getConnection(
+	                "jdbc:mysql://localhost/time_order",
+	                "root",
+	                "");
+
+	        Statement consulta = conexion.createStatement();
+
+	        ResultSet registro = consulta.executeQuery(
+	                "SELECT * FROM proyecto WHERE id_proyecto = " + idProyecto);
+
+	        if (registro.next()) {
+
+	            p = new Proyecto();
+
+	            p.setId_proyecto(registro.getInt("id_proyecto"));
+	            p.setCodigo_interno(registro.getString("codigo_interno"));
+	            p.setNombre(registro.getString("nombre"));
+	            p.setDescripcion(registro.getString("descripcion"));
+	            p.setEs_generico(registro.getBoolean("es_generico"));
+
+	            Tipo_proyecto tipo = new Tipo_proyecto();
+	            tipo.setId_tipo_proyecto(registro.getInt("id_tipo_proyecto"));
+
+	            Estado_proyecto estado = new Estado_proyecto();
+	            estado.setId_estado_proyecto(registro.getInt("id_estado_proyecto"));
+
+	            p.setTipoproyec(tipo);
+	            p.setEstadoproyec(estado);
+
+	            if (registro.getDate("fecha_inicio") != null) {
+	                p.setFecha_inicio(
+	                        registro.getDate("fecha_inicio").toLocalDate());
+	            }
+
+	            if (registro.getDate("fecha_limite") != null) {
+	                p.setFecha_limite(
+	                        registro.getDate("fecha_limite").toLocalDate());
+	            }
+	        }
+
+	        conexion.close();
+
+	    } catch (SQLException e) {
+
+	        e.printStackTrace();
+	    }
+
+	    return p;
 	}
 
 }

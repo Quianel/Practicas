@@ -1,11 +1,15 @@
 package controlador;
 
+import modelo.CrearProyectoDAO;
 import modelo.GestionProyectoDAO;
 import modelo.Proyecto;
+
+import vista.VentanaCrearProyecto;
 import vista.VentanaGestionProyecto;
 
 import java.util.ArrayList;
 
+import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 
 public class GestionProyectoController {
@@ -19,56 +23,155 @@ public class GestionProyectoController {
         this.modelo = new GestionProyectoDAO();
 
         cargarTabla();
+
+        // =========================
+        // DOBLE CLICK PARA EDITAR
+        // =========================
+
+        this.vista.getTablaProyectos().addMouseListener(
+            new java.awt.event.MouseAdapter() {
+
+                @Override
+                public void mouseClicked(java.awt.event.MouseEvent e) {
+
+                    if (e.getClickCount() == 2) {
+                        editarProyecto();
+                    }
+                }
+            }
+        );
+
+        // =========================
+        // BOTÓN CREAR
+        // =========================
+
+        vista.getBotonProyecto().addActionListener(e -> {
+
+            JFrame frame = new JFrame("Crear Proyecto");
+
+            VentanaCrearProyecto ventana =
+                    new VentanaCrearProyecto();
+
+            frame.setContentPane(ventana);
+
+            frame.setSize(700, 500);
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
+
+            frame.addWindowListener(new java.awt.event.WindowAdapter() {
+
+                @Override
+                public void windowClosed(java.awt.event.WindowEvent e) {
+                    cargarTabla();
+                }
+            });
+        });
     }
 
-    private void cargarTabla() {
+    // =========================
+    // EDITAR PROYECTO
+    // =========================
+
+    private void editarProyecto() {
+
+        try {
+
+            int fila = vista.getTablaProyectos().getSelectedRow();
+
+            if (fila == -1) return;
+
+            int idProyecto = (int) vista
+                    .getTablaProyectos()
+                    .getValueAt(fila, 0);
+
+            CrearProyectoDAO dao = new CrearProyectoDAO();
+
+            Proyecto proyecto = dao.obtenerProyectoPorId(idProyecto);
+
+            if (proyecto != null) {
+
+                JFrame frame = new JFrame("Editar Proyecto");
+
+                VentanaCrearProyecto ventanaEditar =
+                        new VentanaCrearProyecto();
+
+                ventanaEditar.mostrarCargaProyecto(proyecto);
+
+                frame.setContentPane(ventanaEditar);
+
+                frame.setSize(700, 500);
+                frame.setLocationRelativeTo(null);
+                frame.setVisible(true);
+
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+                frame.addWindowListener(new java.awt.event.WindowAdapter() {
+
+                    @Override
+                    public void windowClosed(java.awt.event.WindowEvent e) {
+                        cargarTabla();
+                    }
+                });
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // =========================
+    // CARGAR TABLA
+    // =========================
+
+    public void cargarTabla() {
 
         try {
 
             ArrayList<Proyecto> lista = modelo.traerTodos();
 
-            DefaultTableModel modeloTabla = new DefaultTableModel();
+            DefaultTableModel modeloTabla = new DefaultTableModel() {
 
-            // =========================
-            // COLUMNAS
-            // =========================
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
 
-            //modeloTabla.addColumn("ID");
+            modeloTabla.addColumn("ID");
             modeloTabla.addColumn("Código");
             modeloTabla.addColumn("Nombre");
             modeloTabla.addColumn("Tipo");
             modeloTabla.addColumn("Estado");
-            //modeloTabla.addColumn("Descripción");
             modeloTabla.addColumn("Fecha Inicio");
             modeloTabla.addColumn("Fecha Límite");
             modeloTabla.addColumn("Acciones");
-            //modeloTabla.addColumn("Genérico");
-            
-
-            // =========================
-            // FILAS
-            // =========================
 
             for (Proyecto p : lista) {
 
                 modeloTabla.addRow(new Object[] {
-                        //p.getId_proyecto(),
+
+                        p.getId_proyecto(),
                         p.getCodigo_interno(),
                         p.getNombre(),
                         p.getTipoproyec().getNombre(),
                         p.getEstadoproyec().getNombre(),
-                        //p.getDescripcion(),
                         p.getFecha_inicio(),
                         p.getFecha_limite(),
                         "Editar | Ver | Del"
-                        //p.isEs_generico()                        
                 });
             }
 
             vista.getTablaProyectos().setModel(modeloTabla);
 
-        } catch (Exception e) {
+            // ocultar ID
+            vista.getTablaProyectos()
+                    .getColumnModel().getColumn(0).setMinWidth(0);
+            vista.getTablaProyectos()
+                    .getColumnModel().getColumn(0).setMaxWidth(0);
+            vista.getTablaProyectos()
+                    .getColumnModel().getColumn(0).setWidth(0);
 
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
