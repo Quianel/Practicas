@@ -11,6 +11,8 @@ import javax.swing.border.EmptyBorder;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 
+import controlador.GestionProyectoController;
+
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JLabel;
@@ -158,6 +160,8 @@ public class VentanaMenuPrincipal extends JFrame {
 		//panelCardLCarga.add(vProyecto,"CrearProyecto");
 		
 		VentanaGestionProyecto vGtPro = new VentanaGestionProyecto();
+		new GestionProyectoController(vGtPro);
+
 		panelCardLCarga.add(vGtPro,"vGtnPro");
 		
 		VentanaControlTiempo vCntTiem = new VentanaControlTiempo("00:00:00");

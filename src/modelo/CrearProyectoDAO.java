@@ -1,6 +1,5 @@
 package modelo;
 
-import java.lang.reflect.Array;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -86,7 +85,7 @@ public class CrearProyectoDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+		return correcto;
 	}
 	
 	public ArrayList<Tipo_proyecto> cargarTipos(){
