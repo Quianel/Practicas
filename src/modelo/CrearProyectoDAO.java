@@ -73,6 +73,22 @@ public class CrearProyectoDAO {
 		
 	}
 	
+	public boolean modificarProyecto(int id_proyecto) {
+		boolean correcto = true;
+		
+		try {
+			Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/time_order", "root", "");
+			Statement consulta = conexion.createStatement();
+			ResultSet registro = consulta.executeQuery("select * from proyecto where id_proyecto= "+id_proyecto);
+			if(registro.next()) {
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 	public ArrayList<Tipo_proyecto> cargarTipos(){
 		ArrayList<Tipo_proyecto> lista = new ArrayList<>();
 		try {

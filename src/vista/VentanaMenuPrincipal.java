@@ -111,6 +111,13 @@ public class VentanaMenuPrincipal extends JFrame {
 		mnuPrincipal.add(mnMistareas);
 		
 		JMenu mnControlTiempo = new JMenu("Control de tiempo");
+		mnControlTiempo.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				CardLayout cl = (CardLayout)(panelCardLCarga.getLayout());
+				cl.show(panelCardLCarga,"ventContTiem");
+			}
+		});
 		mnControlTiempo.setIcon(new ImageIcon("img/controlTiempo.png"));
 		mnControlTiempo.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 12));
 		mnuPrincipal.add(mnControlTiempo);
@@ -149,6 +156,10 @@ public class VentanaMenuPrincipal extends JFrame {
 		
 		VentanaCrearProyecto vProyecto = new VentanaCrearProyecto();
 		panelCardLCarga.add(vProyecto,"CrearProyecto");
+		
+		
+		VentanaControlTiempo vCntTiem = new VentanaControlTiempo("00:00:00");
+		panelCardLCarga.add(vCntTiem,"ventContTiem");
 			
 	}
 	public void nuevoPanel(JPanel panelActual) {//Este metodo no es necesario en este caso, pero lo dejo por si tuvieramos que cambiar por no funcionamiento

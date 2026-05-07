@@ -160,6 +160,7 @@ public class VentanaCrearProyecto extends JPanel {
 				}
 				
 				CrearProyectoDAO dao = new CrearProyectoDAO();
+				//if(nuevoP.getId_proyecto())
 				boolean exito = dao.insertarProyecto(nuevoP);//utilizo mi insertar proyecto en la base de datos para que ya se guarde
 				
 				if(exito) {
