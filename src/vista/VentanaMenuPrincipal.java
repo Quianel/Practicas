@@ -87,7 +87,7 @@ public class VentanaMenuPrincipal extends JFrame {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				CardLayout cl = (CardLayout)(panelCardLCarga.getLayout());
-				cl.show(panelCardLCarga,"CrearProyecto");
+				cl.show(panelCardLCarga,"vGtnPro");
 			}
 		});
 		mnProyectos.setIcon(new ImageIcon("img/proyecto.png"));
@@ -154,9 +154,11 @@ public class VentanaMenuPrincipal extends JFrame {
 		Bienvenida b = new Bienvenida();//creo objeto de la ventana 
 		panelCardLCarga.add(b,"Inicio");//añado al cardLayout y le doy un nombre para la llamada
 		
-		VentanaCrearProyecto vProyecto = new VentanaCrearProyecto();
-		panelCardLCarga.add(vProyecto,"CrearProyecto");
+		//VentanaCrearProyecto vProyecto = new VentanaCrearProyecto();
+		//panelCardLCarga.add(vProyecto,"CrearProyecto");
 		
+		VentanaGestionProyecto vGtPro = new VentanaGestionProyecto();
+		panelCardLCarga.add(vGtPro,"vGtnPro");
 		
 		VentanaControlTiempo vCntTiem = new VentanaControlTiempo("00:00:00");
 		panelCardLCarga.add(vCntTiem,"ventContTiem");
