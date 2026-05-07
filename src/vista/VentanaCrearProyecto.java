@@ -138,21 +138,21 @@ public class VentanaCrearProyecto extends JPanel {
 		esGenericoBox.setBounds(385, 62, 98, 22);
 		add(esGenericoBox);
 		
-		JButton GuardarBoton = new JButton("Guardar");
+		JButton GuardarBoton = new JButton("Guardar");//Logica del boton de guardado
 		GuardarBoton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Proyecto nuevoP = new Proyecto();
+				Proyecto nuevoP = new Proyecto();//creo objeto proyecto para guardar en el lo que obtenga de lo que escriba en los inputs
 				
 				nuevoP.setNombre(InputNombre.getText());
 				nuevoP.setCodigo_interno(InputCodigo.getText());
 				nuevoP.setDescripcion(textField.getText());
 				nuevoP.setEs_generico(esGenericoBox.isSelected());
 				
-				nuevoP.setTipoproyec((Tipo_proyecto) inputTipo.getSelectedItem());
+				nuevoP.setTipoproyec((Tipo_proyecto) inputTipo.getSelectedItem());//necesito convertir al objeto lo que obtenga para guardarlo en proyecto
 				nuevoP.setEstadoproyec((Estado_proyecto) inputEstado.getSelectedItem());
 				
 				if(dateChooser.getDate() != null) {
-					nuevoP.setFecha_inicio(new java.sql.Date(dateChooser.getDate().getTime()).toLocalDate());
+					nuevoP.setFecha_inicio(new java.sql.Date(dateChooser.getDate().getTime()).toLocalDate());//Unica manera de convertir lo que obtengo de fecha para la base de datos
 				}
 				
 				if(dateChooser_1.getDate() != null) {
@@ -160,7 +160,7 @@ public class VentanaCrearProyecto extends JPanel {
 				}
 				
 				CrearProyectoDAO dao = new CrearProyectoDAO();
-				boolean exito = dao.insertarProyecto(nuevoP);
+				boolean exito = dao.insertarProyecto(nuevoP);//utilizo mi insertar proyecto en la base de datos para que ya se guarde
 				
 				if(exito) {
 					JOptionPane.showMessageDialog(null, "Proyecto guardado correctamente","EXITO",JOptionPane.INFORMATION_MESSAGE);
@@ -174,12 +174,12 @@ public class VentanaCrearProyecto extends JPanel {
 		GuardarBoton.setBounds(420, 250, 75, 22);
 		add(GuardarBoton);
 		
-		cargarCombosTipoyEstado();
+		cargarCombosTipoyEstado();//cargo mis combobox
 		
 		CrearProyectoDAO dao = new CrearProyectoDAO();
-		Proyecto p = dao.obtenerProyecto();
+		Proyecto p = dao.obtenerProyecto();//llamo a mi metodo de la base de datos
 		
-		mostrarCargaProyecto(p);
+		mostrarCargaProyecto(p);//Le paso el objeto a mi metodo que rellenara los inputs
 
 	}
 	

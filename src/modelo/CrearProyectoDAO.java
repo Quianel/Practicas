@@ -26,7 +26,7 @@ public class CrearProyectoDAO {
 				p.setEs_generico(registro.getBoolean("es_generico"));
 				
 				Tipo_proyecto tipo = new Tipo_proyecto();
-				tipo.setId_tipo_proyecto(registro.getInt("id_tipo_proyecto"));
+				tipo.setId_tipo_proyecto(registro.getInt("id_tipo_proyecto"));//primero guardo en el objeto para luego hacer el set
 				p.setTipoproyec(tipo);
 				
 				Estado_proyecto estado = new Estado_proyecto();
@@ -34,7 +34,7 @@ public class CrearProyectoDAO {
 				p.setEstadoproyec(estado);
 				
 				if(registro.getDate("fecha_inicio") != null) {
-					p.setFecha_inicio(registro.getDate("fecha_inicio").toLocalDate());
+					p.setFecha_inicio(registro.getDate("fecha_inicio").toLocalDate());//convierto en lo que necesito para el DAO el modo fecha
 				}
 				if(registro.getDate("fecha_limite") != null) {
 					p.setFecha_inicio(registro.getDate("fecha_limite").toLocalDate());

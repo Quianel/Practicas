@@ -69,11 +69,11 @@ public class VentanaMenuPrincipal extends JFrame {
 		contentPane.add(mnuPrincipal,BorderLayout.WEST);
 		
 		JMenu mnDashboIni = new JMenu("Dashboard/Inicio");
-		mnDashboIni.addMouseListener(new MouseAdapter() {
+		mnDashboIni.addMouseListener(new MouseAdapter() {//Al tener JMENU les añado action mouse pressed
 			@Override
 			public void mousePressed(MouseEvent e) {
-				CardLayout cl = (CardLayout)(panelCardLCarga.getLayout());
-				cl.show(panelCardLCarga, "Inicio");
+				CardLayout cl = (CardLayout)(panelCardLCarga.getLayout()); 
+				cl.show(panelCardLCarga, "Inicio");//Hago visible la ventana inicio
 			}
 		});
 	
@@ -144,14 +144,14 @@ public class VentanaMenuPrincipal extends JFrame {
 		contentPane.add(panelCardLCarga, BorderLayout.CENTER);
 		panelCardLCarga.setLayout(new CardLayout(0, 0));
 		
-		Bienvenida b = new Bienvenida();
-		panelCardLCarga.add(b,"Inicio");
+		Bienvenida b = new Bienvenida();//creo objeto de la ventana 
+		panelCardLCarga.add(b,"Inicio");//añado al cardLayout y le doy un nombre para la llamada
 		
 		VentanaCrearProyecto vProyecto = new VentanaCrearProyecto();
 		panelCardLCarga.add(vProyecto,"CrearProyecto");
 			
 	}
-	public void nuevoPanel(JPanel panelActual) {
+	public void nuevoPanel(JPanel panelActual) {//Este metodo no es necesario en este caso, pero lo dejo por si tuvieramos que cambiar por no funcionamiento
 		contentPane.removeAll();
 		contentPane.add(panelActual);
 		contentPane.repaint();
