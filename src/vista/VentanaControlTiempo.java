@@ -23,12 +23,15 @@ public class VentanaControlTiempo extends JPanel {
 	private Timer timer;
 	private int segundos = 0, minutos = 0, horas = 0;
 	private boolean activo = false;
+	private JLabel labelTiempo;
+	private JButton btnIniciar;
+	private JButton btnPausar;
 
 
 	/**
 	 * Create the panel.
 	 */
-	public VentanaControlTiempo(String tiempo) {
+	public VentanaControlTiempo() {
 		setBackground(new Color(180, 180, 180));
 		setLayout(null);
 		
@@ -60,30 +63,41 @@ public class VentanaControlTiempo extends JPanel {
 		table.setBounds(246, 99, 194, 94);
 		add(table);
 		
-		JLabel lblNewLabel = new JLabel(tiempo);
-		lblNewLabel.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 19));
-		lblNewLabel.setBounds(65, 129, 78, 44);
-		add(lblNewLabel);
+		labelTiempo = new JLabel("00:00:00");
+		labelTiempo.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 19));
+		labelTiempo.setBounds(65, 129, 78, 44);
+		add(labelTiempo);
 		
-		JButton IniciarBoton = new JButton("Iniciar");
-		IniciarBoton.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
-		IniciarBoton.setBounds(24, 201, 69, 22);
-		IniciarBoton.addActionListener(new ActionListener() {
+		btnIniciar = new JButton("Iniciar");
+		btnIniciar.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
+		btnIniciar.setBounds(24, 201, 69, 22);
+		btnIniciar.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(!activo) {
 					iniciarCronometro();
+					btnIniciar.setEnabled(false);
+					btnPausar.setEnabled(true);
+					
 				}
 				
 			}
 		});
-		add(IniciarBoton);
+		add(btnIniciar);
 		
-		JButton PausarBoton = new JButton("Pausar");
-		PausarBoton.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
-		PausarBoton.setBounds(118, 200, 69, 22);
-		add(PausarBoton);
+		btnPausar = new JButton("Pausar");
+		btnPausar.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
+		btnPausar.setBounds(118, 200, 69, 22);
+		btnPausar.addActionListener(new ActionListener() {
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		        timer.stop();               
+		        btnPausar.setEnabled(false); 
+		        btnIniciar.setEnabled(true);
+		    }
+		});
+		add(btnPausar);
 
 	}
 	private void iniciarCronometro() {
@@ -104,9 +118,10 @@ public class VentanaControlTiempo extends JPanel {
 	        });	
 		 timer.start();
 	}
-	 private String actualizarEtiqueta() {
+	 private void actualizarEtiqueta() {
 	        String tiempo = String.format("%02d:%02d:%02d", horas, minutos, segundos);
-	        return tiempo;
+	        labelTiempo.setText(tiempo);
+	        
 	    }
 	
 }
