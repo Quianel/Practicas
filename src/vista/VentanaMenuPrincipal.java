@@ -160,7 +160,7 @@ public class VentanaMenuPrincipal extends JFrame {
 		VentanaGestionProyecto vGtPro = new VentanaGestionProyecto();
 		panelCardLCarga.add(vGtPro,"vGtnPro");
 		
-		VentanaControlTiempo vCntTiem = new VentanaControlTiempo("00:00:00");
+		VentanaControlTiempo vCntTiem = new VentanaControlTiempo();
 		panelCardLCarga.add(vCntTiem,"ventContTiem");
 			
 	}

@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class CrearProyectoDAO {
@@ -73,7 +74,8 @@ public class CrearProyectoDAO {
 		
 	}
 	
-	public boolean modificarProyecto(int id_proyecto) {
+	public boolean modificarProyecto(int id_proyecto,String nombre,String codigo_interno,Tipo_proyecto tipoproyec,Estado_proyecto estadoproyec,
+			LocalDate fecha_inicio,LocalDate fecha_limite,String descripcion,boolean es_generico) {
 		boolean correcto = true;
 		
 		try {
@@ -81,7 +83,13 @@ public class CrearProyectoDAO {
 			Statement consulta = conexion.createStatement();
 			ResultSet registro = consulta.executeQuery("select * from proyecto where id_proyecto= "+id_proyecto);
 			if(registro.next()) {
-				
+				correcto = false;
+			}else {
+				int valor = consulta.executeUpdate("update proyecto set nombre = '"+ nombre 
+													+ "', codigo_interno = '"+ codigo_interno
+													+ "', id_tipo_proyecto = "+ tipoproyec.getId_tipo_proyecto()
+												    + ", id_estado_proyecto = "+ estadoproyec.getId_estado_proyecto()
+												    + ", fecha_inicio = '"+ fecha_inicio)
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
