@@ -1,6 +1,7 @@
 package controlador;
 
 import vista.VentanaLogin;
+import vista.VentanaMenuPrincipal;
 import modelo.UsuarioDAO;
 
 import java.awt.event.ActionEvent;
@@ -26,15 +27,29 @@ public class LoginController {
     }
 
     private void login() {
+
         String correo = vista.getCorreo();
         String contrasena = vista.getContrasena();
 
         boolean valido = modelo.validarUsuario(correo, contrasena);
 
         if (valido) {
+
             JOptionPane.showMessageDialog(null, "Login correcto");
+
+            // Crear ventana principal
+            VentanaMenuPrincipal menu = new VentanaMenuPrincipal();
+
+            // Mostrar ventana principal
+            menu.setVisible(true);
+
+            // Cerrar login
+            vista.dispose();
+
         } else {
+
             JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
+
         }
     }
 }

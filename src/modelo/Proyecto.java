@@ -18,8 +18,8 @@ public class Proyecto {//Clase proyecto principal
 		codigo_interno="";
 		nombre="";
 		descripcion="";
-		fecha_inicio=LocalDate.of(0000, 00, 00);
-		fecha_limite=LocalDate.of(0000, 00, 00);
+		fecha_inicio=LocalDate.of(0001, 01, 01);
+		fecha_limite=LocalDate.of(0001, 01, 01);
 		es_generico=false;
 		tipoproyec=null;
 		estadoproyec=null;
