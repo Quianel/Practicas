@@ -3,10 +3,6 @@ package controlador;
 import modelo.GestionProyectoDAO;
 import modelo.Proyecto;
 import vista.VentanaGestionProyecto;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
-import javax.swing.JOptionPane;
 
 import java.util.ArrayList;
 
@@ -23,7 +19,6 @@ public class GestionProyectoController {
         this.modelo = new GestionProyectoDAO();
 
         cargarTabla();
-        eventos();
     }
 
     private void cargarTabla() {
@@ -38,7 +33,7 @@ public class GestionProyectoController {
             // COLUMNAS
             // =========================
 
-            modeloTabla.addColumn("ID");
+            //modeloTabla.addColumn("ID");
             modeloTabla.addColumn("Código");
             modeloTabla.addColumn("Nombre");
             modeloTabla.addColumn("Tipo");
@@ -57,7 +52,7 @@ public class GestionProyectoController {
             for (Proyecto p : lista) {
 
                 modeloTabla.addRow(new Object[] {
-                        p.getId_proyecto(),
+                        //p.getId_proyecto(),
                         p.getCodigo_interno(),
                         p.getNombre(),
                         p.getTipoproyec().getNombre(),
@@ -71,35 +66,10 @@ public class GestionProyectoController {
             }
 
             vista.getTablaProyectos().setModel(modeloTabla);
-            vista.getTablaProyectos().getColumnModel().getColumn(0).setMinWidth(0);
-            vista.getTablaProyectos().getColumnModel().getColumn(0).setMaxWidth(0);
-            vista.getTablaProyectos().getColumnModel().getColumn(0).setWidth(0);
 
         } catch (Exception e) {
 
             e.printStackTrace();
         }
-    }
-    
-    private void eventos() {
-
-        vista.getTablaProyectos().addMouseListener(new MouseAdapter() {
-
-            @Override
-            public void mouseClicked(MouseEvent e) {
-
-                int fila = vista.getTablaProyectos().rowAtPoint(e.getPoint());
-                int columna = vista.getTablaProyectos().columnAtPoint(e.getPoint());
-
-                // Columna acciones
-                if (columna == 7) {
-
-                    // Obtener ID oculto
-                    int idProyecto = (int) vista.getTablaProyectos().getValueAt(fila, 0);
-
-                    abrirVentanaEditar(idProyecto);
-                }
-            }
-        });
     }
 }

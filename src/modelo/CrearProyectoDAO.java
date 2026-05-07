@@ -88,7 +88,7 @@ public class CrearProyectoDAO {
 													+ "', codigo_interno = '"+ codigo_interno
 													+ "', id_tipo_proyecto = "+ tipoproyec.getId_tipo_proyecto()
 												    + ", id_estado_proyecto = "+ estadoproyec.getId_estado_proyecto()
-												    + ", fecha_inicio = '"+ fecha_inicio)
+												    + ", fecha_inicio = '"+ fecha_inicio);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
