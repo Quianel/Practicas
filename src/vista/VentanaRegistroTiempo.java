@@ -10,7 +10,7 @@ import com.toedter.calendar.JDateChooser;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
-public class VentataRegistroTiempo extends JPanel {
+public class VentanaRegistroTiempo extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private JTextField InputHoraInicio;
@@ -20,7 +20,7 @@ public class VentataRegistroTiempo extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public VentataRegistroTiempo() {
+	public VentanaRegistroTiempo() {
 		setBackground(new Color(180, 180, 180));
 		setLayout(null);
 		
