@@ -81,6 +81,8 @@ public class VentanaLogin extends JFrame {
         botonIS.setBounds(109, 135, 119, 22);
         contentPane.add(botonIS);
 
+        getRootPane().setDefaultButton(botonIS);
+
         InputContrasena = new JPasswordField();
         InputContrasena.setBounds(147, 79, 96, 20);
         contentPane.add(InputContrasena);

@@ -15,10 +15,12 @@ public class LoginController {
     private UsuarioDAO modelo;
 
     public LoginController(VentanaLogin vista) {
+
         this.vista = vista;
         this.modelo = new UsuarioDAO();
 
         this.vista.getBotonLogin().addActionListener(new ActionListener() {
+
             @Override
             public void actionPerformed(ActionEvent e) {
                 login();
@@ -28,28 +30,80 @@ public class LoginController {
 
     private void login() {
 
-        String correo = vista.getCorreo();
-        String contrasena = vista.getContrasena();
+        try {
 
-        boolean valido = modelo.validarUsuario(correo, contrasena);
+            String correo = vista.getCorreo().trim();
+            String contrasena = vista.getContrasena().trim();
 
-        if (valido) {
+            // =========================
+            // VALIDAR CAMPOS VACÍOS
+            // =========================
 
-            JOptionPane.showMessageDialog(null, "Login correcto");
+            if (correo.isEmpty() || contrasena.isEmpty()) {
 
-            // Crear ventana principal
-            VentanaMenuPrincipal menu = new VentanaMenuPrincipal();
+                JOptionPane.showMessageDialog(
+                        vista,
+                        "Debes completar todos los campos",
+                        "Campos vacíos",
+                        JOptionPane.WARNING_MESSAGE);
 
-            // Mostrar ventana principal
-            menu.setVisible(true);
+                return;
+            }
 
-            // Cerrar login
-            vista.dispose();
+            // =========================
+            // VALIDAR FORMATO EMAIL
+            // =========================
 
-        } else {
+            if (!correo.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
 
-            JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
+                JOptionPane.showMessageDialog(
+                        vista,
+                        "Introduce un correo válido",
+                        "Correo inválido",
+                        JOptionPane.WARNING_MESSAGE);
 
+                return;
+            }
+
+            // =========================
+            // LOGIN
+            // =========================
+
+            boolean valido = modelo.validarUsuario(correo, contrasena);
+
+            if (valido) {
+
+                JOptionPane.showMessageDialog(
+                        vista,
+                        "Login correcto",
+                        "Bienvenido",
+                        JOptionPane.INFORMATION_MESSAGE);
+
+                // Abrir menú principal
+                VentanaMenuPrincipal menu = new VentanaMenuPrincipal();
+                menu.setVisible(true);
+
+                // Cerrar login
+                vista.dispose();
+
+            } else {
+
+                JOptionPane.showMessageDialog(
+                        vista,
+                        "Usuario o contraseña incorrectos",
+                        "Error de autenticación",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch (Exception e) {
+
+            JOptionPane.showMessageDialog(
+                    vista,
+                    "Ha ocurrido un error:\n" + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+
+            e.printStackTrace();
         }
     }
 }

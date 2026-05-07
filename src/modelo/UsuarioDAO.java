@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 
 public class UsuarioDAO {
 
-    public boolean validarUsuario(String correo, String contrasena) {
+    public boolean validarUsuario(String correo, String contrasena) throws Exception {
 
         String sql = "SELECT password_hash FROM trabajador WHERE correo = ?";
 
@@ -21,16 +21,18 @@ public class UsuarioDAO {
 
                 String hashGuardado = rs.getString("password_hash");
 
-                // Comparación correcta con BCrypt
+                // Validación BCrypt
                 if (org.mindrot.jbcrypt.BCrypt.checkpw(contrasena, hashGuardado)) {
                     return true;
                 }
             }
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            return false;
 
-        return false;
+        } catch (Exception e) {
+
+            // Lanzamos el error al controlador
+            throw new Exception("Error al validar usuario: " + e.getMessage());
+        }
     }
 }
