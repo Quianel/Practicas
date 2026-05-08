@@ -76,7 +76,6 @@ public class CrearProyectoDAO {
 		    correcto = false;
 		}
 		return correcto;
-		
 	}
 	
 	public boolean modificarProyecto(int id_proyecto,String nombre,String codigo_interno,Tipo_proyecto tipoproyec,Estado_proyecto estadoproyec,
