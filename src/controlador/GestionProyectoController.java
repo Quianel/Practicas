@@ -40,6 +40,14 @@ public class GestionProyectoController {
                 }
             }
         );
+        
+        // =========================
+        // BOTON BUSCAR
+        // =========================
+        
+        vista.getBotonLupa().addActionListener(e -> {
+        	cargarTablaConFiltro(vista.getInputBuscarValue());
+        });
 
         // =========================
         // BOTÓN CREAR
@@ -128,6 +136,63 @@ public class GestionProyectoController {
         try {
 
             ArrayList<Proyecto> lista = modelo.traerTodos();
+
+            DefaultTableModel modeloTabla = new DefaultTableModel() {
+
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
+
+            modeloTabla.addColumn("ID");
+            modeloTabla.addColumn("Código");
+            modeloTabla.addColumn("Nombre");
+            modeloTabla.addColumn("Tipo");
+            modeloTabla.addColumn("Estado");
+            modeloTabla.addColumn("Fecha Inicio");
+            modeloTabla.addColumn("Fecha Límite");
+            //modeloTabla.addColumn("Acciones");
+
+            for (Proyecto p : lista) {
+
+                modeloTabla.addRow(new Object[] {
+
+                        p.getId_proyecto(),
+                        p.getCodigo_interno(),
+                        p.getNombre(),
+                        p.getTipoproyec().getNombre(),
+                        p.getEstadoproyec().getNombre(),
+                        p.getFecha_inicio(),
+                        p.getFecha_limite()
+                        //"Editar | Ver | Del"
+                });
+            }
+
+            vista.getTablaProyectos().setModel(modeloTabla);
+
+            // ocultar ID
+            vista.getTablaProyectos()
+                    .getColumnModel().getColumn(0).setMinWidth(0);
+            vista.getTablaProyectos()
+                    .getColumnModel().getColumn(0).setMaxWidth(0);
+            vista.getTablaProyectos()
+                    .getColumnModel().getColumn(0).setWidth(0);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    // =========================
+    // CARGAR TABLA CON FILTROS
+    // =========================
+    
+    public void cargarTablaConFiltro(String busqueda) {
+
+        try {
+
+            ArrayList<Proyecto> lista = modelo.traerConFiltro(busqueda);
 
             DefaultTableModel modeloTabla = new DefaultTableModel() {
 
