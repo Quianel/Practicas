@@ -1,6 +1,8 @@
 package vista;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
 import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -23,6 +25,7 @@ public class VentanaGestionUsuario extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JTextField textField;
 	private JTable table;
+	private JButton CrearUsuarioBoton;
 
 
 	/**
@@ -33,21 +36,7 @@ public class VentanaGestionUsuario extends JPanel {
 		setBackground(new Color(180, 180, 180));
 		setLayout(null);
 		
-		JButton CrearUsuarioBoton = new JButton("Crear Usuario");
-		CrearUsuarioBoton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				VentanaCrearUsuario nuevoPanel = new VentanaCrearUsuario(); 
-				
-				if (vgu != null) {
-					vgu.removeAll();
-					vgu.add(nuevoPanel);
-					vgu.revalidate();
-					vgu.repaint();
-			    }
-				
-			}
-		});
+		CrearUsuarioBoton = new JButton("Crear Usuario");
 		CrearUsuarioBoton.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
 		CrearUsuarioBoton.setBounds(10, 27, 116, 23);
 		add(CrearUsuarioBoton);
@@ -62,11 +51,26 @@ public class VentanaGestionUsuario extends JPanel {
 		btnNewButton.setBounds(359, 27, 41, 23);
 		add(btnNewButton);
 		
-		table = new JTable();
+		table = new JTable(){
+
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
 		table.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
 		table.setBounds(10, 71, 449, 193);
+		
+		
 		add(table);
 		
 	}
+	 public JTable getTabla() {
+	        return table;
+	    }
+	 public JButton getBoton() {
+	        return CrearUsuarioBoton;
+	    }
+	
 	
 }

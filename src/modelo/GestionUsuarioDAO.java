@@ -13,7 +13,7 @@ public class GestionUsuarioDAO {
         ArrayList<Trabajador> listaTrabajadores = new ArrayList<>();
 
         String sql = "select tra.nombre, tra.correo, rl.nombre, prl.nombre, n.nombre, tra.activo " +
-        		  "from trabajador tra, perfil_laboral prl, nivel_experiencia n, rol_sistema rl " +
+        		"from trabajador tra, perfil_laboral prl, nivel_experiencia n, rol_sistema rl " +
         		"where tra.id_rol=rl.id_rol " +
         		"and tra.id_perfil=prl.id_perfil " +
         		"and tra.id_nivel=n.id_nivel";
@@ -25,27 +25,28 @@ public class GestionUsuarioDAO {
             while (rs.next()) {
             	
             	Perfil_laboral pl = new Perfil_laboral(
-            			
+            			rs.getInt("id_perfil"),
             			rs.getString("nombre")
             			);
             	Nivel_experiencia ne = new Nivel_experiencia(
-            			
+            			rs.getInt("id_nivel"),
             			rs.getString("nombre")
             			);
+            	Rol_permiso rp = new Rol_permiso(
+            			rs.getInt("id_rol"),
+            			rs.getInt("id_permiso")
+            			);
             	Trabajador t = new Trabajador(
+            			rs.getInt("id_trabajador"),
             			rs.getString("nombre"),
             			rs.getString("correo"),
-            			rs.getString("rol"),
-            			rs.getBoolean("activo")
-            			
+            			rs.getString("password_hash"),
+            			rs.getBoolean("activo"),
+            			rp,
+            			pl,
+            			ne
             			);
-            	listaTrabajadores.add(t);
-            	
-            			
-            			
-            	
-
-               
+            	listaTrabajadores.add(t);       
             }
 
         } catch (Exception e) {
