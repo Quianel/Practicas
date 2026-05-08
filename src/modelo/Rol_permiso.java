@@ -3,6 +3,7 @@ package modelo;
 public class Rol_permiso {
 	private int id_rol;
 	private int id_permiso;
+	
 
 	public Rol_permiso() {
 		id_rol=0;
