@@ -23,12 +23,13 @@ public class VentanaGestionUsuario extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JTextField textField;
 	private JTable table;
-	private DefaultTableModel modelo;
+
 
 	/**
 	 * Create the panel.
 	 */
 	public VentanaGestionUsuario() {
+		VentanaGestionUsuario vgu = new VentanaGestionUsuario();
 		setBackground(new Color(180, 180, 180));
 		setLayout(null);
 		
@@ -36,6 +37,15 @@ public class VentanaGestionUsuario extends JPanel {
 		CrearUsuarioBoton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
+				VentanaCrearUsuario nuevoPanel = new VentanaCrearUsuario(); 
+				
+				if (vgu != null) {
+					vgu.removeAll();
+					vgu.add(nuevoPanel);
+					vgu.revalidate();
+					vgu.repaint();
+			    }
+				
 			}
 		});
 		CrearUsuarioBoton.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
@@ -56,37 +66,7 @@ public class VentanaGestionUsuario extends JPanel {
 		table.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
 		table.setBounds(10, 71, 449, 193);
 		add(table);
-		cargarDatosTabla();
-
+		
 	}
-	public void cargarDatosTabla() {
-        
-        modelo.setRowCount(0);
-
-        String sql = "select tra.nombre, tra.correo, rl.nombre, prl.nombre, n.nombre, tra.activo"
-        		+ "from trabajador tra, perfil_laboral prl, nivel_experiencia n, rol_sistema rl"
-        		+ "where tra.id_rol=rl.id_rol"
-        		+ "and tra.id_perfil=prl.id_perfil"
-        		+ "and tra.id_nivel=n.id_nivel;";
-        
-        
-        try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/time_order", "root", "");
-             Statement st = con.createStatement();
-             ResultSet rs = st.executeQuery(sql)) {
-
-            while (rs.next()) {
-                Object[] fila = new Object[3];
-                fila[0] = rs.getObject(1);
-                fila[1] = rs.getObject(2);
-                fila[2] = rs.getObject(3);
-                fila[3] = rs.getObject(4);
-                fila[4] = rs.getObject(5);
-                fila[5] = rs.getObject(6);
-                
-                modelo.addRow(fila);
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al conectar: " + e.getMessage());
-        }
-    }
+	
 }
