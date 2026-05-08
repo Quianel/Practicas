@@ -85,6 +85,10 @@ public class VentanaGestionProyecto extends JPanel {
     public String getInputBuscarValue() {
     	return inputBuscar.getText();
     }
+    
+    public void setInputBuscarValue(String inputBuscarText) {
+    	inputBuscar.setText(inputBuscarText);
+    }
 
     public JButton getBotonLupa() {
         return botonLupa;

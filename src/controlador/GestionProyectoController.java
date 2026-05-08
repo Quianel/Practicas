@@ -64,12 +64,18 @@ public class GestionProyectoController {
 
             frame.setSize(700, 500);
             frame.setLocationRelativeTo(null);
+
+            // FALTA ESTO
+            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
             frame.setVisible(true);
 
             frame.addWindowListener(new java.awt.event.WindowAdapter() {
 
                 @Override
                 public void windowClosed(java.awt.event.WindowEvent e) {
+
+                    vista.setInputBuscarValue("");
                     cargarTabla();
                 }
             });
@@ -117,6 +123,7 @@ public class GestionProyectoController {
 
                     @Override
                     public void windowClosed(java.awt.event.WindowEvent e) {
+                    	vista.setInputBuscarValue("");
                         cargarTabla();
                     }
                 });
