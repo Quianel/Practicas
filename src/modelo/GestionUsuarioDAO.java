@@ -12,11 +12,12 @@ public class GestionUsuarioDAO {
 
         ArrayList<Trabajador> listaTrabajadores = new ArrayList<>();
 
-        String sql = "select tra.nombre, tra.correo, rl.nombre, prl.nombre, n.nombre, tra.activo " +
-        		"from trabajador tra, perfil_laboral prl, nivel_experiencia n, rol_sistema rl " +
-        		"where tra.id_rol=rl.id_rol " +
-        		"and tra.id_perfil=prl.id_perfil " +
-        		"and tra.id_nivel=n.id_nivel";
+        String sql = "SELECT tra.id_trabajador, tra.nombre AS nombre_tra, tra.correo, tra.password_hash, tra.activo, rl.id_rol, rl.id_permiso,  " +
+        	    "rl.nombre AS nombre_rol, prl.id_perfil, prl.nombre AS nombre_perfil, n.id_nivel, n.nombre AS nombre_nivel " +
+        	    "FROM trabajador tra, perfil_laboral prl, nivel_experiencia n, rol_sistema rl " +
+        	    "where tra.id_rol=rl.id_rol " +
+        	    "and tra.id_perfil=prl.id_perfil " +
+        	    "and tra.id_nivel=n.id_nivel";
 
         try (Connection con = ConexionBD.getConexion();
              PreparedStatement ps = con.prepareStatement(sql);
@@ -26,11 +27,11 @@ public class GestionUsuarioDAO {
             	
             	Perfil_laboral pl = new Perfil_laboral(
             			rs.getInt("id_perfil"),
-            			rs.getString("nombre")
+            			rs.getString("nombre_perfil")
             			);
             	Nivel_experiencia ne = new Nivel_experiencia(
             			rs.getInt("id_nivel"),
-            			rs.getString("nombre")
+            			rs.getString("nombre_nivel")
             			);
             	Rol_permiso rp = new Rol_permiso(
             			rs.getInt("id_rol"),
@@ -38,7 +39,7 @@ public class GestionUsuarioDAO {
             			);
             	Trabajador t = new Trabajador(
             			rs.getInt("id_trabajador"),
-            			rs.getString("nombre"),
+            			rs.getString("nombre_tra"),
             			rs.getString("correo"),
             			rs.getString("password_hash"),
             			rs.getBoolean("activo"),

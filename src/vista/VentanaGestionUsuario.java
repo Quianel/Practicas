@@ -1,31 +1,27 @@
 package vista;
 
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+
 
 import java.awt.Color;
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
+
 import javax.swing.JTextField;
-import javax.swing.table.DefaultTableModel;
+
 
 import java.awt.Font;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+
 
 import javax.swing.JTable;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import javax.swing.JScrollPane;
+
 
 public class VentanaGestionUsuario extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private JTextField textField;
-	private JTable table;
 	private JButton CrearUsuarioBoton;
+	private JTable table;
 
 
 	/**
@@ -50,18 +46,17 @@ public class VentanaGestionUsuario extends JPanel {
 		btnNewButton.setBounds(359, 27, 41, 23);
 		add(btnNewButton);
 		
-		table = new JTable(){
+		table  = new JTable() {
 
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
-		table.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
-		table.setBounds(10, 71, 449, 193);
-		
-		
-		add(table);
+        JScrollPane scrollPane = new JScrollPane(table);
+        scrollPane.setBounds(10, 69, 650, 220);
+
+        add(scrollPane);
 		
 	}
 	 public JTable getTabla() {
@@ -70,6 +65,4 @@ public class VentanaGestionUsuario extends JPanel {
 	 public JButton getBoton() {
 	        return CrearUsuarioBoton;
 	    }
-	
-	
 }

@@ -5,24 +5,21 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 
-import modelo.CrearUsuarioDAO;
+
 import modelo.GestionUsuarioDAO;
-import modelo.Proyecto;
 import modelo.Trabajador;
-import vista.VentanaCrearProyecto;
 import vista.VentanaCrearUsuario;
-import vista.VentanaGestionProyecto;
 import vista.VentanaGestionUsuario;
 
 public class GestionUsuarioController {
 	
 	private VentanaGestionUsuario vista;
-	private GestionUsuarioDAO modelo; public 
-	GestionUsuarioController(VentanaGestionUsuario vista) {
+	private GestionUsuarioDAO modelo; 
+	public GestionUsuarioController(VentanaGestionUsuario vista) {
 
         this.vista = vista;
         this.modelo = new GestionUsuarioDAO();
-
+        
         cargarTabla();
 
         // =========================
@@ -59,10 +56,16 @@ public class GestionUsuarioController {
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);
 
+            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+            frame.setVisible(true);
+
             frame.addWindowListener(new java.awt.event.WindowAdapter() {
 
                 @Override
                 public void windowClosed(java.awt.event.WindowEvent e) {
+
+                    //vista.setInputBuscarValue("");
                     cargarTabla();
                 }
             });
@@ -145,17 +148,19 @@ public class GestionUsuarioController {
             modeloTabla.addColumn("Nivel");
             modeloTabla.addColumn("Activo");
             //modeloTabla.addColumn("Acciones");
+            
 
             for (Trabajador t : lista) {
 
                 modeloTabla.addRow(new Object[] {
 
-                        t.getNombre(),
+                		t.getNombre(),
                         t.getCorreo(),
                         t.getRol(),
-                        t.getPerfil(),
-                        t.getNivel(),
-                        t.getPassword_hash()
+                        t.getPerfil().getNombre(),
+                        t.getNivel().getNombre(),
+                        t.isActivo()
+                        
                         
                         //"Editar | Ver | Del"
                 });
@@ -163,13 +168,7 @@ public class GestionUsuarioController {
 
             vista.getTabla().setModel(modeloTabla);
 
-            // ocultar ID
-            vista.getTabla()
-                    .getColumnModel().getColumn(0).setMinWidth(0);
-            vista.getTabla()
-                    .getColumnModel().getColumn(0).setMaxWidth(0);
-            vista.getTabla()
-                    .getColumnModel().getColumn(0).setWidth(0);
+            
 
         } catch (Exception e) {
             e.printStackTrace();
