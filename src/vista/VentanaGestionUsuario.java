@@ -32,7 +32,6 @@ public class VentanaGestionUsuario extends JPanel {
 	 * Create the panel.
 	 */
 	public VentanaGestionUsuario() {
-		VentanaGestionUsuario vgu = new VentanaGestionUsuario();
 		setBackground(new Color(180, 180, 180));
 		setLayout(null);
 		

@@ -142,6 +142,13 @@ public class VentanaMenuPrincipal extends JFrame {
 		mnuPrincipal.add(mnReportes);
 		
 		JMenu mnUsuariosTrabajadores = new JMenu("Usuarios/Trabajadores");
+		mnUsuariosTrabajadores.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				CardLayout cl = (CardLayout)(panelCardLCarga.getLayout());
+				cl.show(panelCardLCarga,"ventGestionUsuario");
+			}
+		});
 		mnUsuariosTrabajadores.setIcon(new ImageIcon("img/usuariosTrabajadores.png"));
 		mnUsuariosTrabajadores.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 12));
 		mnuPrincipal.add(mnUsuariosTrabajadores);
@@ -176,6 +183,9 @@ public class VentanaMenuPrincipal extends JFrame {
 		
 		VentanaCatalogoDeTareas vCatTareas = new VentanaCatalogoDeTareas();
 		panelCardLCarga.add(vCatTareas, "ventCatTareas");
+		
+		VentanaGestionUsuario venGestUsuario = new VentanaGestionUsuario();
+		panelCardLCarga.add(venGestUsuario, "ventGestionUsuario");
 			
 	}
 	public void nuevoPanel(JPanel panelActual) {//Este metodo no es necesario en este caso, pero lo dejo por si tuvieramos que cambiar por no funcionamiento
