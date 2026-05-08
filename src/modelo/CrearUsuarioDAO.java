@@ -126,5 +126,55 @@ public class CrearUsuarioDAO {
 		}
 		return null;
 	}
+	
+	public Trabajador obtenerTrabajadorPorId(int idTrabajador) {
+
+	    Trabajador t = null;
+
+	    try {
+
+	        Connection conexion = DriverManager.getConnection(
+	                "jdbc:mysql://localhost/time_order",
+	                "root",
+	                "");
+
+	        Statement consulta = conexion.createStatement();
+
+	        ResultSet registro = consulta.executeQuery(
+	                "SELECT * FROM trabajador WHERE id_trabajador = " + idTrabajador);
+
+	        if (registro.next()) {
+
+	            t = new Trabajador();
+
+	            t.setId_trabajador(registro.getInt("id_trabajador"));
+	            t.setNombre(registro.getString("nombre"));
+	            t.setCorreo(registro.getString("correo"));
+	            t.setPassword_hash(registro.getString("password_hash"));
+	            t.setActivo(registro.getBoolean("activo"));
+
+	            Rol_permiso rol = new Rol_permiso();
+	            rol.setId_rol(registro.getInt("id_rol"));
+	            
+	            Perfil_laboral per = new Perfil_laboral();
+	            per.setId_perfil(registro.getInt("id_perfil"));
+
+	            Nivel_experiencia nivel = new Nivel_experiencia();
+	            nivel.setId_nivel(registro.getInt("id_nivel"));
+
+	            t.setRol(rol);
+	            t.setPerfil(per);
+	            t.setNivel(nivel);
+	        }
+
+	        conexion.close();
+
+	    } catch (SQLException e) {
+
+	        e.printStackTrace();
+	    }
+
+	    return t;
+	}
 
 }

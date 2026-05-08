@@ -6,10 +6,19 @@ import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
+
+import modelo.CrearUsuarioDAO;
+import modelo.Nivel_experiencia;
+import modelo.Perfil_laboral;
+import modelo.Rol_permiso;
+import modelo.Trabajador;
+
 import javax.swing.JPasswordField;
 import javax.swing.JComboBox;
 import javax.swing.JCheckBox;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class VentanaCrearUsuario extends JPanel {
 
@@ -120,12 +129,31 @@ public class VentanaCrearUsuario extends JPanel {
 		ActivoTxt.setBounds(246, 133, 43, 20);
 		add(ActivoTxt);
 		
-		JCheckBox chckbxNewCheckBox = new JCheckBox("");
-		chckbxNewCheckBox.setBackground(new Color(180, 180, 180));
-		chckbxNewCheckBox.setBounds(295, 131, 21, 22);
-		add(chckbxNewCheckBox);
+		JCheckBox activoCheckBox = new JCheckBox("");
+		activoCheckBox.setBackground(new Color(180, 180, 180));
+		activoCheckBox.setBounds(295, 131, 21, 22);
+		add(activoCheckBox);
 		
 		JButton GuardarBoton = new JButton("Guardar");
+		GuardarBoton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Trabajador nuevoTrab = new Trabajador();
+				nuevoTrab.setNombre(InputNombre.getText());
+				nuevoTrab.setCorreo(InputCorreo.getText());
+				nuevoTrab.setPassword_hash(new String(InputContrasena.getPassword()));
+				nuevoTrab.setPassword_hash(new String(InputConContrasena.getPassword()));
+				nuevoTrab.setRol((Rol_permiso)InputRol.getSelectedItem());
+				nuevoTrab.setPerfil((Perfil_laboral)InputPerfil.getSelectedItem());
+				nuevoTrab.setNivel((Nivel_experiencia)InputNivel.getSelectedItem());
+				nuevoTrab.setActivo(activoCheckBox.isSelected());
+			}
+			CrearUsuarioDAO cu = new CrearUsuarioDAO();
+			
+			boolean correcto;
+			
+			
+			
+		});
 		GuardarBoton.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
 		GuardarBoton.setBounds(277, 182, 76, 22);
 		add(GuardarBoton);
@@ -136,4 +164,7 @@ public class VentanaCrearUsuario extends JPanel {
 		add(CancelarBoton);
 
 	}
+	
+
+
 }
