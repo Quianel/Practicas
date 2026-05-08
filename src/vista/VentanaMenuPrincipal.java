@@ -12,6 +12,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 
 import controlador.GestionProyectoController;
+import controlador.TareaProyectoController;
 
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
@@ -112,6 +113,15 @@ public class VentanaMenuPrincipal extends JFrame {
 		JMenu mnTareasdelProy = new JMenu("Tareas del proyecto");
 		mnTareasdelProy.setIcon(new ImageIcon("img/tarea.png"));
 		mnTareasdelProy.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 12));
+
+		mnTareasdelProy.addMouseListener(new MouseAdapter() {
+		    @Override
+		    public void mousePressed(MouseEvent e) {
+		        CardLayout cl = (CardLayout)(panelCardLCarga.getLayout());
+		        cl.show(panelCardLCarga, "tareas"); // este es el nombre del panel
+		    }
+		});
+
 		mnuPrincipal.add(mnTareasdelProy);
 		
 		JMenu mnMistareas = new JMenu("Mis tareas");
@@ -184,6 +194,11 @@ public class VentanaMenuPrincipal extends JFrame {
 		VentanaCatalogoDeTareas vCatTareas = new VentanaCatalogoDeTareas();
 		panelCardLCarga.add(vCatTareas, "ventCatTareas");
 		
+		VentanaTareas vt = new VentanaTareas();
+		new TareaProyectoController(vt);
+
+		panelCardLCarga.add(vt, "tareas");
+		
 		VentanaGestionUsuario venGestUsuario = new VentanaGestionUsuario();
 		panelCardLCarga.add(venGestUsuario, "ventGestionUsuario");
 			
@@ -194,6 +209,4 @@ public class VentanaMenuPrincipal extends JFrame {
 		contentPane.repaint();
 		contentPane.revalidate();
 	}
-
-
 }

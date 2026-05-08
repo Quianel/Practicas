@@ -125,6 +125,9 @@ public class Proyecto {//Clase proyecto principal
 		this.estadoproyec = estadoproyec;
 	}
 	
-	
+	@Override
+	public String toString() {
+	    return nombre;
+	}
 	
 }
