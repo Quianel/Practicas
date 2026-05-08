@@ -35,4 +35,60 @@ public class Tarea_proyecto {//Clase tarea principal
 		this.nombre_visible=nombre_visible;
 		this.activa=activa;
 	}
+
+	public int getId_tarea_proyecto() {
+		return id_tarea_proyecto;
+	}
+
+	public void setId_tarea_proyecto(int id_tarea_proyecto) {
+		this.id_tarea_proyecto = id_tarea_proyecto;
+	}
+
+	public Proyecto getProyec() {
+		return proyec;
+	}
+
+	public void setProyec(Proyecto proyec) {
+		this.proyec = proyec;
+	}
+
+	public Catalogo_tareas getCatalog() {
+		return catalog;
+	}
+
+	public void setCatalog(Catalogo_tareas catalog) {
+		this.catalog = catalog;
+	}
+
+	public int getId_tarea_padre() {
+		return id_tarea_padre;
+	}
+
+	public void setId_tarea_padre(int id_tarea_padre) {
+		this.id_tarea_padre = id_tarea_padre;
+	}
+
+	public Estado_tarea getEstadotar() {
+		return estadotar;
+	}
+
+	public void setEstadotar(Estado_tarea estadotar) {
+		this.estadotar = estadotar;
+	}
+
+	public String getNombre_visible() {
+		return nombre_visible;
+	}
+
+	public void setNombre_visible(String nombre_visible) {
+		this.nombre_visible = nombre_visible;
+	}
+
+	public boolean isActiva() {
+		return activa;
+	}
+
+	public void setActiva(boolean activa) {
+		this.activa = activa;
+	}
 }

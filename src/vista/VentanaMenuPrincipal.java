@@ -98,6 +98,13 @@ public class VentanaMenuPrincipal extends JFrame {
 		mnuPrincipal.add(mnProyectos);
 		
 		JMenu mnCatTareas = new JMenu("Catálogo de Tareas");
+		mnCatTareas.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				CardLayout cl = (CardLayout)(panelCardLCarga.getLayout());
+				cl.show(panelCardLCarga, "ventCatTareas");
+			}
+		});
 		mnCatTareas.setIcon(new ImageIcon("img/listaTareas.png"));
 		mnCatTareas.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 12));
 		mnuPrincipal.add(mnCatTareas);
@@ -166,6 +173,9 @@ public class VentanaMenuPrincipal extends JFrame {
 		
 		VentanaControlTiempo vCntTiem = new VentanaControlTiempo();
 		panelCardLCarga.add(vCntTiem,"ventContTiem");
+		
+		VentanaCatalogoDeTareas vCatTareas = new VentanaCatalogoDeTareas();
+		panelCardLCarga.add(vCatTareas, "ventCatTareas");
 			
 	}
 	public void nuevoPanel(JPanel panelActual) {//Este metodo no es necesario en este caso, pero lo dejo por si tuvieramos que cambiar por no funcionamiento
