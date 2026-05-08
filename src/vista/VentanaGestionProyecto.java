@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import javax.swing.JMenu;
 import javax.swing.ImageIcon;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
@@ -44,7 +45,7 @@ public class VentanaGestionProyecto extends JPanel {
         inputBuscar.setColumns(10);
 
         botonLupa = new JButton("");
-        botonLupa.setIcon(new ImageIcon("C:\\Users\\DAM\\Desktop\\lupa2 (1).jpg"));
+        botonLupa.setIcon(new ImageIcon("img/lupa.png"));
         botonLupa.setBounds(161, 26, 19, 20);
         add(botonLupa);
 
@@ -79,6 +80,10 @@ public class VentanaGestionProyecto extends JPanel {
 
     public JTextField getInputBuscar() {
         return inputBuscar;
+    }
+    
+    public String getInputBuscarValue() {
+    	return inputBuscar.getText();
     }
 
     public JButton getBotonLupa() {
