@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class CrearUsuarioDAO {
 
@@ -58,6 +59,72 @@ public class CrearUsuarioDAO {
 		}
 		return correcto;
 
+	}
+	
+	public ArrayList<Rol_permiso> cargarRol(){
+		ArrayList<Rol_permiso> lista = new ArrayList<>();
+		try {
+			Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/time_order", "root", "");
+			Statement consulta = conexion.createStatement();
+			ResultSet registro = consulta.executeQuery("select * from rol_permiso");
+			
+			while(registro.next()) {
+				Rol_permiso rp = new Rol_permiso();
+				rp.setId_rol(registro.getInt("id_rol"));
+				rp.setId_permiso(registro.getInt("id_permiso"));
+				
+				lista.add(rp);
+			}
+			conexion.close();
+			return lista;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public ArrayList<Perfil_laboral> cargarPerfil(){
+		ArrayList<Perfil_laboral> lista = new ArrayList<>();
+		try {
+			Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/time_order", "root", "");
+			Statement consulta = conexion.createStatement();
+			ResultSet registro = consulta.executeQuery("select * from perfil_laboral");
+			
+			while(registro.next()) {
+				Perfil_laboral pl = new Perfil_laboral();
+				pl.setId_perfil(registro.getInt("id_perfil"));
+				pl.setNombre(registro.getString("nombre"));
+				
+				lista.add(pl);
+			}
+			conexion.close();
+			return lista;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public ArrayList<Nivel_experiencia> cargarNivel(){
+		ArrayList<Nivel_experiencia> lista = new ArrayList<>();
+		try {
+			Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/time_order", "root", "");
+			Statement consulta = conexion.createStatement();
+			ResultSet registro = consulta.executeQuery("select * from nivel_experiencia");
+			
+			while(registro.next()) {
+				Nivel_experiencia ne = new Nivel_experiencia();
+				ne.setId_nivel(registro.getInt("id_nivel"));
+				ne.setNombre(registro.getString("nombre"));
+				
+				lista.add(ne);
+			}
+			conexion.close();
+			return lista;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }
