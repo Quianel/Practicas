@@ -6,7 +6,7 @@ public class Trabajador { // Clase trabajador principal
 	private String correo;
 	private String password_hash;
 	private boolean activo;
-	private Rol_permiso rol;// necesitamos este de la tabla rol_permiso por si es administrador o no
+	private Rol_sistema rol;// necesitamos este de la tabla rol_permiso por si es administrador o no
 	private Perfil_laboral perfil;// necesitamos este de la tabla perfil_laboral para saber que proyectos se pueden asignar
 	private Nivel_experiencia nivel;// necesitamos de la tabla nivel_experiencia para saber si cumple con nivel para un proyecto
 									 
@@ -23,7 +23,7 @@ public class Trabajador { // Clase trabajador principal
 	}
 
 	public Trabajador(int id_trabajador, String nombre, String correo, String password_hash, boolean activo,
-			Rol_permiso rol, Perfil_laboral perfil, Nivel_experiencia nivel) {
+			Rol_sistema rol, Perfil_laboral perfil, Nivel_experiencia nivel) {
 
 		this.id_trabajador = id_trabajador;
 		this.nombre = nombre;
@@ -85,11 +85,11 @@ public class Trabajador { // Clase trabajador principal
 		this.activo = activo;
 	}
 
-	public Rol_permiso getRol() {
+	public Rol_sistema getRol() {
 		return rol;
 	}
 
-	public void setRol(Rol_permiso rol) {
+	public void setRol(Rol_sistema rol) {
 		this.rol = rol;
 	}
 

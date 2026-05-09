@@ -11,6 +11,7 @@ import modelo.CrearUsuarioDAO;
 import modelo.Nivel_experiencia;
 import modelo.Perfil_laboral;
 import modelo.Rol_permiso;
+import modelo.Rol_sistema;
 import modelo.Trabajador;
 
 import javax.swing.JPasswordField;
@@ -142,7 +143,7 @@ public class VentanaCrearUsuario extends JPanel {
 				nuevoTrab.setCorreo(InputCorreo.getText());
 				nuevoTrab.setPassword_hash(new String(InputContrasena.getPassword()));
 				nuevoTrab.setPassword_hash(new String(InputConContrasena.getPassword()));
-				nuevoTrab.setRol((Rol_permiso)InputRol.getSelectedItem());
+				nuevoTrab.setRol((Rol_sistema)InputRol.getSelectedItem());
 				nuevoTrab.setPerfil((Perfil_laboral)InputPerfil.getSelectedItem());
 				nuevoTrab.setNivel((Nivel_experiencia)InputNivel.getSelectedItem());
 				nuevoTrab.setActivo(activoCheckBox.isSelected());

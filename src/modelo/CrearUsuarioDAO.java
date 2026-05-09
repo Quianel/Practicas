@@ -32,7 +32,7 @@ public class CrearUsuarioDAO {
 	}
 
 	public boolean modificarUsuario(int id_trabajador, String nombre, String correo, String password_hash,
-			Rol_permiso rol, Perfil_laboral perfil, Nivel_experiencia nivel, boolean activo) {
+			Rol_sistema rol, Perfil_laboral perfil, Nivel_experiencia nivel, boolean activo) {
 		boolean correcto = true;
 
 		try {
@@ -61,19 +61,19 @@ public class CrearUsuarioDAO {
 
 	}
 	
-	public ArrayList<Rol_permiso> cargarRol(){
-		ArrayList<Rol_permiso> lista = new ArrayList<>();
+	public ArrayList<Rol_sistema> cargarRol(){
+		ArrayList<Rol_sistema> lista = new ArrayList<>();
 		try {
 			Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/time_order", "root", "");
 			Statement consulta = conexion.createStatement();
-			ResultSet registro = consulta.executeQuery("select * from rol_permiso");
+			ResultSet registro = consulta.executeQuery("select * from rol_sistema");
 			
 			while(registro.next()) {
-				Rol_permiso rp = new Rol_permiso();
-				rp.setId_rol(registro.getInt("id_rol"));
-				rp.setId_permiso(registro.getInt("id_permiso"));
+				Rol_sistema rs = new Rol_sistema();
+				rs.setId_rol(registro.getInt("id_rol"));
+				rs.setNombre(registro.getString("nombre"));
 				
-				lista.add(rp);
+				lista.add(rs);
 			}
 			conexion.close();
 			return lista;
@@ -153,7 +153,7 @@ public class CrearUsuarioDAO {
 	            t.setPassword_hash(registro.getString("password_hash"));
 	            t.setActivo(registro.getBoolean("activo"));
 
-	            Rol_permiso rol = new Rol_permiso();
+	            Rol_sistema rol = new Rol_sistema();
 	            rol.setId_rol(registro.getInt("id_rol"));
 	            
 	            Perfil_laboral per = new Perfil_laboral();
