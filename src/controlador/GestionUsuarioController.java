@@ -16,6 +16,7 @@ public class GestionUsuarioController {
 	private VentanaGestionUsuario vista;
 	private GestionUsuarioDAO modelo; 
 	public GestionUsuarioController(VentanaGestionUsuario vista) {
+		
 
         this.vista = vista;
         this.modelo = new GestionUsuarioDAO();
@@ -132,6 +133,7 @@ public class GestionUsuarioController {
         try {
 
             ArrayList<Trabajador> lista = modelo.traerTodos();
+            
 
             DefaultTableModel modeloTabla = new DefaultTableModel() {
 
@@ -156,7 +158,7 @@ public class GestionUsuarioController {
 
                 		t.getNombre(),
                         t.getCorreo(),
-                        t.getRol(),
+                        t.getRol().getNombre(),
                         t.getPerfil().getNombre(),
                         t.getNivel().getNombre(),
                         t.isActivo()
@@ -167,6 +169,9 @@ public class GestionUsuarioController {
             }
 
             vista.getTabla().setModel(modeloTabla);
+            vista.getTabla().revalidate();
+            vista.getTabla().repaint();
+            vista.getParent().revalidate();
 
             
 

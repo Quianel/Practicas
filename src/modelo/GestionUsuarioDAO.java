@@ -33,9 +33,9 @@ public class GestionUsuarioDAO {
             			rs.getInt("id_nivel"),
             			rs.getString("nombre_nivel")
             			);
-            	Rol_permiso rp = new Rol_permiso(
+            	Rol_sistema rp = new Rol_sistema(
             			rs.getInt("id_rol"),
-            			rs.getInt("id_permiso")
+            			rs.getString("nombre_rol")
             			);
             	Trabajador t = new Trabajador(
             			rs.getInt("id_trabajador"),
@@ -49,8 +49,10 @@ public class GestionUsuarioDAO {
             			);
             	listaTrabajadores.add(t);       
             }
+           
 
         } catch (Exception e) {
+        	e.printStackTrace();
 
             throw new Exception("Error al obtener trabajadores: " + e.getMessage());
         }
