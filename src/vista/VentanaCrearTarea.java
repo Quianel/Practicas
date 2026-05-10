@@ -9,14 +9,20 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import com.toedter.calendar.JDateChooser;
+
+import modelo.Proyecto;
+import modelo.Tarea_proyecto;
+
 import javax.swing.JCheckBox;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class VentanaCrearTarea extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private JTextField textField;
 	private JTextField textField_1;
+	private JComboBox cmbProyecto;
 
 	/**
 	 * Create the panel.
@@ -45,12 +51,14 @@ public class VentanaCrearTarea extends JPanel {
 		inputTipo.setBounds(137, 75, 143, 22);
 		add(inputTipo);
 		
-		textField = new JTextField();
-		textField.setColumns(10);
-		textField.setBounds(137, 44, 143, 20);
-		add(textField);
-		
 		JButton GuardarBoton = new JButton("Guardar");
+		GuardarBoton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				Tarea_proyecto nuevaTarea = new Tarea_proyecto();
+				nuevaTarea.setProyec((Proyecto)(cmbProyecto.getSelectedItem()));
+			}
+		});
 		GuardarBoton.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
 		GuardarBoton.setBounds(170, 243, 75, 22);
 		add(GuardarBoton);
@@ -91,6 +99,10 @@ public class VentanaCrearTarea extends JPanel {
 		textField_1.setColumns(10);
 		textField_1.setBounds(137, 174, 143, 20);
 		add(textField_1);
+		
+		cmbProyecto = new JComboBox();
+		cmbProyecto.setBounds(137, 44, 143, 22);
+		add(cmbProyecto);
 		
 	}
 }
