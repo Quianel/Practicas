@@ -12,7 +12,7 @@ public class GestionUsuarioDAO {
 
         ArrayList<Trabajador> listaTrabajadores = new ArrayList<>();
 
-        String sql = "SELECT tra.id_trabajador, tra.nombre AS nombre_tra, tra.correo, tra.password_hash, tra.activo, rl.id_rol, rl.id_permiso,  " +
+        String sql = "SELECT tra.id_trabajador, tra.nombre AS nombre_tra, tra.correo, tra.password_hash, tra.activo, rl.id_rol,  " +
         	    "rl.nombre AS nombre_rol, prl.id_perfil, prl.nombre AS nombre_perfil, n.id_nivel, n.nombre AS nombre_nivel " +
         	    "FROM trabajador tra, perfil_laboral prl, nivel_experiencia n, rol_sistema rl " +
         	    "where tra.id_rol=rl.id_rol " +
@@ -21,7 +21,7 @@ public class GestionUsuarioDAO {
 
         try (Connection con = ConexionBD.getConexion();
              PreparedStatement ps = con.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+             ResultSet rs = ps.executeQuery()) {	
 
             while (rs.next()) {
             	

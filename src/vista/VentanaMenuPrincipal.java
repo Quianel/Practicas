@@ -12,6 +12,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 
 import controlador.GestionProyectoController;
+import controlador.GestionUsuarioController;
 import controlador.TareaProyectoController;
 
 import javax.swing.JMenuBar;
@@ -200,6 +201,8 @@ public class VentanaMenuPrincipal extends JFrame {
 		panelCardLCarga.add(vt, "tareas");
 		
 		VentanaGestionUsuario venGestUsuario = new VentanaGestionUsuario();
+		new GestionUsuarioController(venGestUsuario);
+
 		panelCardLCarga.add(venGestUsuario, "ventGestionUsuario");
 			
 	}
