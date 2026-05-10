@@ -8,14 +8,23 @@ import javax.swing.JTextPane;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+
 import com.toedter.calendar.JDateChooser;
 
+import modelo.Catalogo_tareas;
+import modelo.CrearProyectoDAO;
+import modelo.CrearTareaDAO;
+import modelo.Estado_proyecto;
+import modelo.Estado_tarea;
 import modelo.Proyecto;
 import modelo.Tarea_proyecto;
+import modelo.Tipo_proyecto;
 
 import javax.swing.JCheckBox;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 public class VentanaCrearTarea extends JPanel {
@@ -23,6 +32,9 @@ public class VentanaCrearTarea extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JTextField textField_1;
 	private JComboBox cmbProyecto;
+	private JComboBox inputTipo;
+	private JComboBox inputTareasPadre;
+	private JComboBox inputEstadoTarea;
 
 	/**
 	 * Create the panel.
@@ -47,7 +59,7 @@ public class VentanaCrearTarea extends JPanel {
 		txtpnTipoDeTarea.setBounds(33, 77, 96, 20);
 		add(txtpnTipoDeTarea);
 		
-		JComboBox inputTipo = new JComboBox();
+		inputTipo = new JComboBox();
 		inputTipo.setBounds(137, 75, 143, 22);
 		add(inputTipo);
 		
@@ -57,6 +69,42 @@ public class VentanaCrearTarea extends JPanel {
 				
 				Tarea_proyecto nuevaTarea = new Tarea_proyecto();
 				nuevaTarea.setProyec((Proyecto)(cmbProyecto.getSelectedItem()));
+				nuevaTarea.setCatalog((Catalogo_tareas)(inputTipo.getSelectedItem()));
+				nuevaTarea.setId_tarea_padre(inputTareasPadre.getSelectedIndex());//duda aqui
+				nuevaTarea.setEstadotar((Estado_tarea)(inputEstadoTarea.getSelectedItem()));
+				nuevaTarea.setNombre_visible(textField_1.getText());
+				
+				CrearTareaDAO dao = new CrearTareaDAO();
+				boolean exito;
+				
+				exito = dao.insertarTarea(nuevaTarea);
+				cmbProyecto.setSelectedIndex(-1);
+				inputTipo.setSelectedIndex(-1);
+				inputTareasPadre.setSelectedIndex(-1);
+				inputEstadoTarea.setSelectedIndex(-1);
+				textField_1.setText("");
+				
+				  if(exito) {
+
+			            JOptionPane.showMessageDialog(
+			                    null,
+			                    "Tarea guardada correctamente",
+			                    "EXITO",
+			                    JOptionPane.INFORMATION_MESSAGE);
+
+			        } else {
+
+			            JOptionPane.showMessageDialog(
+			                    null,
+			                    "Error al guardar tarea",
+			                    "ERROR",
+			                    JOptionPane.ERROR_MESSAGE);
+			        }
+				
+				
+				
+			
+				
 			}
 		});
 		GuardarBoton.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
@@ -71,7 +119,7 @@ public class VentanaCrearTarea extends JPanel {
 		txtpnTareaPadre.setBounds(33, 108, 96, 20);
 		add(txtpnTareaPadre);
 		
-		JComboBox inputTareasPadre = new JComboBox();
+		inputTareasPadre = new JComboBox();
 		inputTareasPadre.setBounds(137, 108, 143, 22);
 		add(inputTareasPadre);
 		
@@ -83,7 +131,7 @@ public class VentanaCrearTarea extends JPanel {
 		txtpnEstado.setBounds(33, 139, 96, 20);
 		add(txtpnEstado);
 		
-		JComboBox inputEstadoTarea = new JComboBox();
+		inputEstadoTarea = new JComboBox();
 		inputEstadoTarea.setBounds(137, 141, 143, 22);
 		add(inputEstadoTarea);
 		
@@ -104,5 +152,48 @@ public class VentanaCrearTarea extends JPanel {
 		cmbProyecto.setBounds(137, 44, 143, 22);
 		add(cmbProyecto);
 		
+	}
+	
+	public void cargarCombos() {
+		CrearTareaDAO ct = new CrearTareaDAO();
+		ArrayList<Proyecto> listaProyectos = ct.cargarProyectos();
+		ArrayList<Catalogo_tareas> listatipoTarea = ct.cargarTipoTarea();
+		ArrayList<Estado_tarea> listaEstado = ct.cargarEstadoTar();
+		ArrayList<Tarea_proyecto> listaTareaproy= ct.cargarTareaPadre();
+		
+		if(listaProyectos != null) {
+			for(Proyecto p : listaProyectos) {
+				cmbProyecto.addItem(p);
+			}
+		}else {
+			JOptionPane.showMessageDialog(null, "No se ha podido cargar el tipo de proyecto", "ERROR DE CARGA",
+					JOptionPane.ERROR_MESSAGE);
+		}
+		if(listatipoTarea != null) {
+			for(Catalogo_tareas t : listatipoTarea) {
+				inputTipo.addItem(t);
+			}
+		}else {
+			JOptionPane.showMessageDialog(null, "No se ha podido cargar el estado de proyecto", "ERROR DE CARGA",
+					JOptionPane.ERROR_MESSAGE);
+		}	
+		
+		if(listaEstado != null) {
+			for(Estado_tarea e : listaEstado) {
+				cmbProyecto.addItem(e);
+			}
+		}else {
+			JOptionPane.showMessageDialog(null, "No se ha podido cargar el tipo de proyecto", "ERROR DE CARGA",
+					JOptionPane.ERROR_MESSAGE);
+		}
+		
+		if(listaTareaproy != null) {
+			for(Tarea_proyecto tp : listaTareaproy) {
+				cmbProyecto.addItem(tp);
+			}
+		}else {
+			JOptionPane.showMessageDialog(null, "No se ha podido cargar el tipo de proyecto", "ERROR DE CARGA",
+					JOptionPane.ERROR_MESSAGE);
+		}
 	}
 }

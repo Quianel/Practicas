@@ -66,18 +66,25 @@ public class CrearTareaDAO {
 		
 	}
 	
-	public ArrayList<Tipo_proyecto> cargarTipoProyec(){
-		ArrayList<Tipo_proyecto> lista = new ArrayList<>();
+	public ArrayList<Catalogo_tareas> cargarTipoTarea(){
+		ArrayList<Catalogo_tareas> lista = new ArrayList<>();
 		
 		try {
 			Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/time_order", "root", "");
 			Statement consulta = conexion.createStatement();
-			ResultSet registro = consulta.executeQuery("select * from tipo_proyecto");
+			ResultSet registro = consulta.executeQuery("select * from catalogo_tareas");
 			
 			while(registro.next()) {
-				Tipo_proyecto tipo = new Tipo_proyecto();
-				tipo.setId_tipo_proyecto(registro.getInt("id_tipo_proyecto"));
+				Catalogo_tareas tipo = new Catalogo_tareas();
+				tipo.setId_tarea_catalogo(registro.getInt("id_tarea_catalogo"));
 				tipo.setNombre(registro.getString("nombre"));
+				tipo.setSoloSenior(registro.getBoolean("solo_senior"));
+				Tarea_proyecto tp = new Tarea_proyecto();
+				tp.setId_tarea_proyecto(registro.getInt("id_tarea_proyecto"));
+				tipo.setTareaProyecto(tp);
+				Proyecto p = new Proyecto();
+				p.setId_proyecto(registro.getInt("id_proyecto"));
+				tipo.setProyecto(p);
 				
 				lista.add(tipo);
 			}
