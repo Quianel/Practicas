@@ -58,13 +58,13 @@ public class VentanaTareas extends JPanel {
         add(scrollAsignados);
 
         JTextPane txtpnTrabajadores = new JTextPane();
-        txtpnTrabajadores.setText("Trabajadores Asignados al Proyecto");
+        txtpnTrabajadores.setText("Trabajadores asignados al Proyecto");
         txtpnTrabajadores.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
         txtpnTrabajadores.setBounds(577, 66, 193, 20);
         add(txtpnTrabajadores);
 
         JTextPane txtpnTrabajadoresSinAsignar = new JTextPane();
-        txtpnTrabajadoresSinAsignar.setText("Trabajadores sin asignar Proyectos");
+        txtpnTrabajadoresSinAsignar.setText("Trabajadores sin asignar al proyecto");
         txtpnTrabajadoresSinAsignar.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
         txtpnTrabajadoresSinAsignar.setBounds(577, 231, 193, 20);
         add(txtpnTrabajadoresSinAsignar);
