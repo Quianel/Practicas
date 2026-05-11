@@ -4,6 +4,8 @@ import javax.swing.JPanel;
 
 
 import java.awt.Color;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 import javax.swing.JTextField;
@@ -19,8 +21,9 @@ import javax.swing.JScrollPane;
 public class VentanaGestionUsuario extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private JTextField textField;
+	private JTextField inputBuscar;
 	private JButton CrearUsuarioBoton;
+	 private JButton botonLupa;
 	private JTable table;
 
 
@@ -36,15 +39,16 @@ public class VentanaGestionUsuario extends JPanel {
 		CrearUsuarioBoton.setBounds(10, 27, 116, 23);
 		add(CrearUsuarioBoton);
 		
-		textField = new JTextField();
-		textField.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
-		textField.setBounds(245, 29, 116, 20);
-		add(textField);
-		textField.setColumns(10);
+		inputBuscar = new JTextField();
+		inputBuscar.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
+		inputBuscar.setBounds(245, 29, 116, 20);
+		add(inputBuscar);
+		inputBuscar.setColumns(10);
 		
-		JButton btnNewButton = new JButton("New button");
-		btnNewButton.setBounds(359, 27, 41, 23);
-		add(btnNewButton);
+	    botonLupa = new JButton("");
+	    botonLupa.setIcon(new ImageIcon("img/lupa.png"));
+	    botonLupa.setBounds(359, 27, 41, 23);
+		add(botonLupa);
 		
 		table  = new JTable() {
 
@@ -64,5 +68,14 @@ public class VentanaGestionUsuario extends JPanel {
 	    }
 	 public JButton getBoton() {
 	        return CrearUsuarioBoton;
+	    }
+	 public JButton getBotonLupa() {
+	        return botonLupa;
+	    }
+	 public void setInputBuscarValue(String inputBuscarText) {
+		 inputBuscar.setText(inputBuscarText);
+	    }
+	 public String getInputBuscarValue() {
+	    	return inputBuscar.getText();
 	    }
 }

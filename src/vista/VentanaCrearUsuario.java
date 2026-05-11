@@ -10,6 +10,7 @@ import javax.swing.UIManager;
 import modelo.CrearUsuarioDAO;
 import modelo.Nivel_experiencia;
 import modelo.Perfil_laboral;
+import modelo.Proyecto;
 import modelo.Rol_permiso;
 import modelo.Rol_sistema;
 import modelo.Trabajador;
@@ -28,6 +29,11 @@ public class VentanaCrearUsuario extends JPanel {
 	private JTextField InputCorreo;
 	private JPasswordField InputContrasena;
 	private JPasswordField InputConContrasena;
+	private JComboBox InputRol;
+	private JComboBox InputNivel;
+	private JComboBox InputPerfil;
+	private JCheckBox activoCheckBox;
+	private Trabajador trabajadorEditando = null;
 
 	/**
 	 * Create the panel.
@@ -94,7 +100,7 @@ public class VentanaCrearUsuario extends JPanel {
 		RolTxt.setBounds(246, 40, 32, 20);
 		add(RolTxt);
 		
-		JComboBox InputRol = new JComboBox();
+		InputRol = new JComboBox();
 		InputRol.setBounds(344, 40, 96, 22);
 		add(InputRol);
 		
@@ -106,7 +112,7 @@ public class VentanaCrearUsuario extends JPanel {
 		txtpnPerfilLaboral.setBounds(246, 69, 76, 20);
 		add(txtpnPerfilLaboral);
 		
-		JComboBox InputPerfil = new JComboBox();
+		InputPerfil = new JComboBox();
 		InputPerfil.setBounds(344, 69, 96, 22);
 		add(InputPerfil);
 		
@@ -118,7 +124,7 @@ public class VentanaCrearUsuario extends JPanel {
 		NivelTxt.setBounds(246, 100, 96, 20);
 		add(NivelTxt);
 		
-		JComboBox InputNivel = new JComboBox();
+		InputNivel = new JComboBox();
 		InputNivel.setBounds(344, 98, 96, 22);
 		add(InputNivel);
 		
@@ -130,7 +136,7 @@ public class VentanaCrearUsuario extends JPanel {
 		ActivoTxt.setBounds(246, 133, 43, 20);
 		add(ActivoTxt);
 		
-		JCheckBox activoCheckBox = new JCheckBox("");
+		activoCheckBox = new JCheckBox("");
 		activoCheckBox.setBackground(new Color(180, 180, 180));
 		activoCheckBox.setBounds(295, 131, 21, 22);
 		add(activoCheckBox);
@@ -164,6 +170,20 @@ public class VentanaCrearUsuario extends JPanel {
 		CancelarBoton.setBounds(363, 182, 76, 22);
 		add(CancelarBoton);
 
+	}
+	public void mostrarCargaTrabajador(Trabajador t) {
+
+	    this.trabajadorEditando = t;
+
+	    if(t != null) {
+
+	        InputNombre.setText(t.getNombre());
+	        InputCorreo.setText(t.getCorreo());
+	        activoCheckBox.setSelected(t.isActivo());
+	        InputRol.setSelectedItem(t.getRol().getNombre());
+	        InputPerfil.setSelectedItem(t.getPerfil().getNombre());
+	        InputNivel.setSelectedItem(t.getNivel().getNombre());
+	    }
 	}
 	
 

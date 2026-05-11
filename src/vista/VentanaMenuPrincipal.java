@@ -204,6 +204,10 @@ public class VentanaMenuPrincipal extends JFrame {
 		new GestionUsuarioController(venGestUsuario);
 
 		panelCardLCarga.add(venGestUsuario, "ventGestionUsuario");
+		
+		VentanaCrearUsuario venCrearUsu = new VentanaCrearUsuario();
+		
+		panelCardLCarga.add(venCrearUsu, "ventCrearUsuario");
 			
 	}
 	public void nuevoPanel(JPanel panelActual) {//Este metodo no es necesario en este caso, pero lo dejo por si tuvieramos que cambiar por no funcionamiento
