@@ -190,21 +190,5 @@ public class CrearUsuarioDAO {
 	    return t;
 	}
 	
-	public Trabajador validarLogin(String correo,String contraseniaIntrod) {
-		Connection conexion = null;
-		Trabajador t = null;
-		String query = "select * from trabajador where correo = ?";
-		
-		try {
-			conexion = DriverManager.getConnection("jdbc:mysql://localhost/time_order","root","");
-			PreparedStatement consulta = conexion.prepareStatement(query);
-			
-			consulta.setString(1, correo);
-			ResultSet registro = consulta.executeQuery();
-		} catch (SQLException e) {
-			
-			e.printStackTrace();
-		}
-	}
 
 }

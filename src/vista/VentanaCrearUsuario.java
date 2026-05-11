@@ -17,6 +17,7 @@ import modelo.Trabajador;
 
 import javax.swing.JPasswordField;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JCheckBox;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -41,8 +42,7 @@ public class VentanaCrearUsuario extends JPanel {
 	public VentanaCrearUsuario() {
 		setBackground(new Color(180, 180, 180));
 		setLayout(null);
-		
-		
+
 		JTextPane NombreTxt = new JTextPane();
 		NombreTxt.setText("Nombre:");
 		NombreTxt.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
@@ -50,12 +50,12 @@ public class VentanaCrearUsuario extends JPanel {
 		NombreTxt.setBackground(new Color(180, 180, 180));
 		NombreTxt.setBounds(46, 40, 52, 20);
 		add(NombreTxt);
-		
+
 		InputNombre = new JTextField();
 		InputNombre.setBounds(119, 40, 96, 20);
 		add(InputNombre);
 		InputNombre.setColumns(10);
-		
+
 		JTextPane CorreoTxt = new JTextPane();
 		CorreoTxt.setText("Correo:");
 		CorreoTxt.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
@@ -63,12 +63,12 @@ public class VentanaCrearUsuario extends JPanel {
 		CorreoTxt.setBackground(UIManager.getColor("InternalFrame.activeBorderColor"));
 		CorreoTxt.setBounds(46, 69, 52, 20);
 		add(CorreoTxt);
-		
+
 		InputCorreo = new JTextField();
 		InputCorreo.setBounds(119, 69, 96, 20);
 		add(InputCorreo);
 		InputCorreo.setColumns(10);
-		
+
 		JTextPane ContrasenaTxt = new JTextPane();
 		ContrasenaTxt.setText("Contraseña:");
 		ContrasenaTxt.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
@@ -76,11 +76,11 @@ public class VentanaCrearUsuario extends JPanel {
 		ContrasenaTxt.setBackground(UIManager.getColor("InternalFrame.activeBorderColor"));
 		ContrasenaTxt.setBounds(46, 100, 68, 20);
 		add(ContrasenaTxt);
-		
+
 		InputContrasena = new JPasswordField();
 		InputContrasena.setBounds(119, 100, 96, 20);
 		add(InputContrasena);
-		
+
 		JTextPane ConContrasenaTxt = new JTextPane();
 		ConContrasenaTxt.setText("Confirmar\t\t\r\nContraseña:\r\n");
 		ConContrasenaTxt.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
@@ -88,11 +88,11 @@ public class VentanaCrearUsuario extends JPanel {
 		ConContrasenaTxt.setBackground(UIManager.getColor("InternalFrame.activeBorderColor"));
 		ConContrasenaTxt.setBounds(46, 133, 68, 37);
 		add(ConContrasenaTxt);
-		
+
 		InputConContrasena = new JPasswordField();
 		InputConContrasena.setBounds(119, 150, 96, 20);
 		add(InputConContrasena);
-		
+
 		JTextPane RolTxt = new JTextPane();
 		RolTxt.setText("Rol:");
 		RolTxt.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
@@ -100,11 +100,11 @@ public class VentanaCrearUsuario extends JPanel {
 		RolTxt.setBackground(UIManager.getColor("InternalFrame.activeBorderColor"));
 		RolTxt.setBounds(246, 40, 32, 20);
 		add(RolTxt);
-		
+
 		InputRol = new JComboBox();
 		InputRol.setBounds(344, 40, 96, 22);
 		add(InputRol);
-		
+
 		JTextPane txtpnPerfilLaboral = new JTextPane();
 		txtpnPerfilLaboral.setText("Perfil Laboral:");
 		txtpnPerfilLaboral.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
@@ -112,11 +112,11 @@ public class VentanaCrearUsuario extends JPanel {
 		txtpnPerfilLaboral.setBackground(UIManager.getColor("InternalFrame.activeBorderColor"));
 		txtpnPerfilLaboral.setBounds(246, 69, 76, 20);
 		add(txtpnPerfilLaboral);
-		
+
 		InputPerfil = new JComboBox();
 		InputPerfil.setBounds(344, 69, 96, 22);
 		add(InputPerfil);
-		
+
 		JTextPane NivelTxt = new JTextPane();
 		NivelTxt.setText("Nivel Experiencia:");
 		NivelTxt.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
@@ -124,11 +124,11 @@ public class VentanaCrearUsuario extends JPanel {
 		NivelTxt.setBackground(UIManager.getColor("InternalFrame.activeBorderColor"));
 		NivelTxt.setBounds(246, 100, 96, 20);
 		add(NivelTxt);
-		
+
 		InputNivel = new JComboBox();
 		InputNivel.setBounds(344, 98, 96, 22);
 		add(InputNivel);
-		
+
 		JTextPane ActivoTxt = new JTextPane();
 		ActivoTxt.setText("Activo");
 		ActivoTxt.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
@@ -136,57 +136,96 @@ public class VentanaCrearUsuario extends JPanel {
 		ActivoTxt.setBackground(UIManager.getColor("InternalFrame.activeBorderColor"));
 		ActivoTxt.setBounds(246, 133, 43, 20);
 		add(ActivoTxt);
-		
+
 		activoCheckBox = new JCheckBox("");
 		activoCheckBox.setBackground(new Color(180, 180, 180));
 		activoCheckBox.setBounds(295, 131, 21, 22);
 		add(activoCheckBox);
-		
+
 		JButton GuardarBoton = new JButton("Guardar");
 		GuardarBoton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Trabajador nuevoTrab = new Trabajador();
-				nuevoTrab.setNombre(InputNombre.getText());
-				nuevoTrab.setCorreo(InputCorreo.getText());
-				nuevoTrab.setPassword_hash(new String(InputContrasena.getPassword()));
-				nuevoTrab.setPassword_hash(new String(InputConContrasena.getPassword()));
-				nuevoTrab.setRol((Rol_sistema)InputRol.getSelectedItem());
-				nuevoTrab.setPerfil((Perfil_laboral)InputPerfil.getSelectedItem());
-				nuevoTrab.setNivel((Nivel_experiencia)InputNivel.getSelectedItem());
-				nuevoTrab.setActivo(activoCheckBox.isSelected());
+
+				if (InputNombre.getText().trim().isEmpty() || InputCorreo.getText().trim().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "El nombre y el correo son obligatorios", "ADVERTENCIA",
+							JOptionPane.WARNING_MESSAGE);
+				} else {
+					String pass = new String(InputContrasena.getPassword());
+					String passConfirm = new String(InputConContrasena.getPassword());
+
+					if (pass.isEmpty()) {
+						JOptionPane.showMessageDialog(null, "La contraseña no puede estar vacia", "ADVERTENCIA",
+								JOptionPane.WARNING_MESSAGE);
+					} else {
+						if (!pass.equals(passConfirm)) {
+							JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden", "ERROR",
+									JOptionPane.ERROR_MESSAGE);
+						} else {
+							Trabajador nuevoTrab = new Trabajador();
+							nuevoTrab.setNombre(InputNombre.getText().trim());
+							nuevoTrab.setCorreo(InputCorreo.getText().trim());
+							nuevoTrab.setPassword_hash(pass);
+							nuevoTrab.setRol((Rol_sistema) InputRol.getSelectedItem());
+							nuevoTrab.setPerfil((Perfil_laboral) InputPerfil.getSelectedItem());
+							nuevoTrab.setNivel((Nivel_experiencia) InputNivel.getSelectedItem());
+							nuevoTrab.setActivo(activoCheckBox.isSelected());
+
+							CrearUsuarioDAO cu = new CrearUsuarioDAO();
+							boolean correcto = cu.CrearUsuario(nuevoTrab);
+
+							if (correcto) {
+								JOptionPane.showMessageDialog(null, "Usuario registrado correctamente", "EXITO",
+										JOptionPane.INFORMATION_MESSAGE);
+								InputNombre.setText("");
+								InputCorreo.setText("");
+								InputContrasena.setText("");
+								InputConContrasena.setText("");
+								activoCheckBox.setSelected(false);
+								if(InputRol.getItemCount()>0) {
+									InputRol.setSelectedIndex(0);
+								}
+								if(InputPerfil.getItemCount()>0) {
+									InputPerfil.setSelectedIndex(0);
+								}
+								if(InputNivel.getItemCount()>0){
+									InputNivel.setSelectedIndex(0);
+								}
+								trabajadorEditando = null;
+							} else {
+								JOptionPane.showMessageDialog(null, "No se pudo registrar al usuario", "ERROR",
+										JOptionPane.ERROR_MESSAGE);
+							}
+
+						}
+					}
+				}
+
 			}
-			CrearUsuarioDAO cu = new CrearUsuarioDAO();
-			
-			boolean correcto;
-			
-			
-			
 		});
 		GuardarBoton.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
 		GuardarBoton.setBounds(277, 182, 76, 22);
 		add(GuardarBoton);
-		
+
 		JButton CancelarBoton = new JButton("Cancelar");
 		CancelarBoton.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
 		CancelarBoton.setBounds(363, 182, 76, 22);
 		add(CancelarBoton);
 
 	}
+
 	public void mostrarCargaTrabajador(Trabajador t) {
 
-	    this.trabajadorEditando = t;
+		this.trabajadorEditando = t;
 
-	    if(t != null) {
+		if (t != null) {
 
-	        InputNombre.setText(t.getNombre());
-	        InputCorreo.setText(t.getCorreo());
-	        activoCheckBox.setSelected(t.isActivo());
-	        InputRol.setSelectedItem(t.getRol().getNombre());
-	        InputPerfil.setSelectedItem(t.getPerfil().getNombre());
-	        InputNivel.setSelectedItem(t.getNivel().getNombre());
-	    }
+			InputNombre.setText(t.getNombre());
+			InputCorreo.setText(t.getCorreo());
+			activoCheckBox.setSelected(t.isActivo());
+			InputRol.setSelectedItem(t.getRol().getNombre());
+			InputPerfil.setSelectedItem(t.getPerfil().getNombre());
+			InputNivel.setSelectedItem(t.getNivel().getNombre());
+		}
 	}
-	
-
 
 }

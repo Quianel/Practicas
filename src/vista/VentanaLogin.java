@@ -2,8 +2,13 @@ package vista;
 
 import java.awt.EventQueue;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import modelo.CrearUsuarioDAO;
+import modelo.UsuarioDAO;
+
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JTextPane;
@@ -83,6 +88,32 @@ public class VentanaLogin extends JFrame {
         botonIS = new JButton("Iniciar Sesión");
         botonIS.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
+        		
+        		String correo = inputCorreo.getText().trim();
+        		String contrasenia = new String(InputContrasena.getPassword());
+        		
+        		if(correo.isEmpty() || contrasenia.isEmpty()) {
+        			JOptionPane.showMessageDialog(null, "Por favor rellene los campos","ADVERTENCIA",JOptionPane.WARNING_MESSAGE);
+        			
+        		}else {
+        			UsuarioDAO dao = new UsuarioDAO();
+        			
+        			try {
+						boolean correcto = dao.validarUsuario(correo, contrasenia);
+						
+						if(correcto) {
+							JOptionPane.showMessageDialog(null, "Bienvenido al sistema", "CORRECTO",JOptionPane.INFORMATION_MESSAGE);
+							
+							//dispose();
+						}else {
+							JOptionPane.showMessageDialog(null, "Correo o contraseña incorrectos","ERROR",JOptionPane.ERROR_MESSAGE);
+						}
+					} catch (Exception e1) {
+						
+						JOptionPane.showMessageDialog(null, "Error del sistema","ERROR",JOptionPane.ERROR_MESSAGE);
+					}
+        			
+        		}
         	}
         });
         botonIS.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
