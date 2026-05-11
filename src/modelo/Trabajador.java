@@ -109,5 +109,9 @@ public class Trabajador { // Clase trabajador principal
 		this.nivel = nivel;
 	}
 	
+	@Override
+	public String toString() {
+	    return nombre;
+	}
 	
 }

@@ -99,7 +99,7 @@ public class TareasYAsignacionesDAO {
         return lista;
     }
     
-    public ArrayList<Trabajador> obtenerTrabajadoresPorProyecto(int idProyecto) throws Exception {
+    /* public ArrayList<Trabajador> obtenerTrabajadoresPorProyecto(int idProyecto) throws Exception {
 
         ArrayList<Trabajador> lista = new ArrayList<>();
 
@@ -148,7 +148,7 @@ public class TareasYAsignacionesDAO {
         }
 
         return lista;
-    }
+    }*/
     public ArrayList<Trabajador> obtenerTrabajadoresSinAsignar(int idProyecto) throws Exception {
 
         ArrayList<Trabajador> lista = new ArrayList<>();
@@ -160,7 +160,8 @@ public class TareasYAsignacionesDAO {
 
             "FROM trabajador tr " +
 
-            "WHERE tr.id_trabajador NOT IN ( " +
+            "WHERE tr.activo = 1 " +
+            "AND tr.id_trabajador NOT IN ( " +
 
                 "SELECT at.id_trabajador " +
 
@@ -205,5 +206,107 @@ public class TareasYAsignacionesDAO {
         }
 
         return lista;
+    }
+    public void quitarAsignacion(int idTareaProyecto, int idTrabajador) throws Exception {
+
+        String sql =
+            "UPDATE asignacion_tarea " +
+            "SET activa = 0, " +
+            "fecha_fin_asignacion = CURDATE(), " +
+            "motivo_fin = 'Desasignado manualmente' " +
+            "WHERE id_tarea_proyecto = ? " +
+            "AND id_trabajador = ? " +
+            "AND activa = 1";
+
+        try (
+            Connection con = ConexionBD.getConexion();
+            PreparedStatement ps = con.prepareStatement(sql)
+        ) {
+
+            ps.setInt(1, idTareaProyecto);
+            ps.setInt(2, idTrabajador);
+
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+
+            throw new Exception(
+                "Error al quitar asignación: " + e.getMessage()
+            );
+        }
+    }
+    
+    public ArrayList<Trabajador> obtenerTrabajadoresPorTarea(int idTareaProyecto) throws Exception {
+
+        ArrayList<Trabajador> lista = new ArrayList<>();
+
+        String sql =
+            "SELECT DISTINCT " +
+            "tr.id_trabajador, " +
+            "tr.nombre AS nombre_trabajador " +
+
+            "FROM asignacion_tarea at, trabajador tr " +
+
+            "WHERE at.id_trabajador = tr.id_trabajador " +
+            "AND at.id_tarea_proyecto = ? " +
+            "AND at.activa = 1";
+
+        try (
+            Connection con = ConexionBD.getConexion();
+            PreparedStatement ps = con.prepareStatement(sql)
+        ) {
+
+            ps.setInt(1, idTareaProyecto);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+
+                Trabajador t = new Trabajador();
+
+                t.setId_trabajador(
+                    rs.getInt("id_trabajador")
+                );
+
+                t.setNombre(
+                    rs.getString("nombre_trabajador")
+                );
+
+                lista.add(t);
+            }
+
+        } catch (Exception e) {
+
+            throw new Exception(
+                "Error al obtener trabajadores por tarea: "
+                + e.getMessage()
+            );
+        }
+
+        return lista;
+    }
+    public void desactivarTrabajador(int idTrabajador) throws Exception {
+
+        String sql =
+            "UPDATE trabajador " +
+            "SET activo = 0 " +
+            "WHERE id_trabajador = ?";
+
+        try (
+            Connection con = ConexionBD.getConexion();
+            PreparedStatement ps = con.prepareStatement(sql)
+        ) {
+
+            ps.setInt(1, idTrabajador);
+
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+
+            throw new Exception(
+                "Error al desactivar trabajador: "
+                + e.getMessage()
+            );
+        }
     }
 }

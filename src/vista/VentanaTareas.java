@@ -4,18 +4,23 @@ import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 
 import modelo.Proyecto;
+import modelo.Trabajador;
 
 public class VentanaTareas extends JPanel {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
     private JTable table;
-    private JTextArea textAreaAsignados;
-    private JTextArea textAreaSinAsignar;
+
     private JComboBox<Proyecto> inputProyecto;
+
+    private JList<Trabajador> listaAsignados;
+    private JList<Trabajador> listaSinAsignar;
+
+    private JButton btnQuitarAsignado;
+    private JButton btnQuitarSinAsignar;
 
     public VentanaTareas() {
 
@@ -36,46 +41,44 @@ public class VentanaTareas extends JPanel {
         table = new JTable();
 
         JScrollPane scroll = new JScrollPane(table);
-        scroll.setBounds(39, 119, 539, 170);
+        scroll.setBounds(39, 119, 500, 170);
         add(scroll);
 
-        JButton QuitarAsignarBoton = new JButton("Quitar");
-        QuitarAsignarBoton.setBounds(732, 195, 84, 22);
-        add(QuitarAsignarBoton);
+        btnQuitarAsignado = new JButton("Quitar");
+        btnQuitarAsignado.setBounds(707, 175, 63, 22);
+        add(btnQuitarAsignado);
 
-        JButton QuitarSinTxt = new JButton("Quitar");
-        QuitarSinTxt.setBounds(726, 364, 90, 22);
-        add(QuitarSinTxt);
+        btnQuitarSinAsignar = new JButton("Quitar");
+        btnQuitarSinAsignar.setBounds(707, 343, 63, 22);
+        add(btnQuitarSinAsignar);
 
-        textAreaAsignados = new JTextArea();
-        textAreaAsignados.setEditable(false);
+        JTextPane txtpnTrabajadores = new JTextPane();
+        txtpnTrabajadores.setText("Trabajadores Asignados al Proyecto");
+        txtpnTrabajadores.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
+        txtpnTrabajadores.setBounds(577, 66, 193, 20);
+        add(txtpnTrabajadores);
+
+        listaAsignados = new JList<>();
 
         JScrollPane scrollAsignados =
-                new JScrollPane(textAreaAsignados);
+                new JScrollPane(listaAsignados);
 
-        scrollAsignados.setBounds(577, 83, 239, 114);
+        scrollAsignados.setBounds(577, 83, 193, 114);
 
         add(scrollAsignados);
 
-        JTextPane txtpnTrabajadores = new JTextPane();
-        txtpnTrabajadores.setText("Trabajadores asignados al Proyecto");
-        txtpnTrabajadores.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
-        txtpnTrabajadores.setBounds(577, 66, 239, 20);
-        add(txtpnTrabajadores);
-
         JTextPane txtpnTrabajadoresSinAsignar = new JTextPane();
-        txtpnTrabajadoresSinAsignar.setText("Trabajadores sin asignar al proyecto");
+        txtpnTrabajadoresSinAsignar.setText("Trabajadores sin asignar tareas");
         txtpnTrabajadoresSinAsignar.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
-        txtpnTrabajadoresSinAsignar.setBounds(577, 231, 239, 20);
+        txtpnTrabajadoresSinAsignar.setBounds(577, 231, 193, 20);
         add(txtpnTrabajadoresSinAsignar);
 
-        textAreaSinAsignar = new JTextArea();
-        textAreaSinAsignar.setEditable(false);
+        listaSinAsignar = new JList<>();
 
         JScrollPane scrollSinAsignar =
-                new JScrollPane(textAreaSinAsignar);
+                new JScrollPane(listaSinAsignar);
 
-        scrollSinAsignar.setBounds(577, 251, 239, 114);
+        scrollSinAsignar.setBounds(577, 251, 193, 114);
 
         add(scrollSinAsignar);
     }
@@ -87,11 +90,20 @@ public class VentanaTareas extends JPanel {
     public JComboBox<Proyecto> getInputProyecto() {
         return inputProyecto;
     }
-    public JTextArea getTextAreaAsignados() {
-        return textAreaAsignados;
+
+    public JList<Trabajador> getListaAsignados() {
+        return listaAsignados;
     }
 
-    public JTextArea getTextAreaSinAsignar() {
-        return textAreaSinAsignar;
+    public JList<Trabajador> getListaSinAsignar() {
+        return listaSinAsignar;
+    }
+
+    public JButton getBtnQuitarAsignado() {
+        return btnQuitarAsignado;
+    }
+
+    public JButton getBtnQuitarSinAsignar() {
+        return btnQuitarSinAsignar;
     }
 }

@@ -6,6 +6,8 @@ import vista.VentanaTareas;
 import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class TareaProyectoController {
@@ -33,22 +35,59 @@ public class TareaProyectoController {
                 cargarTabla(p.getId_proyecto());
 
                 if (p.getId_proyecto() != -1) {
-
-                    cargarTrabajadoresAsignados(
-                        p.getId_proyecto()
-                    );
-
                     cargarTrabajadoresSinAsignar(
                         p.getId_proyecto()
                     );
 
                 } else {
 
-                    vista.getTextAreaAsignados().setText("");
-                    vista.getTextAreaSinAsignar().setText("");
+                    vista.getListaAsignados().setModel(
+                        new DefaultListModel<>()
+                    );
+
+                    vista.getListaSinAsignar().setModel(
+                        new DefaultListModel<>()
+                    );
                 }
             }
         });
+        
+     // Cuando se selecciona una tarea de la tabla, se cargan los trabajadores asignados a esa tarea
+        vista.getTable().getSelectionModel().addListSelectionListener(e -> {
+
+            if (!e.getValueIsAdjusting()) {
+
+                int fila = vista.getTable().getSelectedRow();
+
+                if (fila != -1) {
+
+                    int idTareaProyecto = (int)
+                            vista.getTable().getValueAt(fila, 0);
+
+                    cargarTrabajadoresAsignados(
+                        idTareaProyecto
+                    );
+                }
+            }
+        });
+       
+     // =========================
+     // BOTON QUITAR SIN ASIGNAR
+     // =========================
+
+     vista.getBtnQuitarSinAsignar().addActionListener(e -> {
+
+         quitarTrabajador();
+     });
+     
+     // =========================
+     // BOTON QUITAR ASIGNADO
+     // =========================
+
+     vista.getBtnQuitarAsignado().addActionListener(e -> {
+
+         quitarAsignacion();
+     });
     }
 
     // =========================
@@ -127,21 +166,21 @@ public class TareaProyectoController {
         }
     }
     
-    private void cargarTrabajadoresAsignados(int idProyecto) {
+    private void cargarTrabajadoresAsignados(int idTareaProyecto) {
 
         try {
 
-            ArrayList<Trabajador> lista =
-                    modelo.obtenerTrabajadoresPorProyecto(idProyecto);
+            ArrayList<Trabajador> lista = modelo.obtenerTrabajadoresPorTarea(idTareaProyecto);
 
-            String texto = "";
+            DefaultListModel<Trabajador> modeloLista =
+                    new DefaultListModel<>();
 
             for (Trabajador t : lista) {
 
-                texto += t.getNombre() + "\n";
+                modeloLista.addElement(t);
             }
 
-            vista.getTextAreaAsignados().setText(texto);
+            vista.getListaAsignados().setModel(modeloLista);
 
         } catch (Exception e) {
 
@@ -156,14 +195,119 @@ public class TareaProyectoController {
             ArrayList<Trabajador> lista =
                     modelo.obtenerTrabajadoresSinAsignar(idProyecto);
 
-            String texto = "";
+            DefaultListModel<Trabajador> modeloLista =
+                    new DefaultListModel<>();
 
             for (Trabajador t : lista) {
 
-                texto += t.getNombre() + "\n";
+                modeloLista.addElement(t);
             }
 
-            vista.getTextAreaSinAsignar().setText(texto);
+            vista.getListaSinAsignar().setModel(modeloLista);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+    }
+    private void quitarAsignacion() {
+
+        try {
+
+            int fila = vista.getTable().getSelectedRow();
+
+            if (fila == -1) {
+
+                JOptionPane.showMessageDialog(
+                    null,
+                    "Seleccione una tarea"
+                );
+
+                return;
+            }
+
+            Trabajador trabajador =
+                    vista.getListaAsignados().getSelectedValue();
+
+            if (trabajador == null) {
+
+                JOptionPane.showMessageDialog(
+                    null,
+                    "Seleccione un trabajador asignado"
+                );
+
+                return;
+            }
+
+            int idTareaProyecto = (int)
+                    vista.getTable().getValueAt(fila, 0);
+
+            modelo.quitarAsignacion(
+                idTareaProyecto,
+                trabajador.getId_trabajador()
+            );
+
+            // RECARGAR ASIGNADOS DE LA TAREA
+            cargarTrabajadoresAsignados(
+                idTareaProyecto
+            );
+
+            // RECARGAR SIN ASIGNAR DEL PROYECTO
+            Proyecto p = (Proyecto)
+                    vista.getInputProyecto().getSelectedItem();
+
+            if (p != null && p.getId_proyecto() != -1) {
+
+                cargarTrabajadoresSinAsignar(
+                    p.getId_proyecto()
+                );
+            }
+
+            JOptionPane.showMessageDialog(
+                null,
+                "Asignación quitada correctamente"
+            );
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+    }
+    private void quitarTrabajador() {
+
+        try {
+
+            Trabajador trabajador =
+                    vista.getListaSinAsignar().getSelectedValue();
+
+            if (trabajador == null) {
+
+                JOptionPane.showMessageDialog(
+                    null,
+                    "Seleccione un trabajador"
+                );
+
+                return;
+            }
+
+            modelo.desactivarTrabajador(
+                trabajador.getId_trabajador()
+            );
+
+            Proyecto p = (Proyecto)
+                    vista.getInputProyecto().getSelectedItem();
+
+            if (p != null && p.getId_proyecto() != -1) {
+
+                cargarTrabajadoresSinAsignar(
+                    p.getId_proyecto()
+                );
+            }
+
+            JOptionPane.showMessageDialog(
+                null,
+                "Trabajador desactivado correctamente"
+            );
 
         } catch (Exception e) {
 
