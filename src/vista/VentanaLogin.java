@@ -54,6 +54,7 @@ public class VentanaLogin extends JFrame {
         inputCorreo.setColumns(10);
 
         JTextPane CorreoTxt = new JTextPane();
+        CorreoTxt.setFocusable(false);
         CorreoTxt.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
         CorreoTxt.setEditable(false);
         CorreoTxt.setBackground(new Color(228, 228, 228));
@@ -62,6 +63,8 @@ public class VentanaLogin extends JFrame {
         contentPane.add(CorreoTxt);
 
         JTextPane ContrasenaTxt = new JTextPane();
+        ContrasenaTxt.setFocusable(false);
+        ContrasenaTxt.setForeground(new Color(0, 0, 0));
         ContrasenaTxt.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
         ContrasenaTxt.setEditable(false);
         ContrasenaTxt.setText("Contraseña:");

@@ -11,6 +11,9 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JComboBox;
 import javax.swing.UIManager;
+
+import modelo.ControlTiempoDAO;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JLabel;
@@ -21,6 +24,8 @@ public class VentanaControlTiempo extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JTable table;
 	private Timer timer;
+	private JComboBox inputTarea;
+	private JComboBox inputProyecto;
 	private int segundos = 0, minutos = 0, horas = 0;
 	private boolean activo = false;
 	private JLabel labelTiempo;
@@ -32,6 +37,7 @@ public class VentanaControlTiempo extends JPanel {
 	 * Create the panel.
 	 */
 	public VentanaControlTiempo() {
+		ControlTiempoDAO dao = new ControlTiempoDAO();
 		setBackground(new Color(180, 180, 180));
 		setLayout(null);
 		
@@ -43,9 +49,10 @@ public class VentanaControlTiempo extends JPanel {
 		ProyectoTxt.setBounds(24, 31, 54, 20);
 		add(ProyectoTxt);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(85, 31, 148, 22);
-		add(comboBox);
+		inputProyecto = new JComboBox();
+		inputProyecto.setBounds(85, 31, 148, 22);
+		add(inputProyecto);
+		dao.cargarProyecto(inputProyecto);
 		
 		JTextPane TareaTxt = new JTextPane();
 		TareaTxt.setText("Tarea:");
@@ -55,9 +62,10 @@ public class VentanaControlTiempo extends JPanel {
 		TareaTxt.setBounds(24, 66, 54, 20);
 		add(TareaTxt);
 		
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setBounds(85, 64, 148, 22);
-		add(comboBox_1);
+	    inputTarea = new JComboBox();
+		inputTarea.setBounds(85, 64, 148, 22);
+		add(inputTarea);
+		dao.cargarTarea(inputTarea);
 		
 		table = new JTable();
 		table.setBounds(246, 99, 194, 94);
@@ -98,6 +106,18 @@ public class VentanaControlTiempo extends JPanel {
 		    }
 		});
 		add(btnPausar);
+		
+		JTextPane inputComentario = new JTextPane();
+		inputComentario.setBounds(24, 272, 228, 100);
+		add(inputComentario);
+		
+		JTextPane ComentarioTxt = new JTextPane();
+		ComentarioTxt.setEnabled(false);
+		ComentarioTxt.setEditable(false);
+		ComentarioTxt.setText("Comentario\r\n");
+		ComentarioTxt.setBackground(new Color(180, 180, 180));
+		ComentarioTxt.setBounds(24, 250, 69, 20);
+		add(ComentarioTxt);
 
 	}
 	private void iniciarCronometro() {
@@ -123,5 +143,4 @@ public class VentanaControlTiempo extends JPanel {
 	        labelTiempo.setText(tiempo);
 	        
 	    }
-	
 }
