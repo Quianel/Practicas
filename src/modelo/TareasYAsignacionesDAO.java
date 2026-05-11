@@ -149,4 +149,61 @@ public class TareasYAsignacionesDAO {
 
         return lista;
     }
+    public ArrayList<Trabajador> obtenerTrabajadoresSinAsignar(int idProyecto) throws Exception {
+
+        ArrayList<Trabajador> lista = new ArrayList<>();
+
+        String sql =
+            "SELECT DISTINCT " +
+            "tr.id_trabajador, " +
+            "tr.nombre AS nombre_trabajador " +
+
+            "FROM trabajador tr " +
+
+            "WHERE tr.id_trabajador NOT IN ( " +
+
+                "SELECT at.id_trabajador " +
+
+                "FROM asignacion_tarea at, tarea_proyecto tp " +
+
+                "WHERE at.id_tarea_proyecto = tp.id_tarea_proyecto " +
+                "AND at.activa = 1 " +
+                "AND tp.id_proyecto = ? " +
+
+            ")";
+
+        try (
+            Connection con = ConexionBD.getConexion();
+            PreparedStatement ps = con.prepareStatement(sql)
+        ) {
+
+            ps.setInt(1, idProyecto);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+
+                Trabajador t = new Trabajador();
+
+                t.setId_trabajador(
+                    rs.getInt("id_trabajador")
+                );
+
+                t.setNombre(
+                    rs.getString("nombre_trabajador")
+                );
+
+                lista.add(t);
+            }
+
+        } catch (Exception e) {
+
+            throw new Exception(
+                "Error al obtener trabajadores sin asignar: "
+                + e.getMessage()
+            );
+        }
+
+        return lista;
+    }
 }

@@ -38,9 +38,14 @@ public class TareaProyectoController {
                         p.getId_proyecto()
                     );
 
+                    cargarTrabajadoresSinAsignar(
+                        p.getId_proyecto()
+                    );
+
                 } else {
 
                     vista.getTextAreaAsignados().setText("");
+                    vista.getTextAreaSinAsignar().setText("");
                 }
             }
         });
@@ -63,7 +68,7 @@ public class TareaProyectoController {
             // =========================
             Proyecto todos = new Proyecto();
             todos.setId_proyecto(-1);
-            todos.setNombre("Todos los proyectos");
+            todos.setNombre("Seleccione un proyecto");
 
             combo.addElement(todos);
 
@@ -137,6 +142,28 @@ public class TareaProyectoController {
             }
 
             vista.getTextAreaAsignados().setText(texto);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+    }
+    
+    private void cargarTrabajadoresSinAsignar(int idProyecto) {
+
+        try {
+
+            ArrayList<Trabajador> lista =
+                    modelo.obtenerTrabajadoresSinAsignar(idProyecto);
+
+            String texto = "";
+
+            for (Trabajador t : lista) {
+
+                texto += t.getNombre() + "\n";
+            }
+
+            vista.getTextAreaSinAsignar().setText(texto);
 
         } catch (Exception e) {
 
