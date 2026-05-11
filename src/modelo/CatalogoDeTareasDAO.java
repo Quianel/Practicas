@@ -43,11 +43,16 @@ public class CatalogoDeTareasDAO {
 		try {
 			Connection conexion = getConexion();
         	Statement consulta = conexion.createStatement();
-			ResultSet registro = consulta.executeQuery("select tarea_proyecto.id_tarea_proyecto as 'Codigo', tarea_proyecto.id_tarea_proyecto as 'Codigo', catalogo_tareas.nombre as 'Nombre de tarea', solo_senior as 'Solo senior', proyecto.Nombre\r\n"
-					+ "from tarea_proyecto, catalogo_tareas, proyecto\r\n"
-					+ "where tarea_proyecto.id_proyecto = proyecto.id_proyecto\r\n"
-					+ "and tarea_proyecto.id_tarea_catalogo = catalogo_tareas.id_tarea_catalogo\r\n"
-					+ "and tarea_proyecto.activa = true;");
+			ResultSet registro = consulta.executeQuery("SELECT DISTINCT\r\n"
+					+ "    catalogo_tareas.id_tarea_catalogo AS 'Codigo',\r\n"
+					+ "    catalogo_tareas.nombre AS 'Nombre de tarea',\r\n"
+					+ "    solo_senior AS 'Solo senior',\r\n"
+					+ "    tipo_proyecto.nombre AS 'Nombre'\r\n"
+					+ "FROM catalogo_tareas, tipo_proyecto, tarea_proyecto, proyecto\r\n"
+					+ "WHERE catalogo_tareas.id_tipo_proyecto = tipo_proyecto.id_tipo_proyecto\r\n"
+					+ "AND tipo_proyecto.id_tipo_proyecto = proyecto.id_tipo_proyecto\r\n"
+					+ "AND proyecto.id_proyecto = tarea_proyecto.id_proyecto\r\n"
+					+ "AND activa = true;");
 			
             while (registro.next()) {
             	
@@ -87,9 +92,7 @@ public class CatalogoDeTareasDAO {
 
 	public void actualizarBaseDatos(DefaultTableModel modeloTabla) {
 		int codigo;
-		String nombreTarea;
 		boolean soloSlider;
-		String nombre;
 		for(int fila = 0; fila < modeloTabla.getRowCount(); fila++) {
 			codigo = (int) modeloTabla.getValueAt(fila, 0);
 			soloSlider = (boolean) modeloTabla.getValueAt(fila, 2);
@@ -117,23 +120,28 @@ public class CatalogoDeTareasDAO {
         	ResultSet registro;
         	
         	if(tipoProyecto == "(Todas)") {
-    			registro = consulta.executeQuery("select tarea_proyecto.id_tarea_proyecto as 'Codigo', catalogo_tareas.nombre as 'Nombre de tarea', solo_senior as 'Solo senior', proyecto.nombre as 'Nombre'\r\n"
-    					+ "from tarea_proyecto, catalogo_tareas, tipo_proyecto, proyecto\r\n"
-    					+ "where tarea_proyecto.id_tarea_catalogo = catalogo_tareas.id_tarea_catalogo\r\n"
-    					+ "and catalogo_tareas.id_tipo_proyecto = tipo_proyecto.id_tipo_proyecto\r\n"
-    					+ "and tipo_proyecto.id_tipo_proyecto = proyecto.id_tipo_proyecto\r\n"
-    					+ "and proyecto.id_tipo_proyecto = tipo_proyecto.id_tipo_proyecto\r\n"
-    					+ "and tarea_proyecto.activa = true;");
+    			registro = consulta.executeQuery("SELECT DISTINCT\r\n"
+    					+ "    catalogo_tareas.id_tarea_catalogo AS 'Codigo',\r\n"
+    					+ "    catalogo_tareas.nombre AS 'Nombre de tarea',\r\n"
+    					+ "    solo_senior AS 'Solo senior',\r\n"
+    					+ "    tipo_proyecto.nombre AS 'Nombre'\r\n"
+    					+ "FROM catalogo_tareas, tipo_proyecto, tarea_proyecto, proyecto\r\n"
+    					+ "WHERE catalogo_tareas.id_tipo_proyecto = tipo_proyecto.id_tipo_proyecto\r\n"
+    					+ "AND tipo_proyecto.id_tipo_proyecto = proyecto.id_tipo_proyecto\r\n"
+    					+ "AND proyecto.id_proyecto = tarea_proyecto.id_proyecto\r\n"
+    					+ "AND activa = true;");
         	}else {
-        		registro = consulta.executeQuery("select tarea_proyecto.id_tarea_proyecto as 'Codigo', \r\n"
-        				+ "catalogo_tareas.nombre as 'Nombre de tarea', solo_senior as 'Solo senior', \r\n"
-        				+ "proyecto.nombre as 'Nombre'\r\n"
-        				+ "from tarea_proyecto, catalogo_tareas, tipo_proyecto, proyecto \r\n"
-        				+ "where tarea_proyecto.id_tarea_catalogo = catalogo_tareas.id_tarea_catalogo \r\n"
-        				+ "and catalogo_tareas.id_tipo_proyecto = tipo_proyecto.id_tipo_proyecto \r\n"
-        				+ "and tipo_proyecto.nombre = '" + tipoProyecto + "' \r\n"
-        				+ "and tipo_proyecto.id_tipo_proyecto = proyecto.id_tipo_proyecto\r\n"
-        				+ "and tarea_proyecto.activa = true;");
+        		registro = consulta.executeQuery("SELECT DISTINCT\r\n"
+    					+ "    catalogo_tareas.id_tarea_catalogo AS 'Codigo',\r\n"
+    					+ "    catalogo_tareas.nombre AS 'Nombre de tarea',\r\n"
+    					+ "    solo_senior AS 'Solo senior',\r\n"
+    					+ "    tipo_proyecto.nombre AS 'Nombre'\r\n"
+    					+ "FROM catalogo_tareas, tipo_proyecto, tarea_proyecto, proyecto\r\n"
+    					+ "WHERE catalogo_tareas.id_tipo_proyecto = tipo_proyecto.id_tipo_proyecto\r\n"
+    					+ "AND tipo_proyecto.id_tipo_proyecto = proyecto.id_tipo_proyecto\r\n"
+    					+ "AND proyecto.id_proyecto = tarea_proyecto.id_proyecto\r\n"
+    					+ "and tipo_proyecto.nombre = '" + tipoProyecto + "' \r\n"
+    					+ "AND activa = true;");
         	}
 			
             while (registro.next()) {

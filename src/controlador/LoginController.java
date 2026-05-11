@@ -78,9 +78,11 @@ public class LoginController {
                         "Login correcto",
                         "Bienvenido",
                         JOptionPane.INFORMATION_MESSAGE);
-
+                
+                String usuario = UsuarioDAO.seleccionUsuario(correo); //RECIBE TRABAJADOR O ADMINISTRADOR
+                
                 // Abrir menú principal
-                VentanaMenuPrincipal menu = new VentanaMenuPrincipal();
+                VentanaMenuPrincipal menu = new VentanaMenuPrincipal(usuario);
                 menu.setVisible(true);
 
                 // Cerrar login

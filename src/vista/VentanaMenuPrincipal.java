@@ -51,8 +51,10 @@ public class VentanaMenuPrincipal extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @param usuario 
 	 */
-	public VentanaMenuPrincipal() {
+	public VentanaMenuPrincipal(String usuario) {
+		
 		setFont(new Font("Liberation Mono", Font.BOLD, 14));
 		setTitle("Menú principal / Aside");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -86,83 +88,97 @@ public class VentanaMenuPrincipal extends JFrame {
 		mnDashboIni.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 12));
 		mnuPrincipal.add(mnDashboIni);
 		
-		JMenu mnProyectos = new JMenu("Proyectos");
-		mnProyectos.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				CardLayout cl = (CardLayout)(panelCardLCarga.getLayout());
-				cl.show(panelCardLCarga,"vGtnPro");
-			}
-		});
-		mnProyectos.setIcon(new ImageIcon("img/proyecto.png"));
-		mnProyectos.setBackground(new Color(180, 180, 180));
-		mnProyectos.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 12));
-		mnuPrincipal.add(mnProyectos);
+		if(usuario.equals("Administrador")) {
+			JMenu mnProyectos = new JMenu("Proyectos");
+			mnProyectos.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mousePressed(MouseEvent e) {
+					CardLayout cl = (CardLayout)(panelCardLCarga.getLayout());
+					cl.show(panelCardLCarga,"vGtnPro");
+				}
+			});
+			mnProyectos.setIcon(new ImageIcon("img/proyecto.png"));
+			mnProyectos.setBackground(new Color(180, 180, 180));
+			mnProyectos.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 12));
+			mnuPrincipal.add(mnProyectos);
+		}
 		
-		JMenu mnCatTareas = new JMenu("Catálogo de Tareas");
-		mnCatTareas.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				CardLayout cl = (CardLayout)(panelCardLCarga.getLayout());
-				cl.show(panelCardLCarga, "ventCatTareas");
-			}
-		});
-		mnCatTareas.setIcon(new ImageIcon("img/listaTareas.png"));
-		mnCatTareas.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 12));
-		mnuPrincipal.add(mnCatTareas);
+		if(usuario.equals("Administrador")) {
+			JMenu mnCatTareas = new JMenu("Catálogo de Tareas");
+			mnCatTareas.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mousePressed(MouseEvent e) {
+					CardLayout cl = (CardLayout)(panelCardLCarga.getLayout());
+					cl.show(panelCardLCarga, "ventCatTareas");
+				}
+			});
+			mnCatTareas.setIcon(new ImageIcon("img/listaTareas.png"));
+			mnCatTareas.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 12));
+			mnuPrincipal.add(mnCatTareas);
+		}
 		
-		JMenu mnTareasdelProy = new JMenu("Tareas del proyecto");
-		mnTareasdelProy.setIcon(new ImageIcon("img/tarea.png"));
-		mnTareasdelProy.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 12));
-
-		mnTareasdelProy.addMouseListener(new MouseAdapter() {
-		    @Override
-		    public void mousePressed(MouseEvent e) {
-		        CardLayout cl = (CardLayout)(panelCardLCarga.getLayout());
-		        cl.show(panelCardLCarga, "tareas"); // este es el nombre del panel
-		    }
-		});
-
-		mnuPrincipal.add(mnTareasdelProy);
+		if(usuario.equals("Administrador")) {
+			JMenu mnTareasdelProy = new JMenu("Tareas del proyecto");
+			mnTareasdelProy.setIcon(new ImageIcon("img/tarea.png"));
+			mnTareasdelProy.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 12));
+	
+			mnTareasdelProy.addMouseListener(new MouseAdapter() {
+			    @Override
+			    public void mousePressed(MouseEvent e) {
+			        CardLayout cl = (CardLayout)(panelCardLCarga.getLayout());
+			        cl.show(panelCardLCarga, "tareas"); // este es el nombre del panel
+			    }
+			});
+	
+			mnuPrincipal.add(mnTareasdelProy);
+		}
 		
-		JMenu mnMistareas = new JMenu("Mis tareas");
-		mnMistareas.setIcon(new ImageIcon("img/misTareas.png"));
-		mnMistareas.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 12));
-		mnuPrincipal.add(mnMistareas);
+		if(usuario.equals("Trabajador")) {
+			JMenu mnMistareas = new JMenu("Mis tareas");
+			mnMistareas.setIcon(new ImageIcon("img/misTareas.png"));
+			mnMistareas.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 12));
+			mnuPrincipal.add(mnMistareas);
+		}
 		
-		JMenu mnControlTiempo = new JMenu("Control de tiempo");
-		mnControlTiempo.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				CardLayout cl = (CardLayout)(panelCardLCarga.getLayout());
-				cl.show(panelCardLCarga,"ventContTiem");
-			}
-		});
-		mnControlTiempo.setIcon(new ImageIcon("img/controlTiempo.png"));
-		mnControlTiempo.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 12));
-		mnuPrincipal.add(mnControlTiempo);
+		if(usuario.equals("Trabajador")) {
+			JMenu mnControlTiempo = new JMenu("Control de tiempo");
+			mnControlTiempo.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mousePressed(MouseEvent e) {
+					CardLayout cl = (CardLayout)(panelCardLCarga.getLayout());
+					cl.show(panelCardLCarga,"ventContTiem");
+				}
+			});
+			mnControlTiempo.setIcon(new ImageIcon("img/controlTiempo.png"));
+			mnControlTiempo.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 12));
+			mnuPrincipal.add(mnControlTiempo);
+		}
 		
-		JMenu mnRegistromanual = new JMenu("Registro manual");
-		mnRegistromanual.setIcon(new ImageIcon("img/registroManual.png"));
-		mnRegistromanual.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 12));
-		mnuPrincipal.add(mnRegistromanual);
+		if(usuario.equals("Trabajador")) {
+			JMenu mnRegistromanual = new JMenu("Registro manual");
+			mnRegistromanual.setIcon(new ImageIcon("img/registroManual.png"));
+			mnRegistromanual.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 12));
+			mnuPrincipal.add(mnRegistromanual);
+		}
 		
 		JMenu mnReportes = new JMenu("Reportes");
 		mnReportes.setIcon(new ImageIcon("img/reportes.png"));
 		mnReportes.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 12));
 		mnuPrincipal.add(mnReportes);
 		
-		JMenu mnUsuariosTrabajadores = new JMenu("Usuarios/Trabajadores");
-		mnUsuariosTrabajadores.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				CardLayout cl = (CardLayout)(panelCardLCarga.getLayout());
-				cl.show(panelCardLCarga,"ventGestionUsuario");
-			}
-		});
-		mnUsuariosTrabajadores.setIcon(new ImageIcon("img/usuariosTrabajadores.png"));
-		mnUsuariosTrabajadores.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 12));
-		mnuPrincipal.add(mnUsuariosTrabajadores);
+		if(usuario.equals("Administrador")) {
+			JMenu mnUsuariosTrabajadores = new JMenu("Usuarios/Trabajadores");
+			mnUsuariosTrabajadores.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mousePressed(MouseEvent e) {
+					CardLayout cl = (CardLayout)(panelCardLCarga.getLayout());
+					cl.show(panelCardLCarga,"ventGestionUsuario");
+				}
+			});
+			mnUsuariosTrabajadores.setIcon(new ImageIcon("img/usuariosTrabajadores.png"));
+			mnUsuariosTrabajadores.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 12));
+			mnuPrincipal.add(mnUsuariosTrabajadores);
+		}
 		
 		JMenu mnCerrarSesion = new JMenu("Cerrar sesión");
 		mnCerrarSesion.setIcon(new ImageIcon("img/cerrarSesion.png"));

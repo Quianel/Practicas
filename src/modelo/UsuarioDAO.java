@@ -3,6 +3,7 @@ package modelo;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class UsuarioDAO {
 
@@ -35,4 +36,24 @@ public class UsuarioDAO {
             throw new Exception("Error al validar usuario: " + e.getMessage());
         }
     }
+
+	public static String seleccionUsuario(String correo) {
+		String tipo = null;
+		try {
+			Connection conexion = ConexionBD.getConexion();
+			Statement consulta = conexion.createStatement();
+			ResultSet registro = consulta.executeQuery("select rol_sistema.nombre Tipo from trabajador, rol_sistema "
+					+ "where trabajador.id_rol = rol_sistema.id_rol "
+					+ "and trabajador.correo = '" + correo + "'");
+			
+			if(registro.next()) {
+				tipo = registro.getString("Tipo");
+			}
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return tipo;
+	}
 }
