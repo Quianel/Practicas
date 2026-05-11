@@ -42,6 +42,7 @@ public class VentanaCrearUsuario extends JPanel {
 		setBackground(new Color(180, 180, 180));
 		setLayout(null);
 		
+		
 		JTextPane NombreTxt = new JTextPane();
 		NombreTxt.setText("Nombre:");
 		NombreTxt.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));

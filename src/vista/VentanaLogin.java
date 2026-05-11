@@ -11,6 +11,8 @@ import javax.swing.JCheckBox;
 import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class VentanaLogin extends JFrame {
 
@@ -41,7 +43,7 @@ public class VentanaLogin extends JFrame {
     public VentanaLogin() {
         setTitle("Login");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 326, 245);
+        setBounds(100, 100, 418, 245);
         contentPane = new JPanel();
         contentPane.setBackground(new Color(228, 228, 228));
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -49,7 +51,7 @@ public class VentanaLogin extends JFrame {
         contentPane.setLayout(null);
 
         inputCorreo = new JTextField();
-        inputCorreo.setBounds(147, 48, 96, 20);
+        inputCorreo.setBounds(147, 48, 175, 20);
         contentPane.add(inputCorreo);
         inputCorreo.setColumns(10);
 
@@ -75,19 +77,23 @@ public class VentanaLogin extends JFrame {
         JCheckBox RecordarTxt = new JCheckBox("Recordar Usuario");
         RecordarTxt.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
         RecordarTxt.setBackground(new Color(228, 228, 228));
-        RecordarTxt.setBounds(114, 106, 129, 22);
+        RecordarTxt.setBounds(157, 106, 129, 22);
         contentPane.add(RecordarTxt);
 
         botonIS = new JButton("Iniciar Sesión");
+        botonIS.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
+        });
         botonIS.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
         botonIS.setBackground(new Color(178, 178, 178));
-        botonIS.setBounds(109, 135, 119, 22);
+        botonIS.setBounds(147, 135, 119, 22);
         contentPane.add(botonIS);
 
         getRootPane().setDefaultButton(botonIS);
 
         InputContrasena = new JPasswordField();
-        InputContrasena.setBounds(147, 79, 96, 20);
+        InputContrasena.setBounds(147, 79, 175, 20);
         contentPane.add(InputContrasena);
     }
 

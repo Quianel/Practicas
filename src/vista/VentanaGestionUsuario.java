@@ -41,13 +41,13 @@ public class VentanaGestionUsuario extends JPanel {
 		
 		inputBuscar = new JTextField();
 		inputBuscar.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
-		inputBuscar.setBounds(245, 29, 116, 20);
+		inputBuscar.setBounds(245, 29, 197, 20);
 		add(inputBuscar);
 		inputBuscar.setColumns(10);
 		
 	    botonLupa = new JButton("");
 	    botonLupa.setIcon(new ImageIcon("img/lupa.png"));
-	    botonLupa.setBounds(359, 27, 41, 23);
+	    botonLupa.setBounds(440, 27, 41, 23);
 		add(botonLupa);
 		
 		table  = new JTable() {
@@ -58,7 +58,7 @@ public class VentanaGestionUsuario extends JPanel {
             }
         };
         JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setBounds(10, 69, 650, 220);
+        scrollPane.setBounds(10, 69, 782, 220);
 
         add(scrollPane);
 		

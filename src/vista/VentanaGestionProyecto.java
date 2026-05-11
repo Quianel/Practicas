@@ -40,18 +40,18 @@ public class VentanaGestionProyecto extends JPanel {
         add(BuscarTxt);
 
         inputBuscar = new JTextField();
-        inputBuscar.setBounds(55, 26, 96, 20);
+        inputBuscar.setBounds(55, 26, 163, 20);
         add(inputBuscar);
         inputBuscar.setColumns(10);
 
         botonLupa = new JButton("");
         botonLupa.setIcon(new ImageIcon("img/lupa.png"));
-        botonLupa.setBounds(161, 26, 19, 20);
+        botonLupa.setBounds(228, 26, 19, 20);
         add(botonLupa);
 
         botonProyecto = new JButton("Crear Proyecto");
         botonProyecto.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
-        botonProyecto.setBounds(305, 24, 122, 22);
+        botonProyecto.setBounds(424, 26, 122, 22);
         add(botonProyecto);
 
         // =========================

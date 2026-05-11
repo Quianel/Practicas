@@ -68,17 +68,17 @@ public class VentanaControlTiempo extends JPanel {
 		dao.cargarTarea(inputTarea);
 		
 		table = new JTable();
-		table.setBounds(246, 99, 194, 94);
+		table.setBounds(401, 114, 317, 125);
 		add(table);
 		
 		labelTiempo = new JLabel("00:00:00");
-		labelTiempo.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 19));
-		labelTiempo.setBounds(65, 129, 78, 44);
+		labelTiempo.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 25));
+		labelTiempo.setBounds(120, 128, 95, 61);
 		add(labelTiempo);
 		
 		btnIniciar = new JButton("Iniciar");
 		btnIniciar.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
-		btnIniciar.setBounds(24, 201, 69, 22);
+		btnIniciar.setBounds(85, 200, 69, 22);
 		btnIniciar.addActionListener(new ActionListener() {
 			
 			@Override
@@ -96,7 +96,7 @@ public class VentanaControlTiempo extends JPanel {
 		
 		btnPausar = new JButton("Pausar");
 		btnPausar.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
-		btnPausar.setBounds(118, 200, 69, 22);
+		btnPausar.setBounds(179, 200, 69, 22);
 		btnPausar.addActionListener(new ActionListener() {
 		    @Override
 		    public void actionPerformed(ActionEvent e) {
@@ -108,7 +108,7 @@ public class VentanaControlTiempo extends JPanel {
 		add(btnPausar);
 		
 		JTextPane inputComentario = new JTextPane();
-		inputComentario.setBounds(24, 272, 228, 100);
+		inputComentario.setBounds(63, 272, 267, 139);
 		add(inputComentario);
 		
 		JTextPane ComentarioTxt = new JTextPane();
@@ -116,7 +116,7 @@ public class VentanaControlTiempo extends JPanel {
 		ComentarioTxt.setEditable(false);
 		ComentarioTxt.setText("Comentario\r\n");
 		ComentarioTxt.setBackground(new Color(180, 180, 180));
-		ComentarioTxt.setBounds(24, 250, 69, 20);
+		ComentarioTxt.setBounds(61, 249, 69, 20);
 		add(ComentarioTxt);
 
 	}

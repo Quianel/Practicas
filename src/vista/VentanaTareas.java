@@ -36,15 +36,15 @@ public class VentanaTareas extends JPanel {
         table = new JTable();
 
         JScrollPane scroll = new JScrollPane(table);
-        scroll.setBounds(39, 119, 500, 170);
+        scroll.setBounds(39, 119, 539, 170);
         add(scroll);
 
         JButton QuitarAsignarBoton = new JButton("Quitar");
-        QuitarAsignarBoton.setBounds(707, 175, 63, 22);
+        QuitarAsignarBoton.setBounds(732, 195, 84, 22);
         add(QuitarAsignarBoton);
 
         JButton QuitarSinTxt = new JButton("Quitar");
-        QuitarSinTxt.setBounds(707, 343, 63, 22);
+        QuitarSinTxt.setBounds(726, 364, 90, 22);
         add(QuitarSinTxt);
 
         textAreaAsignados = new JTextArea();
@@ -53,20 +53,20 @@ public class VentanaTareas extends JPanel {
         JScrollPane scrollAsignados =
                 new JScrollPane(textAreaAsignados);
 
-        scrollAsignados.setBounds(577, 83, 193, 114);
+        scrollAsignados.setBounds(577, 83, 239, 114);
 
         add(scrollAsignados);
 
         JTextPane txtpnTrabajadores = new JTextPane();
         txtpnTrabajadores.setText("Trabajadores asignados al Proyecto");
         txtpnTrabajadores.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
-        txtpnTrabajadores.setBounds(577, 66, 193, 20);
+        txtpnTrabajadores.setBounds(577, 66, 239, 20);
         add(txtpnTrabajadores);
 
         JTextPane txtpnTrabajadoresSinAsignar = new JTextPane();
         txtpnTrabajadoresSinAsignar.setText("Trabajadores sin asignar al proyecto");
         txtpnTrabajadoresSinAsignar.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
-        txtpnTrabajadoresSinAsignar.setBounds(577, 231, 193, 20);
+        txtpnTrabajadoresSinAsignar.setBounds(577, 231, 239, 20);
         add(txtpnTrabajadoresSinAsignar);
 
         textAreaSinAsignar = new JTextArea();
@@ -75,7 +75,7 @@ public class VentanaTareas extends JPanel {
         JScrollPane scrollSinAsignar =
                 new JScrollPane(textAreaSinAsignar);
 
-        scrollSinAsignar.setBounds(577, 251, 193, 114);
+        scrollSinAsignar.setBounds(577, 251, 239, 114);
 
         add(scrollSinAsignar);
     }
