@@ -34,5 +34,8 @@ public class Estado_tarea {
 		this.nombre = nombre;
 	}
 	
-	
+	@Override
+	public String toString() {
+	    return nombre;
+	}
 }

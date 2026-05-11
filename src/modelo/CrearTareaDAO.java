@@ -72,20 +72,11 @@ public class CrearTareaDAO {
 		try {
 			Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/time_order", "root", "");
 			Statement consulta = conexion.createStatement();
-			ResultSet registro = consulta.executeQuery("select * from catalogo_tareas");
+			ResultSet registro = consulta.executeQuery("select nombre from catalogo_tareas");
 			
 			while(registro.next()) {
 				Catalogo_tareas tipo = new Catalogo_tareas();
-				tipo.setId_tarea_catalogo(registro.getInt("id_tarea_catalogo"));
 				tipo.setNombre(registro.getString("nombre"));
-				tipo.setSoloSenior(registro.getBoolean("solo_senior"));
-				Tarea_proyecto tp = new Tarea_proyecto();
-				tp.setId_tarea_proyecto(registro.getInt("id_tarea_proyecto"));
-				tipo.setTareaProyecto(tp);
-				Proyecto p = new Proyecto();
-				p.setId_proyecto(registro.getInt("id_proyecto"));
-				tipo.setProyecto(p);
-				
 				lista.add(tipo);
 			}
 			
@@ -128,21 +119,13 @@ public class CrearTareaDAO {
 		try {
 			conexion = DriverManager.getConnection("jdbc:mysql://localhost/time_order", "root", "");
 			Statement consulta = conexion.createStatement();
-			ResultSet registro = consulta.executeQuery("select * from tarea_proyecto");
+			ResultSet registro = consulta.executeQuery("select id_tarea_padre,nombre_visible,activa from tarea_proyecto "
+														+ "where id_tarea_padre = null or id_tarea_padre = 0 "
+														+ "and activa= 1");
 			
 			while(registro.next()) {
 				Tarea_proyecto tareapadre = new Tarea_proyecto();
 				tareapadre.setId_tarea_padre(registro.getInt("id_tarea_padre"));
-				tareapadre.setId_tarea_proyecto(registro.getInt("id_tarea_proyecto"));
-				Proyecto proyect = new Proyecto();
-				proyect.setId_proyecto(registro.getInt("id_proyecto"));
-				tareapadre.setProyec(proyect);
-				Catalogo_tareas catalogo = new Catalogo_tareas();
-				catalogo.setId_tarea_catalogo(registro.getInt("id_tarea_catalogo"));
-				tareapadre.setCatalog(catalogo);
-				Estado_tarea estadtare = new Estado_tarea();
-				estadtare.setId_estado_tarea(registro.getInt("id_estado_tarea"));
-				tareapadre.setEstadotar(estadtare);
 				tareapadre.setNombre_visible(registro.getString("nombre_visible"));
 				tareapadre.setActiva(registro.getBoolean("activa"));
 					

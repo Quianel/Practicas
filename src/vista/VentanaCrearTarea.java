@@ -154,7 +154,7 @@ public class VentanaCrearTarea extends JPanel {
 		
 	}
 	
-	public void cargarCombos() {
+	/*public void cargarCombos() {
 		CrearTareaDAO ct = new CrearTareaDAO();
 		ArrayList<Proyecto> listaProyectos = ct.cargarProyectos();
 		ArrayList<Catalogo_tareas> listatipoTarea = ct.cargarTipoTarea();
@@ -195,5 +195,21 @@ public class VentanaCrearTarea extends JPanel {
 			JOptionPane.showMessageDialog(null, "No se ha podido cargar el tipo de proyecto", "ERROR DE CARGA",
 					JOptionPane.ERROR_MESSAGE);
 		}
+	}*/
+	
+	public JComboBox<Proyecto> getCmbProyectos(){
+		return cmbProyecto;
+	}
+
+	public JComboBox<Catalogo_tareas> getInputTipo(){
+		return inputTipo;
+	}
+	
+	public JComboBox<Tarea_proyecto> getInputTareaPadre(){
+		return inputTareasPadre;
+	}
+	
+	public JComboBox<Estado_tarea> getInputEstado(){
+		return inputEstadoTarea;
 	}
 }
