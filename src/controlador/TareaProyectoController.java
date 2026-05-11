@@ -29,7 +29,19 @@ public class TareaProyectoController {
             Proyecto p = (Proyecto) vista.getInputProyecto().getSelectedItem();
 
             if (p != null) {
+
                 cargarTabla(p.getId_proyecto());
+
+                if (p.getId_proyecto() != -1) {
+
+                    cargarTrabajadoresAsignados(
+                        p.getId_proyecto()
+                    );
+
+                } else {
+
+                    vista.getTextAreaAsignados().setText("");
+                }
             }
         });
     }
@@ -106,6 +118,28 @@ public class TareaProyectoController {
             vista.getTable().setModel(modeloTabla);
 
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private void cargarTrabajadoresAsignados(int idProyecto) {
+
+        try {
+
+            ArrayList<Trabajador> lista =
+                    modelo.obtenerTrabajadoresPorProyecto(idProyecto);
+
+            String texto = "";
+
+            for (Trabajador t : lista) {
+
+                texto += t.getNombre() + "\n";
+            }
+
+            vista.getTextAreaAsignados().setText(texto);
+
+        } catch (Exception e) {
+
             e.printStackTrace();
         }
     }

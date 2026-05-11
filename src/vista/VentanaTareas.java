@@ -13,8 +13,8 @@ public class VentanaTareas extends JPanel {
     private static final long serialVersionUID = 1L;
 
     private JTable table;
-    private JTextField textField;
-    private JTextField textField_1;
+    private JTextArea textAreaAsignados;
+    private JTextArea textAreaSinAsignar;
     private JComboBox<Proyecto> inputProyecto;
 
     public VentanaTareas() {
@@ -47,9 +47,15 @@ public class VentanaTareas extends JPanel {
         QuitarSinTxt.setBounds(707, 343, 63, 22);
         add(QuitarSinTxt);
 
-        textField = new JTextField();
-        textField.setBounds(577, 83, 193, 114);
-        add(textField);
+        textAreaAsignados = new JTextArea();
+        textAreaAsignados.setEditable(false);
+
+        JScrollPane scrollAsignados =
+                new JScrollPane(textAreaAsignados);
+
+        scrollAsignados.setBounds(577, 83, 193, 114);
+
+        add(scrollAsignados);
 
         JTextPane txtpnTrabajadores = new JTextPane();
         txtpnTrabajadores.setText("Trabajadores Asignados al Proyecto");
@@ -63,10 +69,15 @@ public class VentanaTareas extends JPanel {
         txtpnTrabajadoresSinAsignar.setBounds(577, 231, 193, 20);
         add(txtpnTrabajadoresSinAsignar);
 
-        textField_1 = new JTextField();
-        textField_1.setColumns(10);
-        textField_1.setBounds(577, 251, 193, 114);
-        add(textField_1);
+        textAreaSinAsignar = new JTextArea();
+        textAreaSinAsignar.setEditable(false);
+
+        JScrollPane scrollSinAsignar =
+                new JScrollPane(textAreaSinAsignar);
+
+        scrollSinAsignar.setBounds(577, 251, 193, 114);
+
+        add(scrollSinAsignar);
     }
 
     public JTable getTable() {
@@ -75,5 +86,12 @@ public class VentanaTareas extends JPanel {
 
     public JComboBox<Proyecto> getInputProyecto() {
         return inputProyecto;
+    }
+    public JTextArea getTextAreaAsignados() {
+        return textAreaAsignados;
+    }
+
+    public JTextArea getTextAreaSinAsignar() {
+        return textAreaSinAsignar;
     }
 }
