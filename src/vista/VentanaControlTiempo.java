@@ -50,7 +50,7 @@ public class VentanaControlTiempo extends JPanel {
 		add(ProyectoTxt);
 		
 		inputProyecto = new JComboBox();
-		inputProyecto.setBounds(85, 31, 148, 22);
+		inputProyecto.setBounds(85, 31, 317, 22);
 		add(inputProyecto);
 		dao.cargarProyecto(inputProyecto);
 		
@@ -63,7 +63,7 @@ public class VentanaControlTiempo extends JPanel {
 		add(TareaTxt);
 		
 	    inputTarea = new JComboBox();
-		inputTarea.setBounds(85, 64, 148, 22);
+		inputTarea.setBounds(85, 64, 317, 22);
 		add(inputTarea);
 		dao.cargarTarea(inputTarea);
 		
@@ -112,7 +112,7 @@ public class VentanaControlTiempo extends JPanel {
 		add(inputComentario);
 		
 		JTextPane ComentarioTxt = new JTextPane();
-		ComentarioTxt.setEnabled(false);
+		ComentarioTxt.setFocusable(false);
 		ComentarioTxt.setEditable(false);
 		ComentarioTxt.setText("Comentario\r\n");
 		ComentarioTxt.setBackground(new Color(180, 180, 180));

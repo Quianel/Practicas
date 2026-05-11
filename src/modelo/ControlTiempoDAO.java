@@ -9,7 +9,7 @@ import javax.swing.JComboBox;
 
 public class ControlTiempoDAO {
 	public void cargarProyecto(JComboBox<String> combo) {
-		String sql = "select nombre, codigo_interno from proyecto";
+		String sql = "select concat(nombre, ' ', codigo_interno)from proyecto";
 		 try (Connection con = ConexionBD.getConexion();
 	             PreparedStatement ps = con.prepareStatement(sql);
 	             ResultSet rs = ps.executeQuery()) {	
@@ -17,9 +17,9 @@ public class ControlTiempoDAO {
 	            combo.removeAllItems();
 
 	            while (rs.next()) {
-	                combo.addItem(rs.getString("nombre"));
+	                combo.addItem(rs.getString(1));
 	                
-	                combo.addItem(rs.getString("codigo_interno"));
+	                
 	            }
 
 	           
@@ -30,7 +30,7 @@ public class ControlTiempoDAO {
 	    
 	}
 	public void cargarTarea(JComboBox<String> combo) {
-		String sql = "select nombre from catalogo_tareas";
+		String sql = "select nombre_visible from tarea_proyecto";
 		 try (Connection con = ConexionBD.getConexion();
 	             PreparedStatement ps = con.prepareStatement(sql);
 	             ResultSet rs = ps.executeQuery()) {	
@@ -38,7 +38,7 @@ public class ControlTiempoDAO {
 	            combo.removeAllItems();
 
 	            while (rs.next()) {
-	                combo.addItem(rs.getString("nombre"));
+	                combo.addItem(rs.getString("nombre_visible"));
 	                
 	               
 	            }
