@@ -5,7 +5,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import modelo.VentanaCatalogoDeTareasDAO;
+import modelo.CatalogoDeTareasDAO;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -78,7 +78,7 @@ public class VentanaCatalogoDeTareas extends JPanel {
         btnGuardar.setFont(new Font("Microsoft YaHei UI", Font.BOLD, 12));
         btnGuardar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	VentanaCatalogoDeTareasDAO ventanaCatalogoDeTareasDAO = new VentanaCatalogoDeTareasDAO();
+            	CatalogoDeTareasDAO ventanaCatalogoDeTareasDAO = new CatalogoDeTareasDAO();
             	ventanaCatalogoDeTareasDAO.actualizarBaseDatos(modeloTabla);
             }
         });
@@ -103,7 +103,7 @@ public class VentanaCatalogoDeTareas extends JPanel {
         add(lblTipoProyectos);
 
         modeloTabla.setColumnIdentifiers(new Object[] {
-            "Codigo","Nombre de tarea", "Solo senior", "Nombre", "Activa"
+            "Codigo","Nombre de tarea", "Solo senior", "Nombre"
         });
 
         cargarDatos();
@@ -111,17 +111,17 @@ public class VentanaCatalogoDeTareas extends JPanel {
     }
 
 	private void cargarPorTipoProyecto(String tipoProyecto) {
-        VentanaCatalogoDeTareasDAO ventanaCatalogoDeTareasDAO = new VentanaCatalogoDeTareasDAO();
+        CatalogoDeTareasDAO ventanaCatalogoDeTareasDAO = new CatalogoDeTareasDAO();
         ventanaCatalogoDeTareasDAO.cargarTipoProyecto(tipoProyecto, modeloTabla);
 	}
 	
 	private void cargarDatos() {
-		VentanaCatalogoDeTareasDAO ventanaCatalogoDeTareasDAO = new VentanaCatalogoDeTareasDAO();
+		CatalogoDeTareasDAO ventanaCatalogoDeTareasDAO = new CatalogoDeTareasDAO();
 		ventanaCatalogoDeTareasDAO.cargaDatos(modeloTabla);
     }
 	
 	private void CargaDeComboBoxTiposProyectos() {
-		VentanaCatalogoDeTareasDAO ventanaCatalogoDeTareasDAO = new VentanaCatalogoDeTareasDAO();
+		CatalogoDeTareasDAO ventanaCatalogoDeTareasDAO = new CatalogoDeTareasDAO();
 		ventanaCatalogoDeTareasDAO.Combobox(cmbTiposProyectos);
 	}
 }

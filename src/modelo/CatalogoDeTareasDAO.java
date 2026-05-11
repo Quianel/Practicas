@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import javax.swing.JComboBox;
 import javax.swing.table.DefaultTableModel;
 
-public class VentanaCatalogoDeTareasDAO {
+public class CatalogoDeTareasDAO {
 	Connection getConexion() throws SQLException {
 		String url = "jdbc:mysql://localhost/time_order";
 		String usuario = "root";
@@ -43,10 +43,11 @@ public class VentanaCatalogoDeTareasDAO {
 		try {
 			Connection conexion = getConexion();
         	Statement consulta = conexion.createStatement();
-			ResultSet registro = consulta.executeQuery("select tarea_proyecto.id_tarea_proyecto as 'Codigo', tarea_proyecto.id_tarea_proyecto as 'Codigo', catalogo_tareas.nombre as 'Nombre de tarea', solo_senior as 'Solo senior', proyecto.Nombre, activa\r\n"
+			ResultSet registro = consulta.executeQuery("select tarea_proyecto.id_tarea_proyecto as 'Codigo', tarea_proyecto.id_tarea_proyecto as 'Codigo', catalogo_tareas.nombre as 'Nombre de tarea', solo_senior as 'Solo senior', proyecto.Nombre\r\n"
 					+ "from tarea_proyecto, catalogo_tareas, proyecto\r\n"
 					+ "where tarea_proyecto.id_proyecto = proyecto.id_proyecto\r\n"
-					+ "and tarea_proyecto.id_tarea_catalogo = catalogo_tareas.id_tarea_catalogo;\r\n");
+					+ "and tarea_proyecto.id_tarea_catalogo = catalogo_tareas.id_tarea_catalogo\r\n"
+					+ "and tarea_proyecto.activa = true;");
 			
             while (registro.next()) {
             	
@@ -56,7 +57,6 @@ public class VentanaCatalogoDeTareasDAO {
             	
             	Tarea_proyecto tarpro = new Tarea_proyecto();
             	tarpro.setId_tarea_proyecto(registro.getInt("Codigo"));
-            	tarpro.setActiva(registro.getBoolean("activa"));
             	catalogo.setTareaProyecto(tarpro);
             	
             	Proyecto pro = new Proyecto();
@@ -80,7 +80,6 @@ public class VentanaCatalogoDeTareasDAO {
 					ct.getNombre(),
 					ct.isSoloSenior(),
 					ct.getProyecto().getNombre(),
-					ct.getTareaProyecto().isActiva()
 			});
 		}
 
@@ -91,13 +90,9 @@ public class VentanaCatalogoDeTareasDAO {
 		String nombreTarea;
 		boolean soloSlider;
 		String nombre;
-		boolean activa;
 		for(int fila = 0; fila < modeloTabla.getRowCount(); fila++) {
 			codigo = (int) modeloTabla.getValueAt(fila, 0);
-			nombreTarea = (String) modeloTabla.getValueAt(fila, 1);
 			soloSlider = (boolean) modeloTabla.getValueAt(fila, 2);
-			nombre = (String) modeloTabla.getValueAt(fila, 3);
-			activa = (boolean) modeloTabla.getValueAt(fila, 4);
 			
 			Connection conexion;
 			try {
@@ -105,17 +100,7 @@ public class VentanaCatalogoDeTareasDAO {
 				Statement consulta = conexion.createStatement();
 				int registro = consulta.executeUpdate("update catalogo_tareas "
 						+ "set solo_senior = " + soloSlider + 
-						" where nombre = '" + nombreTarea + "'");
-				conexion.close();
-			}catch (Exception e) {
-				e.printStackTrace();
-			}
-			try {
-				conexion = getConexion();
-				Statement consulta = conexion.createStatement();
-				int registro = consulta.executeUpdate("update tarea_proyecto, proyecto set activa = " + activa + "\r\n"
-						+ "where proyecto.id_proyecto = tarea_proyecto.id_proyecto\r\n"
-						+ "and nombre = '" + nombre + "'");
+						" where id_tarea_catalogo = " + codigo);
 				conexion.close();
 			}catch (Exception e) {
 				e.printStackTrace();
@@ -132,22 +117,23 @@ public class VentanaCatalogoDeTareasDAO {
         	ResultSet registro;
         	
         	if(tipoProyecto == "(Todas)") {
-    			registro = consulta.executeQuery("select tarea_proyecto.id_tarea_proyecto as 'Codigo', catalogo_tareas.nombre as \"Nombre de tarea\", solo_senior as 'Solo senior', proyecto.nombre as \"Nombre\", activa\r\n"
+    			registro = consulta.executeQuery("select tarea_proyecto.id_tarea_proyecto as 'Codigo', catalogo_tareas.nombre as 'Nombre de tarea', solo_senior as 'Solo senior', proyecto.nombre as 'Nombre'\r\n"
     					+ "from tarea_proyecto, catalogo_tareas, tipo_proyecto, proyecto\r\n"
     					+ "where tarea_proyecto.id_tarea_catalogo = catalogo_tareas.id_tarea_catalogo\r\n"
     					+ "and catalogo_tareas.id_tipo_proyecto = tipo_proyecto.id_tipo_proyecto\r\n"
     					+ "and tipo_proyecto.id_tipo_proyecto = proyecto.id_tipo_proyecto\r\n"
-    					+ "and proyecto.id_tipo_proyecto = tipo_proyecto.id_tipo_proyecto;");
+    					+ "and proyecto.id_tipo_proyecto = tipo_proyecto.id_tipo_proyecto\r\n"
+    					+ "and tarea_proyecto.activa = true;");
         	}else {
-        		System.out.println(tipoProyecto);
-        		registro = consulta.executeQuery("select tarea_proyecto.id_tarea_proyecto as 'Codigo', "
-        				+ "catalogo_tareas.nombre as 'Nombre de tarea', solo_senior as 'Solo senior', "
-        				+ "proyecto.nombre as 'Nombre', activa  "
-        				+ "from tarea_proyecto, catalogo_tareas, tipo_proyecto, proyecto "
-        				+ "where tarea_proyecto.id_tarea_catalogo = catalogo_tareas.id_tarea_catalogo "
-        				+ "and catalogo_tareas.id_tipo_proyecto = tipo_proyecto.id_tipo_proyecto "
-        				+ "and tipo_proyecto.nombre = '" + tipoProyecto + "' "
-        				+ "and tipo_proyecto.id_tipo_proyecto = proyecto.id_tipo_proyecto;");
+        		registro = consulta.executeQuery("select tarea_proyecto.id_tarea_proyecto as 'Codigo', \r\n"
+        				+ "catalogo_tareas.nombre as 'Nombre de tarea', solo_senior as 'Solo senior', \r\n"
+        				+ "proyecto.nombre as 'Nombre'\r\n"
+        				+ "from tarea_proyecto, catalogo_tareas, tipo_proyecto, proyecto \r\n"
+        				+ "where tarea_proyecto.id_tarea_catalogo = catalogo_tareas.id_tarea_catalogo \r\n"
+        				+ "and catalogo_tareas.id_tipo_proyecto = tipo_proyecto.id_tipo_proyecto \r\n"
+        				+ "and tipo_proyecto.nombre = '" + tipoProyecto + "' \r\n"
+        				+ "and tipo_proyecto.id_tipo_proyecto = proyecto.id_tipo_proyecto\r\n"
+        				+ "and tarea_proyecto.activa = true;");
         	}
 			
             while (registro.next()) {
@@ -158,7 +144,6 @@ public class VentanaCatalogoDeTareasDAO {
             	
             	Tarea_proyecto tarpro = new Tarea_proyecto();
             	tarpro.setId_tarea_proyecto(registro.getInt("Codigo"));
-            	tarpro.setActiva(registro.getBoolean("activa"));
             	catalogo.setTareaProyecto(tarpro);
             	
             	Proyecto pro = new Proyecto();
@@ -182,7 +167,6 @@ public class VentanaCatalogoDeTareasDAO {
 					ct.getNombre(),
 					ct.isSoloSenior(),
 					ct.getProyecto().getNombre(),
-					ct.getTareaProyecto().isActiva()
 			});
 		}
 	}
