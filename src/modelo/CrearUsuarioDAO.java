@@ -2,6 +2,7 @@ package modelo;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -15,14 +16,26 @@ public class CrearUsuarioDAO {
 		if (t.isActivo() == false) {
 			return false;
 		}
+		
+		String hashearContra = org.mindrot.jbcrypt.BCrypt.hashpw(t.getPassword_hash(), org.mindrot.jbcrypt.BCrypt.gensalt());
+		
+		String query = "insert into trabajador (nombre,correo,password_hash,activo,"
+				+ "id_rol,id_perfil,id_nivel) values(?,?,?,?,?,?,?)";
 		try {
 			Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/time_order", "root", "");
-			Statement consulta = conexion.createStatement();
-			consulta.executeUpdate("insert into trabajador (nombre,correo,password_hash,activo,"
-					+ "id_rol,id_perfil,id_nivel) values(" + "'" + t.getNombre() + "'," + "'" + t.getCorreo() + "',"
-					+ "'" + t.getPassword_hash() + "'," + (t.isActivo() ? 1 : 0) + "," + t.getRol().getId_rol() + ","
-					+ t.getPerfil().getId_perfil() + "," + t.getNivel().getId_nivel() + "," + ")");
-			consulta.close();
+			
+			PreparedStatement consulta = conexion.prepareStatement(query);
+			
+			consulta.setString(1, t.getNombre());
+			consulta.setString(2, t.getCorreo());
+			consulta.setString(3, hashearContra);
+			consulta.setInt(4, t.isActivo() ? 1: 0);
+			consulta.setInt(5, t.getRol().getId_rol());
+			consulta.setInt(6, t.getPerfil().getId_perfil());
+			consulta.setInt(7, t.getNivel().getId_nivel());
+			
+			consulta.executeUpdate();
+			conexion.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			correcto = false;
@@ -175,6 +188,23 @@ public class CrearUsuarioDAO {
 	    }
 
 	    return t;
+	}
+	
+	public Trabajador validarLogin(String correo,String contraseniaIntrod) {
+		Connection conexion = null;
+		Trabajador t = null;
+		String query = "select * from trabajador where correo = ?";
+		
+		try {
+			conexion = DriverManager.getConnection("jdbc:mysql://localhost/time_order","root","");
+			PreparedStatement consulta = conexion.prepareStatement(query);
+			
+			consulta.setString(1, correo);
+			ResultSet registro = consulta.executeQuery();
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
 	}
 
 }
