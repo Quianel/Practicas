@@ -79,10 +79,19 @@ public class LoginController {
                         "Bienvenido",
                         JOptionPane.INFORMATION_MESSAGE);
                 
-                String usuario = UsuarioDAO.seleccionUsuario(correo); //RECIBE TRABAJADOR O ADMINISTRADOR
+                String usuarioRol = UsuarioDAO.seleccionUsuario(correo); //RECIBE TRABAJADOR O ADMINISTRADOR
+                
+                java.util.prefs.Preferences prefs = java.util.prefs.Preferences.userNodeForPackage(VentanaLogin.class);
+                if(vista.esRecordarSeleccionado()) {
+                	prefs.put("usuario_correo",correo);
+                	prefs.put("usuario_rol",usuarioRol);
+                }else {
+                	prefs.remove("usuario_correo");
+                	prefs.remove("usuario_rol");
+                }
                 
                 // Abrir menú principal
-                VentanaMenuPrincipal menu = new VentanaMenuPrincipal(usuario);
+                VentanaMenuPrincipal menu = new VentanaMenuPrincipal(usuarioRol);
                 menu.setVisible(true);
 
                 // Cerrar login
