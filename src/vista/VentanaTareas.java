@@ -106,6 +106,9 @@ public class VentanaTareas extends JPanel {
         add(scrollSinAsignar);
         
         btnNuevaTarea = new JButton("Nueva tarea");
+        btnNuevaTarea.setForeground(new Color(240, 89, 40));
+        btnNuevaTarea.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
+        btnNuevaTarea.setBackground(new Color(187, 190, 253));
         btnNuevaTarea.setBounds(39, 358, 120, 22);
         add(btnNuevaTarea);
     }

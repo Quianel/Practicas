@@ -199,6 +199,7 @@ public class VentanaMenuPrincipal extends JFrame {
 		mnuPrincipal.add(mnCerrarSesion);
 		
 		JLabel lblTimeorder = new JLabel("                                       TIME  ORDER");
+		lblTimeorder.setForeground(new Color(240, 89, 40));
 		lblTimeorder.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
 		lblTimeorder.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(lblTimeorder, BorderLayout.NORTH);

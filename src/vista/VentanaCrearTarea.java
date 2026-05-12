@@ -41,72 +41,92 @@ public class VentanaCrearTarea extends JPanel {
 	 * Create the panel.
 	 */
 	public VentanaCrearTarea() {
-		setBackground(new Color(180, 180, 180));
+		setBackground(new Color(53, 48, 105));
 		setLayout(null);
 		
 		JTextPane txtpnProyecto = new JTextPane();
+		txtpnProyecto.setForeground(new Color(240, 89, 40));
 		txtpnProyecto.setText("Proyecto:");
-		txtpnProyecto.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
+		txtpnProyecto.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
 		txtpnProyecto.setEditable(false);
-		txtpnProyecto.setBackground(UIManager.getColor("InternalFrame.activeBorderColor"));
+		txtpnProyecto.setBackground(new Color(53, 48, 105));
 		txtpnProyecto.setBounds(33, 46, 96, 20);
 		add(txtpnProyecto);
 		
 		JTextPane txtpnTipoDeTarea = new JTextPane();
+		txtpnTipoDeTarea.setForeground(new Color(240, 89, 40));
 		txtpnTipoDeTarea.setText("Tipo de tarea:");
-		txtpnTipoDeTarea.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
+		txtpnTipoDeTarea.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
 		txtpnTipoDeTarea.setEditable(false);
-		txtpnTipoDeTarea.setBackground(UIManager.getColor("InternalFrame.activeBorderColor"));
+		txtpnTipoDeTarea.setBackground(new Color(53, 48, 105));
 		txtpnTipoDeTarea.setBounds(33, 77, 96, 20);
 		add(txtpnTipoDeTarea);
 		
 		inputTipo = new JComboBox();
+		inputTipo.setForeground(new Color(240, 89, 40));
+		inputTipo.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
+		inputTipo.setBackground(new Color(187, 190, 253));
 		inputTipo.setBounds(137, 75, 143, 22);
 		add(inputTipo);
 		
 		GuardarBoton = new JButton("Guardar");
-		GuardarBoton.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
-		GuardarBoton.setBounds(170, 243, 75, 22);
+		GuardarBoton.setForeground(new Color(240, 89, 40));
+		GuardarBoton.setBackground(new Color(187, 190, 253));
+		GuardarBoton.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
+		GuardarBoton.setBounds(170, 243, 90, 22);
 		add(GuardarBoton);
 		
 		JTextPane txtpnTareaPadre = new JTextPane();
+		txtpnTareaPadre.setForeground(new Color(240, 89, 40));
 		txtpnTareaPadre.setText("Tarea padre:");
-		txtpnTareaPadre.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
+		txtpnTareaPadre.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
 		txtpnTareaPadre.setEditable(false);
-		txtpnTareaPadre.setBackground(UIManager.getColor("InternalFrame.activeBorderColor"));
+		txtpnTareaPadre.setBackground(new Color(53, 48, 105));
 		txtpnTareaPadre.setBounds(33, 108, 96, 20);
 		add(txtpnTareaPadre);
 		
 		inputTareasPadre = new JComboBox();
+		inputTareasPadre.setForeground(new Color(240, 89, 40));
+		inputTareasPadre.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
+		inputTareasPadre.setBackground(new Color(187, 190, 253));
 		inputTareasPadre.setBounds(137, 108, 143, 22);
 		add(inputTareasPadre);
 		
 		JTextPane txtpnEstado = new JTextPane();
+		txtpnEstado.setForeground(new Color(240, 89, 40));
 		txtpnEstado.setText("Estado:");
-		txtpnEstado.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
+		txtpnEstado.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
 		txtpnEstado.setEditable(false);
-		txtpnEstado.setBackground(UIManager.getColor("InternalFrame.activeBorderColor"));
+		txtpnEstado.setBackground(new Color(53, 48, 105));
 		txtpnEstado.setBounds(33, 139, 96, 20);
 		add(txtpnEstado);
 		
 		inputEstadoTarea = new JComboBox();
+		inputEstadoTarea.setForeground(new Color(240, 89, 40));
+		inputEstadoTarea.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
+		inputEstadoTarea.setBackground(new Color(187, 190, 253));
 		inputEstadoTarea.setBounds(137, 141, 143, 22);
 		add(inputEstadoTarea);
 		
 		JTextPane txtpnNombre = new JTextPane();
+		txtpnNombre.setForeground(new Color(240, 89, 40));
 		txtpnNombre.setText("Nombre:");
-		txtpnNombre.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
+		txtpnNombre.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
 		txtpnNombre.setEditable(false);
-		txtpnNombre.setBackground(UIManager.getColor("InternalFrame.activeBorderColor"));
+		txtpnNombre.setBackground(new Color(53, 48, 105));
 		txtpnNombre.setBounds(33, 170, 96, 20);
 		add(txtpnNombre);
 		
 		textField_1 = new JTextField();
+		textField_1.setBackground(new Color(187, 190, 253));
 		textField_1.setColumns(10);
 		textField_1.setBounds(137, 174, 143, 20);
 		add(textField_1);
 		
 		cmbProyecto = new JComboBox();
+		cmbProyecto.setForeground(new Color(240, 89, 40));
+		cmbProyecto.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
+		cmbProyecto.setBackground(new Color(187, 190, 253));
 		cmbProyecto.setBounds(137, 44, 143, 22);
 		add(cmbProyecto);
 		

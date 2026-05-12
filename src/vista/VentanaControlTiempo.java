@@ -11,6 +11,9 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JComboBox;
 import javax.swing.UIManager;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 
 import modelo.ControlTiempoDAO;
 
@@ -132,6 +135,18 @@ public class VentanaControlTiempo extends JPanel {
 		ComentarioTxt.setBackground(new Color(53, 48, 105));
 		ComentarioTxt.setBounds(489, 278, 69, 20);
 		add(ComentarioTxt);
+		
+		JTextPane HistorialHoyTxt = new JTextPane();
+		StyledDocument doc = HistorialHoyTxt.getStyledDocument();
+		SimpleAttributeSet center = new SimpleAttributeSet();
+		StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
+		doc.setParagraphAttributes(0, doc.getLength(), center, false);
+		HistorialHoyTxt.setText("Historial de hoy");
+		HistorialHoyTxt.setForeground(new Color(240, 89, 40));
+		HistorialHoyTxt.setBackground(new Color(187, 190, 253));
+		HistorialHoyTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
+		HistorialHoyTxt.setBounds(489, 46, 317, 20);
+		add(HistorialHoyTxt);
 
 	}
 	private void iniciarCronometro() {
