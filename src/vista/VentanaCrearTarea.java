@@ -31,10 +31,11 @@ public class VentanaCrearTarea extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private JTextField textField_1;
-	private JComboBox cmbProyecto;
-	private JComboBox inputTipo;
-	private JComboBox inputTareasPadre;
-	private JComboBox inputEstadoTarea;
+	private JComboBox<Proyecto> cmbProyecto;
+	private JComboBox<Catalogo_tareas> inputTipo;
+	private JComboBox<Tarea_proyecto> inputTareasPadre;
+	private JComboBox<Estado_tarea> inputEstadoTarea;
+	private JButton GuardarBoton;
 
 	/**
 	 * Create the panel.
@@ -63,50 +64,7 @@ public class VentanaCrearTarea extends JPanel {
 		inputTipo.setBounds(137, 75, 143, 22);
 		add(inputTipo);
 		
-		JButton GuardarBoton = new JButton("Guardar");
-		GuardarBoton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				Tarea_proyecto nuevaTarea = new Tarea_proyecto();
-				nuevaTarea.setProyec((Proyecto)(cmbProyecto.getSelectedItem()));
-				nuevaTarea.setCatalog((Catalogo_tareas)(inputTipo.getSelectedItem()));
-				nuevaTarea.setId_tarea_padre(inputTareasPadre.getSelectedIndex());//duda aqui
-				nuevaTarea.setEstadotar((Estado_tarea)(inputEstadoTarea.getSelectedItem()));
-				nuevaTarea.setNombre_visible(textField_1.getText());
-				
-				CrearTareaDAO dao = new CrearTareaDAO();
-				boolean exito;
-				
-				exito = dao.insertarTarea(nuevaTarea);
-				cmbProyecto.setSelectedIndex(-1);
-				inputTipo.setSelectedIndex(-1);
-				inputTareasPadre.setSelectedIndex(-1);
-				inputEstadoTarea.setSelectedIndex(-1);
-				textField_1.setText("");
-				
-				  if(exito) {
-
-			            JOptionPane.showMessageDialog(
-			                    null,
-			                    "Tarea guardada correctamente",
-			                    "EXITO",
-			                    JOptionPane.INFORMATION_MESSAGE);
-
-			        } else {
-
-			            JOptionPane.showMessageDialog(
-			                    null,
-			                    "Error al guardar tarea",
-			                    "ERROR",
-			                    JOptionPane.ERROR_MESSAGE);
-			        }
-				
-				
-				
-			
-				
-			}
-		});
+		GuardarBoton = new JButton("Guardar");
 		GuardarBoton.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
 		GuardarBoton.setBounds(170, 243, 75, 22);
 		add(GuardarBoton);
@@ -211,5 +169,13 @@ public class VentanaCrearTarea extends JPanel {
 	
 	public JComboBox<Estado_tarea> getInputEstado(){
 		return inputEstadoTarea;
+	}
+	
+	public JButton getBtnGuardar() {
+	    return GuardarBoton;
+	}
+
+	public JTextField getTxtNombre() {
+	    return textField_1;
 	}
 }

@@ -2,7 +2,6 @@ package controlador;
 
 import modelo.*;
 import vista.VentanaCrearTarea;
-import vista.VentanaMenuPrincipal;
 import vista.VentanaTareas;
 
 import java.util.ArrayList;
@@ -38,6 +37,7 @@ public class TareaProyectoController {
                 cargarTabla(p.getId_proyecto());
 
                 if (p.getId_proyecto() != -1) {
+
                     cargarTrabajadoresSinAsignar(
                         p.getId_proyecto()
                     );
@@ -54,22 +54,47 @@ public class TareaProyectoController {
                 }
             }
         });
-        
-     // mostrar ventana crear tarea
-        this.vista.getBtnNuevaTarea().addActionListener(e -> {
+
+        // =========================
+        // NUEVA TAREA
+        // =========================
+        vista.getBtnNuevaTarea().addActionListener(e -> {
+
+            VentanaCrearTarea vct = new VentanaCrearTarea();
 
             JFrame frame = new JFrame("Crear tarea");
 
-            frame.setContentPane(new VentanaCrearTarea());
+            // IMPORTANTE
+            new TareaYsubtareasController(
 
-            frame.setSize(1000, 600);
+                vct,
+
+                () -> {
+
+                    Proyecto p =
+                            (Proyecto) vista.getInputProyecto().getSelectedItem();
+
+                    if (p != null) {
+
+                        cargarTabla(p.getId_proyecto());
+
+                    } else {
+
+                        cargarTabla(-1);
+                    }
+
+                    frame.dispose();
+                }
+            );
+
+            frame.setContentPane(vct);
+            frame.setSize(400, 350);
             frame.setLocationRelativeTo(null);
-            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
             frame.setVisible(true);
         });
-        
-     // Cuando se selecciona una tarea de la tabla, se cargan los trabajadores asignados a esa tarea
+        // =========================
+        // SELECCION TABLA
+        // =========================
         vista.getTable().getSelectionModel().addListSelectionListener(e -> {
 
             if (!e.getValueIsAdjusting()) {
@@ -87,24 +112,22 @@ public class TareaProyectoController {
                 }
             }
         });
-       
-     // =========================
-     // BOTON QUITAR SIN ASIGNAR
-     // =========================
 
-     vista.getBtnQuitarSinAsignar().addActionListener(e -> {
+        // =========================
+        // BOTON QUITAR SIN ASIGNAR
+        // =========================
+        vista.getBtnQuitarSinAsignar().addActionListener(e -> {
 
-         quitarTrabajador();
-     });
-     
-     // =========================
-     // BOTON QUITAR ASIGNADO
-     // =========================
+            quitarTrabajador();
+        });
 
-     vista.getBtnQuitarAsignado().addActionListener(e -> {
+        // =========================
+        // BOTON QUITAR ASIGNADO
+        // =========================
+        vista.getBtnQuitarAsignado().addActionListener(e -> {
 
-         quitarAsignacion();
-     });
+            quitarAsignacion();
+        });
     }
 
     // =========================
@@ -119,9 +142,6 @@ public class TareaProyectoController {
 
             DefaultComboBoxModel<Proyecto> combo = new DefaultComboBoxModel<>();
 
-            // =========================
-            // OPCIÓN TODOS
-            // =========================
             Proyecto todos = new Proyecto();
             todos.setId_proyecto(-1);
             todos.setNombre("Seleccione un proyecto");
@@ -182,12 +202,13 @@ public class TareaProyectoController {
             e.printStackTrace();
         }
     }
-    
+
     private void cargarTrabajadoresAsignados(int idTareaProyecto) {
 
         try {
 
-            ArrayList<Trabajador> lista = modelo.obtenerTrabajadoresPorTarea(idTareaProyecto);
+            ArrayList<Trabajador> lista =
+                    modelo.obtenerTrabajadoresPorTarea(idTareaProyecto);
 
             DefaultListModel<Trabajador> modeloLista =
                     new DefaultListModel<>();
@@ -204,7 +225,7 @@ public class TareaProyectoController {
             e.printStackTrace();
         }
     }
-    
+
     private void cargarTrabajadoresSinAsignar(int idProyecto) {
 
         try {
@@ -227,6 +248,7 @@ public class TareaProyectoController {
             e.printStackTrace();
         }
     }
+
     private void quitarAsignacion() {
 
         try {
@@ -264,12 +286,10 @@ public class TareaProyectoController {
                 trabajador.getId_trabajador()
             );
 
-            // RECARGAR ASIGNADOS DE LA TAREA
             cargarTrabajadoresAsignados(
                 idTareaProyecto
             );
 
-            // RECARGAR SIN ASIGNAR DEL PROYECTO
             Proyecto p = (Proyecto)
                     vista.getInputProyecto().getSelectedItem();
 
@@ -290,6 +310,7 @@ public class TareaProyectoController {
             e.printStackTrace();
         }
     }
+
     private void quitarTrabajador() {
 
         try {

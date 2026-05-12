@@ -13,27 +13,67 @@ import java.util.ArrayList;
 public class CrearTareaDAO {
 
 	public boolean insertarTarea(Tarea_proyecto t) {
-		boolean correcto = true;
-		
-		try {
-			Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/time_order", "root", "");
-			Statement consulta = conexion.createStatement();
-			consulta.executeUpdate("insert into tarea_proyecto (id_proyecto,id_tarea_catalogo,id_tarea_padre,id_estado_tarea,nombre_visible,activa)"
-									+ " values("
-									+"'" + t.getProyec().getId_proyecto() + "',"
-									+"'" + t.getCatalog().getId_tarea_catalogo() + "',"
-									+"'" + t.getId_tarea_padre() + "',"
-									+"'" + t.getEstadotar().getId_estado_tarea() + "',"
-									+"'" + t.getNombre_visible() + "',"
-									+"True,"
-									+")");
-			consulta.close();
-		} catch (SQLException e) {
-		    e.printStackTrace();
-		    correcto = false;
-		}
-		return correcto;
-	}
+
+    boolean correcto = true;
+
+    try {
+
+        Connection conexion =
+                DriverManager.getConnection(
+                    "jdbc:mysql://localhost/time_order",
+                    "root",
+                    ""
+                );
+
+        Statement consulta =
+                conexion.createStatement();
+
+        String sql =
+            "INSERT INTO tarea_proyecto " +
+
+            "(id_proyecto, " +
+            "id_tarea_catalogo, " +
+            "id_tarea_padre, " +
+            "id_estado_tarea, " +
+            "nombre_visible, " +
+            "activa) " +
+
+            "VALUES (" +
+
+            t.getProyec().getId_proyecto() + "," +
+            t.getCatalog().getId_tarea_catalogo() + "," +
+
+            (
+                t.getId_tarea_padre() == 0
+                ? "NULL"
+                : t.getId_tarea_padre()
+            ) +
+
+            "," +
+
+            t.getEstadotar().getId_estado_tarea() + "," +
+
+            "'" + t.getNombre_visible() + "'," +
+
+            "true" +
+
+            ")";
+
+        System.out.println(sql);
+
+        consulta.executeUpdate(sql);
+
+        consulta.close();
+        conexion.close();
+
+    } catch (SQLException e) {
+
+        e.printStackTrace();
+        correcto = false;
+    }
+
+    return correcto;
+}
 	
 	public boolean modificarTarea(int id_tarea, int id_proyecto, int id_tarea_catalogo,int id_tarea_padre, int id_estado_tarea, String nombreVisible, boolean activa,
 			LocalDate fecha_inicio,LocalDate fecha_limite,String descripcion,boolean es_generico) {
@@ -67,26 +107,51 @@ public class CrearTareaDAO {
 	}
 	
 	public ArrayList<Catalogo_tareas> cargarTipoTarea(){
-		ArrayList<Catalogo_tareas> lista = new ArrayList<>();
-		
-		try {
-			Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/time_order", "root", "");
-			Statement consulta = conexion.createStatement();
-			ResultSet registro = consulta.executeQuery("select nombre from catalogo_tareas");
-			
-			while(registro.next()) {
-				Catalogo_tareas tipo = new Catalogo_tareas();
-				tipo.setNombre(registro.getString("nombre"));
-				lista.add(tipo);
-			}
-			
-			conexion.close();
-			return lista;
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
+
+	    ArrayList<Catalogo_tareas> lista = new ArrayList<>();
+
+	    try {
+
+	        Connection conexion =
+	                DriverManager.getConnection(
+	                    "jdbc:mysql://localhost/time_order",
+	                    "root",
+	                    ""
+	                );
+
+	        Statement consulta = conexion.createStatement();
+
+	        ResultSet registro =
+	                consulta.executeQuery(
+	                    "select * from catalogo_tareas"
+	                );
+
+	        while(registro.next()) {
+
+	            Catalogo_tareas tipo =
+	                    new Catalogo_tareas();
+
+	            tipo.setId_tarea_catalogo(
+	                registro.getInt("id_tarea_catalogo")
+	            );
+
+	            tipo.setNombre(
+	                registro.getString("nombre")
+	            );
+
+	            lista.add(tipo);
+	        }
+
+	        conexion.close();
+
+	        return lista;
+
+	    } catch (SQLException e) {
+
+	        e.printStackTrace();
+	    }
+
+	    return null;
 	}
 	
 	public ArrayList<Estado_tarea> cargarEstadoTar(){
@@ -114,29 +179,63 @@ public class CrearTareaDAO {
 	}
 	
 	public ArrayList<Tarea_proyecto> cargarTareaPadre(){
-		ArrayList<Tarea_proyecto> lista = new ArrayList<>();
-		Connection conexion;
-		try {
-			conexion = DriverManager.getConnection("jdbc:mysql://localhost/time_order", "root", "");
-			Statement consulta = conexion.createStatement();
-			ResultSet registro = consulta.executeQuery("select id_tarea_padre,nombre_visible,activa from tarea_proyecto "
-														+ "where id_tarea_padre = null or id_tarea_padre = 0 "
-														+ "and activa= 1");
-			
-			while(registro.next()) {
-				Tarea_proyecto tareapadre = new Tarea_proyecto();
-				tareapadre.setId_tarea_padre(registro.getInt("id_tarea_padre"));
-				tareapadre.setNombre_visible(registro.getString("nombre_visible"));
-				tareapadre.setActiva(registro.getBoolean("activa"));
-					
-				lista.add(tareapadre);
-			}
-			conexion.close();
-			return lista;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;	
+
+	    ArrayList<Tarea_proyecto> lista =
+	            new ArrayList<>();
+
+	    try {
+
+	        Connection conexion =
+	                DriverManager.getConnection(
+	                    "jdbc:mysql://localhost/time_order",
+	                    "root",
+	                    ""
+	                );
+
+	        Statement consulta =
+	                conexion.createStatement();
+
+	        ResultSet registro =
+	                consulta.executeQuery(
+
+	                    "SELECT id_tarea_proyecto, " +
+	                    "nombre_visible, activa " +
+
+	                    "FROM tarea_proyecto " +
+
+	                    "WHERE activa = 1"
+	                );
+
+	        while(registro.next()) {
+
+	            Tarea_proyecto tareapadre =
+	                    new Tarea_proyecto();
+
+	            tareapadre.setId_tarea_proyecto(
+	                registro.getInt("id_tarea_proyecto")
+	            );
+
+	            tareapadre.setNombre_visible(
+	                registro.getString("nombre_visible")
+	            );
+
+	            tareapadre.setActiva(
+	                registro.getBoolean("activa")
+	            );
+
+	            lista.add(tareapadre);
+	        }
+
+	        conexion.close();
+
+	        return lista;
+
+	    } catch (SQLException e) {
+
+	        e.printStackTrace();
+	    }
+
+	    return null;
 	}
 	
 	public ArrayList<Proyecto> cargarProyectos(){
@@ -179,7 +278,4 @@ public class CrearTareaDAO {
 		}
 		return null;	
 	}
-	
-	
-		
 }

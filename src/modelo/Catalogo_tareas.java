@@ -74,6 +74,9 @@ public class Catalogo_tareas {
 		this.proyecto = proyecto;
 	}
 	
-	
+	@Override
+	public String toString() {
+	    return nombre;
+	}
 
 }
