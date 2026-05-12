@@ -18,6 +18,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JLabel;
 
 public class VentanaLogin extends JFrame {
 
@@ -85,7 +86,7 @@ public class VentanaLogin extends JFrame {
         RecordarTxt.setForeground(new Color(240, 89, 68));
         RecordarTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
         RecordarTxt.setBackground(new Color(53, 48, 105));
-        RecordarTxt.setBounds(157, 106, 129, 22);
+        RecordarTxt.setBounds(147, 106, 129, 22);
         contentPane.add(RecordarTxt);
 
         botonIS = new JButton("Iniciar Sesión");
@@ -131,6 +132,12 @@ public class VentanaLogin extends JFrame {
         InputContrasena.setBackground(new Color(187, 190, 253));
         InputContrasena.setBounds(147, 79, 175, 20);
         contentPane.add(InputContrasena);
+        
+        JLabel lblNewLabel = new JLabel("Olvido su contraseña");
+        lblNewLabel.setForeground(new Color(240, 89, 40));
+        lblNewLabel.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
+        lblNewLabel.setBounds(147, 168, 129, 14);
+        contentPane.add(lblNewLabel);
     }
 
     // =========================
