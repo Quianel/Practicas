@@ -1,12 +1,15 @@
 package controlador;
 
 import modelo.*;
+import vista.VentanaCrearTarea;
+import vista.VentanaMenuPrincipal;
 import vista.VentanaTareas;
 
 import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -50,6 +53,20 @@ public class TareaProyectoController {
                     );
                 }
             }
+        });
+        
+     // mostrar ventana crear tarea
+        this.vista.getBtnNuevaTarea().addActionListener(e -> {
+
+            JFrame frame = new JFrame("Crear tarea");
+
+            frame.setContentPane(new VentanaCrearTarea());
+
+            frame.setSize(1000, 600);
+            frame.setLocationRelativeTo(null);
+            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+            frame.setVisible(true);
         });
         
      // Cuando se selecciona una tarea de la tabla, se cargan los trabajadores asignados a esa tarea

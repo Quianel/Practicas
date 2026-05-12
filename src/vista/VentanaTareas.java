@@ -21,6 +21,7 @@ public class VentanaTareas extends JPanel {
 
     private JButton btnQuitarAsignado;
     private JButton btnQuitarSinAsignar;
+    private JButton btnNuevaTarea;
 
     public VentanaTareas() {
 
@@ -103,6 +104,10 @@ public class VentanaTareas extends JPanel {
         scrollSinAsignar.setBounds(701, 316, 251, 114);
 
         add(scrollSinAsignar);
+        
+        btnNuevaTarea = new JButton("Nueva tarea");
+        btnNuevaTarea.setBounds(39, 358, 120, 22);
+        add(btnNuevaTarea);
     }
 
     public JTable getTable() {
@@ -127,5 +132,9 @@ public class VentanaTareas extends JPanel {
 
     public JButton getBtnQuitarSinAsignar() {
         return btnQuitarSinAsignar;
+    }
+    
+    public JButton getBtnNuevaTarea() {
+    	return btnNuevaTarea;
     }
 }
