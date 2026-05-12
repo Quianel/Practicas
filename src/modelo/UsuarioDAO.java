@@ -59,6 +59,8 @@ public class UsuarioDAO {
 		return tipo;
 	}
 	
+	/*
+	 * METODO PARA OBTENER CONTRASEÑA USUARIO
 	public String obtenerContrasenaUsu (String correo) {
 		String consultaSql = "select password_hash from trabajador where correo = ?";
 		try {
@@ -78,4 +80,5 @@ public class UsuarioDAO {
 		}
 		return null;
 	}
+	*/
 }
