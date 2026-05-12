@@ -19,6 +19,8 @@ import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class VentanaLogin extends JFrame {
 
@@ -133,11 +135,17 @@ public class VentanaLogin extends JFrame {
         InputContrasena.setBounds(147, 79, 175, 20);
         contentPane.add(InputContrasena);
         
-        JLabel lblNewLabel = new JLabel("Olvido su contraseña");
-        lblNewLabel.setForeground(new Color(240, 89, 40));
-        lblNewLabel.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
-        lblNewLabel.setBounds(147, 168, 129, 14);
-        contentPane.add(lblNewLabel);
+        JLabel lblOlvidarContra = new JLabel("Olvido su contraseña");
+        lblOlvidarContra.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseClicked(MouseEvent e) {
+        		ejecutarRecuperacion();
+        	}
+        });
+        lblOlvidarContra.setForeground(new Color(240, 89, 40));
+        lblOlvidarContra.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
+        lblOlvidarContra.setBounds(147, 168, 129, 14);
+        contentPane.add(lblOlvidarContra);
     }
 
     // =========================
@@ -155,4 +163,24 @@ public class VentanaLogin extends JFrame {
     public JButton getBotonLogin() {
         return botonIS;
     }
+    // =========================
+    // RECUPERAR CONTRASEÑA
+    // =========================
+    
+    public void ejecutarRecuperacion() {
+    	String correo = JOptionPane.showInputDialog(null,"Introduzca su correo electronico: ","RECUPERAR CONTRASEÑA",JOptionPane.QUESTION_MESSAGE);
+    	if(correo != null && !correo.trim().isEmpty()) {
+    		
+    		UsuarioDAO dao = new UsuarioDAO();
+    		
+    		String pass = dao.obtenerContrasenaUsu(correo.trim());
+    		
+    		if(pass != null) {
+    			JOptionPane.showMessageDialog(null, "Su contraseña es: " + pass, "INFO",JOptionPane.INFORMATION_MESSAGE);
+    		}else {
+    			JOptionPane.showMessageDialog(null, "Ese correo no existe o no esta registrado","ERROR",JOptionPane.ERROR_MESSAGE);;
+    		}
+    	}
+    }
+    
 }

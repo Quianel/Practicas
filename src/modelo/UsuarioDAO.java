@@ -1,8 +1,10 @@
 package modelo;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 public class UsuarioDAO {
@@ -55,5 +57,25 @@ public class UsuarioDAO {
 		}
 		
 		return tipo;
+	}
+	
+	public String obtenerContrasenaUsu (String correo) {
+		String consultaSql = "select password_hash from trabajador where correo = ?";
+		try {
+			Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/time_order", "root", "");
+			PreparedStatement consulta = conexion.prepareStatement(consultaSql);
+			
+			consulta.setString(1, correo);
+			ResultSet registro = consulta.executeQuery();
+			
+			if(registro.next()) {
+				return registro.getString("password_hash");
+			}
+			conexion.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }
