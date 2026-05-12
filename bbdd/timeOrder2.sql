@@ -276,9 +276,9 @@ CREATE TABLE `registro_tiempo` (
 --
 
 INSERT INTO `registro_tiempo` (`id_registro`, `id_trabajador`, `id_proyecto`, `id_tarea_proyecto`, `fecha_hora_inicio`, `fecha_hora_fin`, `minutos_totales`, `modo_registro`, `comentario`) VALUES
-(1, 1, 1, NULL, '2026-05-05 15:30:00', '2026-05-05 20:00:00', 100, 'slider', 'Primer registro'),
-(2, 1, 1, NULL, '2026-05-05 15:30:00', '2026-05-05 15:30:00', 200, 'manual', 'Segundo registro'),
-(3, 1, 1, NULL, '2026-05-05 15:30:00', '2026-05-05 15:30:00', 300, 'manual', 'Tercer registro');
+(1, 1, 1, 1, '2026-05-05 15:30:00', '2026-05-05 20:00:00', 100, 'slider', 'Primer registro'),
+(2, 1, 1, 2, '2026-05-05 15:30:00', '2026-05-05 15:30:00', 200, 'manual', 'Segundo registro'),
+(3, 1, 1, 3, '2026-05-05 15:30:00', '2026-05-05 15:30:00', 300, 'manual', 'Tercer registro');
 
 -- --------------------------------------------------------
 
