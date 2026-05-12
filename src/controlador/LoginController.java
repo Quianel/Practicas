@@ -91,7 +91,7 @@ public class LoginController {
                 }
                 
                 // Abrir menú principal
-                VentanaMenuPrincipal menu = new VentanaMenuPrincipal(usuarioRol);
+                VentanaMenuPrincipal menu = new VentanaMenuPrincipal(usuarioRol, correo);
                 menu.setVisible(true);
 
                 // Cerrar login

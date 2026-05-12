@@ -55,8 +55,9 @@ public class VentanaMenuPrincipal extends JFrame {
 	/**
 	 * Create the frame.
 	 * @param usuario 
+	 * @param correo 
 	 */
-	public VentanaMenuPrincipal(String usuario) {
+	public VentanaMenuPrincipal(String usuario, String correo) {
 		
 		setFont(new Font("Liberation Mono", Font.BOLD, 14));
 		setTitle("Menú principal / Aside");
@@ -143,6 +144,13 @@ public class VentanaMenuPrincipal extends JFrame {
 		
 		if(usuario.equals("Trabajador")) {
 			JMenu mnMistareas = new JMenu("Mis tareas");
+			mnMistareas.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mousePressed(MouseEvent e) {
+					CardLayout cl = (CardLayout)(panelCardLCarga.getLayout());
+					cl.show(panelCardLCarga, "ventMisTareas");
+				}
+			});
 			mnMistareas.setForeground(new Color(251, 123, 68));
 			mnMistareas.setIcon(new ImageIcon("img/misTareas.png"));
 			mnMistareas.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 12));
@@ -243,6 +251,9 @@ public class VentanaMenuPrincipal extends JFrame {
 		
 		VentanaCatalogoDeTareas vCatTareas = new VentanaCatalogoDeTareas();
 		panelCardLCarga.add(vCatTareas, "ventCatTareas");
+		
+		Ventana_MisTareas vMisTareas = new Ventana_MisTareas(correo);
+		panelCardLCarga.add(vMisTareas, "ventMisTareas");
 		
 		VentanaTareas vt = new VentanaTareas();
 		new TareaProyectoController(vt);

@@ -143,7 +143,8 @@ public class ControlTiempoDAO {
             			rs.getInt("id_tarea_padre"),
             			est,
             			rs.getString("nombre_visible"),
-            			rs.getBoolean("activa")
+            			rs.getBoolean("activa"), 
+            			null
             			);
             	Registro_tiempo rt = new Registro_tiempo(
             			rs.getInt("id_registro"),

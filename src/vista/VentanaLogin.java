@@ -41,8 +41,9 @@ public class VentanaLogin extends JFrame {
                 	
                 	java.util.prefs.Preferences prefs = java.util.prefs.Preferences.userNodeForPackage(VentanaLogin.class);
                 	String rolGuardado = prefs.get("usuario_rol",null);
+                	String correoGuardado = prefs.get("correo", null);
                 	if(rolGuardado != null) {
-                		VentanaMenuPrincipal menu = new VentanaMenuPrincipal(rolGuardado);
+                		VentanaMenuPrincipal menu = new VentanaMenuPrincipal(rolGuardado, correoGuardado);
                 		menu.setVisible(true);
                 		
                 		frame.dispose();

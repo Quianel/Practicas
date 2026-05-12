@@ -62,7 +62,7 @@ public class TareasYAsignacionesDAO {
 						rs.getString("nombre_estado_tarea"));
 
 				Tarea_proyecto tarea = new Tarea_proyecto(rs.getInt("id_tarea_proyecto"), proyecto, catalogo,
-						rs.getInt("id_tarea_padre"), estado, rs.getString("nombre_visible"), rs.getBoolean("activa"));
+						rs.getInt("id_tarea_padre"), estado, rs.getString("nombre_visible"), rs.getBoolean("activa"), null);
 
 				lista.add(tarea);
 			}

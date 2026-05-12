@@ -8,6 +8,7 @@ public class Tarea_proyecto {//Clase tarea principal
 	private Estado_tarea estadotar;//necesitamos de la tabla estado_tarea para acceder a especificaciones de cumplimiento
 	private String nombre_visible;
 	private boolean activa;
+	private Registro_tiempo regTie;
 	
 	public Tarea_proyecto() {
 		id_tarea_proyecto=0;
@@ -17,10 +18,19 @@ public class Tarea_proyecto {//Clase tarea principal
 		estadotar=null;
 		nombre_visible="";
 		activa=false;
+		regTie=null;
 	}
 	
+	public Registro_tiempo getRegTie() {
+		return regTie;
+	}
+
+	public void setRegTie(Registro_tiempo regTie) {
+		this.regTie = regTie;
+	}
+
 	public Tarea_proyecto(int id_tarea_proyecto,Proyecto proyec,Catalogo_tareas catalog,int id_tarea_padre,
-					Estado_tarea estadotar,String nombre_visible,boolean activa) {
+					Estado_tarea estadotar,String nombre_visible,boolean activa, Registro_tiempo regTie) {
 		
 		this.id_tarea_proyecto=id_tarea_proyecto;
 		this.proyec=proyec;
@@ -29,6 +39,7 @@ public class Tarea_proyecto {//Clase tarea principal
 		this.estadotar=estadotar;
 		this.nombre_visible=nombre_visible;
 		this.activa=activa;
+		this.regTie=regTie;
 	}
 	
 	public Tarea_proyecto(String nombre_visible,boolean activa) {

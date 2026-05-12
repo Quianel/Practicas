@@ -25,6 +25,10 @@ public class Registro_tiempo {// Clase registro_tiempo principal
 		comentario = "";
 	}
 
+	public Registro_tiempo (String comentario) {
+		this.comentario = comentario;
+	}
+	
 	public Registro_tiempo(int id_registro, Trabajador tabajad, Proyecto proye, Tarea_proyecto tarproye,
 			LocalDateTime fecha_hora_inicio, LocalDateTime fecha_hora_fin, int minutos_totales, String modo_registro,
 			String comentario) {
