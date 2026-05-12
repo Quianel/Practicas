@@ -34,6 +34,9 @@ public class Perfil_laboral {
 		this.nombre = nombre;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return this.nombre;
+	}
 
 }

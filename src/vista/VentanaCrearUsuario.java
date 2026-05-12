@@ -21,6 +21,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JCheckBox;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 public class VentanaCrearUsuario extends JPanel {
@@ -231,12 +232,57 @@ public class VentanaCrearUsuario extends JPanel {
 		add(GuardarBoton);
 
 		JButton CancelarBoton = new JButton("Cancelar");
+		CancelarBoton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				trabajadorEditando = null;
+				java.awt.Window ventanaFlotante = javax.swing.SwingUtilities.getWindowAncestor(VentanaCrearUsuario.this);
+				
+				if(ventanaFlotante != null) {
+					ventanaFlotante.dispose();
+				}
+				
+			}
+		});
 		CancelarBoton.setForeground(new Color(240, 89, 68));
 		CancelarBoton.setBackground(new Color(187, 190, 253));
 		CancelarBoton.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
 		CancelarBoton.setBounds(385, 257, 86, 22);
 		add(CancelarBoton);
+		
+		cargarCombosUsuario();
 
+	}
+	
+	public void cargarCombosUsuario() {
+		CrearUsuarioDAO cu = new CrearUsuarioDAO();
+		ArrayList<Rol_sistema> listaRoles = cu.cargarRol();
+		ArrayList<Perfil_laboral> listaPerfiles = cu.cargarPerfil();
+		ArrayList<Nivel_experiencia> listaNiveles = cu.cargarNivel();
+		
+		if(listaRoles != null) {
+			for(Rol_sistema r : listaRoles) {
+				InputRol.addItem(r);
+			}
+		}else {
+			JOptionPane.showMessageDialog(null, "No se han podido cargar los roles","ERROR",JOptionPane.ERROR_MESSAGE);
+		}
+		
+		if(listaPerfiles != null) {
+			for(Perfil_laboral pl : listaPerfiles) {
+				InputPerfil.addItem(pl);
+			}
+		}else {
+			JOptionPane.showMessageDialog(null, "No se han podido cargar los perfiles","ERROR",JOptionPane.ERROR_MESSAGE);
+		}
+		
+		if(listaNiveles != null) {
+			for(Nivel_experiencia n : listaNiveles) {
+				InputNivel.addItem(n);
+			}
+		}else {
+			JOptionPane.showMessageDialog(null, "No se han podido cargar los niveles","ERROR",JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 	public void mostrarCargaTrabajador(Trabajador t) {
@@ -253,5 +299,6 @@ public class VentanaCrearUsuario extends JPanel {
 			InputNivel.setSelectedItem(t.getNivel().getNombre());
 		}
 	}
+	
 
 }
