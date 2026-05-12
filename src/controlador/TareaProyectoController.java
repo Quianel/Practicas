@@ -181,7 +181,7 @@ public class TareaProyectoController {
             modeloTabla.addColumn("Tarea");
             modeloTabla.addColumn("Catálogo");
             modeloTabla.addColumn("Estado");
-            modeloTabla.addColumn("Activa");
+            modeloTabla.addColumn("Asignar");
 
             for (Tarea_proyecto t : lista) {
 
@@ -192,11 +192,17 @@ public class TareaProyectoController {
                     t.getNombre_visible(),
                     t.getCatalog().getNombre(),
                     t.getEstadotar().getNombre(),
-                    t.isActiva()
+                    "Asignar"
+                    //t.isActiva()
                 });
             }
 
             vista.getTable().setModel(modeloTabla);
+
+            // ocultar ID
+            vista.getTable().getColumnModel().getColumn(0).setMinWidth(0);
+            vista.getTable().getColumnModel().getColumn(0).setMaxWidth(0);
+            vista.getTable().getColumnModel().getColumn(0).setWidth(0);
 
         } catch (Exception e) {
             e.printStackTrace();
