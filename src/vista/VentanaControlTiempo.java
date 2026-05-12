@@ -8,6 +8,8 @@ import javax.swing.Timer;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 import javax.swing.JComboBox;
 import javax.swing.UIManager;
@@ -27,6 +29,9 @@ public class VentanaControlTiempo extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JTable table;
 	private Timer timer;
+	private JTextPane inputComentario;
+	private LocalDateTime fechaInicio;
+	private LocalDateTime fechaFinal;
 	private JComboBox inputTarea;
 	private JComboBox inputProyecto;
 	private int segundos = 0, minutos = 0, horas = 0;
@@ -77,7 +82,7 @@ public class VentanaControlTiempo extends JPanel {
 		dao.cargarTarea(inputTarea);
 		
 		table = new JTable();
-		table.setBounds(489, 66, 317, 169);
+		table.setBounds(489, 66, 452, 169);
 		add(table);
 		
 		labelTiempo = new JLabel("00:00:00");
@@ -96,6 +101,7 @@ public class VentanaControlTiempo extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(!activo) {
+					fechaInicio = LocalDateTime.now();
 					iniciarCronometro();
 					btnIniciar.setEnabled(false);
 					btnPausar.setEnabled(true);
@@ -117,11 +123,14 @@ public class VentanaControlTiempo extends JPanel {
 		        timer.stop();               
 		        btnPausar.setEnabled(false); 
 		        btnIniciar.setEnabled(true);
+		        fechaFinal = LocalDateTime.now();
+		        long minutosTotales = ChronoUnit.MINUTES.between(fechaInicio, fechaFinal);
+		        dao.actualizarRegistroTiempo(fechaInicio, fechaFinal, minutosTotales, TOOL_TIP_TEXT_KEY);
 		    }
 		});
 		add(btnPausar);
 		
-		JTextPane inputComentario = new JTextPane();
+		inputComentario = new JTextPane();
 		inputComentario.setBackground(new Color(187, 190, 253));
 		inputComentario.setBounds(491, 301, 339, 184);
 		add(inputComentario);
@@ -145,7 +154,7 @@ public class VentanaControlTiempo extends JPanel {
 		HistorialHoyTxt.setForeground(new Color(240, 89, 40));
 		HistorialHoyTxt.setBackground(new Color(187, 190, 253));
 		HistorialHoyTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
-		HistorialHoyTxt.setBounds(489, 46, 317, 20);
+		HistorialHoyTxt.setBounds(489, 46, 452, 20);
 		add(HistorialHoyTxt);
 
 	}
@@ -171,5 +180,8 @@ public class VentanaControlTiempo extends JPanel {
 	        String tiempo = String.format("%02d:%02d:%02d", horas, minutos, segundos);
 	        labelTiempo.setText(tiempo);
 	        
+	    }
+	 public JTable getTabla() {
+	        return table;
 	    }
 }

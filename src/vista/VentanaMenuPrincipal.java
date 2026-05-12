@@ -11,6 +11,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 
+import controlador.ControlTiempoController;
 import controlador.GestionProyectoController;
 import controlador.GestionUsuarioController;
 import controlador.TareaProyectoController;
@@ -242,6 +243,9 @@ public class VentanaMenuPrincipal extends JFrame {
 		VentanaCrearTarea ventCrearTar = new VentanaCrearTarea();
 		
 		panelCardLCarga.add(ventCrearTar, "ventCrearTarea");
+		
+		
+		new ControlTiempoController(vCntTiem);
 			
 	}
 	public void nuevoPanel(JPanel panelActual) {//Este metodo no es necesario en este caso, pero lo dejo por si tuvieramos que cambiar por no funcionamiento

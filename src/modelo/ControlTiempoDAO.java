@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import javax.swing.JComboBox;
@@ -60,7 +62,7 @@ public class ControlTiempoDAO {
         		+ "ti.nombre as nombre_ti, es.id_estado_proyecto, es.nombre as nombre_es, ca.id_tarea_catalogo, ca.nombre as nombre_ca, "
         		+ "solo_senior, tra.id_trabajador, tra.nombre as nombre_tra, correo, password_hash, activo, r.id_rol, r.nombre as nombre_rol, "
         		+ "prl.id_perfil, prl.nombre as nombre_prl, n.id_nivel, n.nombre as nombre_nivel, fecha_asignacion, fecha_fin_asignacion, "
-        		+ "motivo_fin, asi.activa, est.id_estado_tarea, est.nombre as nombre_est, rt.id_registro,  fecha_hora_inicio, fecha_hora_fin, minutos_totales, modo_registro, comentario "
+        		+ "motivo_fin, asi.activa, est.id_estado_tarea, est.nombre as nombre_est, rt.id_registro,  fecha_hora_inicio, fecha_hora_fin, minutos_totales, modo_registro, comentario, id_tarea_padre, nombre_visible "
         		
         		+ "from asignacion_tarea asi, estado_tarea est, tarea_proyecto ta, proyecto p, tipo_proyecto ti, estado_proyecto es, catalogo_tareas ca, trabajador tra, "
         		+ "perfil_laboral prl, nivel_experiencia n, rol_sistema r, registro_tiempo rt "
@@ -72,8 +74,8 @@ public class ControlTiempoDAO {
         		+ "AND asi.id_trabajador = tra.id_trabajador "
         		+ "AND tra.id_perfil = prl.id_perfil "
         		+ "AND tra.id_nivel = n.id_nivel "
-        		+ "AND tra.id_rol = r.id_rol"
-        		+ "AND ta.id_estado_tarea = est.id_estado_tarea"
+        		+ "AND tra.id_rol = r.id_rol "
+        		+ "AND ta.id_estado_tarea = est.id_estado_tarea "
         		+ "AND rt.id_registro = asi.id_asignacion_tarea";
 
         try (Connection con = ConexionBD.getConexion();
@@ -84,7 +86,7 @@ public class ControlTiempoDAO {
             	
             	Perfil_laboral pl = new Perfil_laboral(
             			rs.getInt("id_perfil"),
-            			rs.getString("nombre_perfil")
+            			rs.getString("nombre_prl")
             			);
             	Nivel_experiencia ne = new Nivel_experiencia(
             			rs.getInt("id_nivel"),
@@ -167,4 +169,25 @@ public class ControlTiempoDAO {
 
         return listaRegistroTiempo;
     }
+	public void actualizarRegistroTiempo(LocalDateTime fechaInicio,LocalDateTime fechaFin, long minutosTotales, String comentario) {
+
+	    String sql = "UPDATE registro_tiempo "
+	               + "SET fecha_hora_inicio = " + fechaInicio + ", minutos_totales = " + minutosTotales +" ,fecha_hora_fin= " + fechaFin; 
+	               
+
+	    try (Connection con = ConexionBD.getConexion();
+	             PreparedStatement ps = con.prepareStatement(sql);
+	             ResultSet rs = ps.executeQuery()) {	
+	    	ps.setTimestamp(1, Timestamp.valueOf(fechaInicio));
+	        ps.setTimestamp(2, Timestamp.valueOf(fechaFin));
+	        ps.setLong(3, minutosTotales);
+	        
+
+	        ps.executeUpdate();
+
+	    } catch (SQLException ex) {
+	        ex.printStackTrace();
+	    }
+	}
+	
 }
