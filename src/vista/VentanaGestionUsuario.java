@@ -31,23 +31,27 @@ public class VentanaGestionUsuario extends JPanel {
 	 * Create the panel.
 	 */
 	public VentanaGestionUsuario() {
-		setBackground(new Color(180, 180, 180));
+		setBackground(new Color(53, 48, 105));
 		setLayout(null);
 		
 		CrearUsuarioBoton = new JButton("Crear Usuario");
-		CrearUsuarioBoton.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
-		CrearUsuarioBoton.setBounds(10, 27, 116, 23);
+		CrearUsuarioBoton.setForeground(new Color(240, 89, 68));
+		CrearUsuarioBoton.setBackground(new Color(187, 190, 253));
+		CrearUsuarioBoton.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
+		CrearUsuarioBoton.setBounds(144, 143, 128, 23);
 		add(CrearUsuarioBoton);
 		
 		inputBuscar = new JTextField();
+		inputBuscar.setBackground(new Color(203, 205, 254));
 		inputBuscar.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
-		inputBuscar.setBounds(245, 29, 197, 20);
+		inputBuscar.setBounds(688, 144, 197, 20);
 		add(inputBuscar);
 		inputBuscar.setColumns(10);
 		
 	    botonLupa = new JButton("");
+	    botonLupa.setBackground(new Color(187, 190, 253));
 	    botonLupa.setIcon(new ImageIcon("img/lupa.png"));
-	    botonLupa.setBounds(440, 27, 41, 23);
+	    botonLupa.setBounds(885, 143, 41, 23);
 		add(botonLupa);
 		
 		table  = new JTable() {
@@ -57,8 +61,11 @@ public class VentanaGestionUsuario extends JPanel {
                 return false;
             }
         };
+        table.setBackground(new Color(187, 190, 253));
+        table.setForeground(new Color(240, 89, 68));
+        table.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
         JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setBounds(10, 69, 782, 220);
+        scrollPane.setBounds(144, 185, 782, 220);
 
         add(scrollPane);
 		

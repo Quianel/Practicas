@@ -20,6 +20,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import java.awt.Font;
 import javax.swing.JLabel;
+import java.awt.Color;
+import java.awt.Dimension;
 
 public class VentanaCatalogoDeTareas extends JPanel {
 
@@ -63,18 +65,24 @@ public class VentanaCatalogoDeTareas extends JPanel {
     }
 
     public VentanaCatalogoDeTareas() {
-        setPreferredSize(new java.awt.Dimension(450, 300));
+    	setBackground(new Color(53, 48, 105));
+        setPreferredSize(new Dimension(922, 504));
         setBorder(new EmptyBorder(5, 5, 5, 5));
         setLayout(null);
 
         JScrollPane scrollPane = new JScrollPane();
-        scrollPane.setBounds(10, 10, 416, 213);
+        scrollPane.setBounds(328, 124, 508, 213);
         add(scrollPane);
 
         tbl = new JTable(modeloTabla);
+        tbl.setBackground(new Color(187, 190, 253));
+        tbl.setForeground(new Color(240, 89, 68));
+        tbl.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
         scrollPane.setViewportView(tbl);
         
         JButton btnGuardar = new JButton("Guardar");
+        btnGuardar.setForeground(new Color(240, 89, 68));
+        btnGuardar.setBackground(new Color(187, 190, 253));
         btnGuardar.setFont(new Font("Microsoft YaHei UI", Font.BOLD, 12));
         btnGuardar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -82,10 +90,12 @@ public class VentanaCatalogoDeTareas extends JPanel {
             	ventanaCatalogoDeTareasDAO.actualizarBaseDatos(modeloTabla);
             }
         });
-        btnGuardar.setBounds(326, 243, 100, 20);
+        btnGuardar.setBounds(736, 364, 100, 20);
         add(btnGuardar);
         
         cmbTiposProyectos = new JComboBox();
+        cmbTiposProyectos.setForeground(new Color(240, 89, 68));
+        cmbTiposProyectos.setBackground(new Color(187, 190, 253));
         cmbTiposProyectos.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String TipoProyecto = cmbTiposProyectos.getSelectedItem().toString();
@@ -94,12 +104,14 @@ public class VentanaCatalogoDeTareas extends JPanel {
             }
         });
         cmbTiposProyectos.setFont(new Font("Microsoft YaHei UI", Font.BOLD, 12));
-        cmbTiposProyectos.setBounds(125, 233, 150, 20);
+        cmbTiposProyectos.setBounds(436, 364, 210, 20);
         add(cmbTiposProyectos);
         
         JLabel lblTipoProyectos = new JLabel("Tipo de proyecto:");
+        lblTipoProyectos.setForeground(new Color(240, 89, 68));
+        lblTipoProyectos.setBackground(new Color(53, 48, 105));
         lblTipoProyectos.setFont(new Font("Microsoft YaHei UI", Font.BOLD, 11));
-        lblTipoProyectos.setBounds(20, 237, 120, 12);
+        lblTipoProyectos.setBounds(330, 368, 120, 12);
         add(lblTipoProyectos);
 
         modeloTabla.setColumnIdentifiers(new Object[] {

@@ -15,21 +15,25 @@ public class Bienvenida extends JPanel {
 	 * Create the panel.
 	 */
 	public Bienvenida() {
+		setBackground(new Color(53, 48, 105));
 		setLayout(null);
 		
 		JLabel lblBienvenido = new JLabel("Bienvenido a TIME ORDER");
-		lblBienvenido.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 16));
-		lblBienvenido.setBounds(117, 33, 307, 40);
+		lblBienvenido.setForeground(new Color(240, 89, 68));
+		lblBienvenido.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 20));
+		lblBienvenido.setBounds(392, 93, 277, 55);
 		add(lblBienvenido);
 		
 		JLabel lblSeleccione = new JLabel("Seleccione una opción del menú");
-		lblSeleccione.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 16));
-		lblSeleccione.setBounds(105, 69, 277, 55);
+		lblSeleccione.setForeground(new Color(240, 89, 68));
+		lblSeleccione.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 16));
+		lblSeleccione.setBounds(392, 143, 277, 55);
 		add(lblSeleccione);
 		
 		JLabel lblParaContin = new JLabel("para continuar");
-		lblParaContin.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 16));
-		lblParaContin.setBounds(168, 117, 117, 26);
+		lblParaContin.setForeground(new Color(240, 89, 68));
+		lblParaContin.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 16));
+		lblParaContin.setBounds(459, 209, 117, 26);
 		add(lblParaContin);
 		
 		JLabel lblReloj = new JLabel("");
@@ -38,7 +42,7 @@ public class Bienvenida extends JPanel {
 		
 		Image imgescalada = imgreloj.getImage().getScaledInstance(125, 92, Image.SCALE_SMOOTH);
 		lblReloj.setIcon(new ImageIcon(imgescalada));
-		lblReloj.setBounds(167, 154, 131, 92);
+		lblReloj.setBounds(459, 252, 131, 92);
 		add(lblReloj);
 
 	}

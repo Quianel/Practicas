@@ -48,44 +48,48 @@ public class VentanaLogin extends JFrame {
     public VentanaLogin() {
         setTitle("Login");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 418, 245);
+        setBounds(700, 400, 418, 245);
         contentPane = new JPanel();
-        contentPane.setBackground(new Color(228, 228, 228));
+        contentPane.setBackground(new Color(53, 48, 105));
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
         contentPane.setLayout(null);
 
         inputCorreo = new JTextField();
+        inputCorreo.setBackground(new Color(187, 190, 253));
         inputCorreo.setBounds(147, 48, 175, 20);
         contentPane.add(inputCorreo);
         inputCorreo.setColumns(10);
 
         JTextPane CorreoTxt = new JTextPane();
+        CorreoTxt.setForeground(new Color(240, 89, 68));
         CorreoTxt.setFocusable(false);
-        CorreoTxt.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
+        CorreoTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
         CorreoTxt.setEditable(false);
-        CorreoTxt.setBackground(new Color(228, 228, 228));
+        CorreoTxt.setBackground(new Color(53, 48, 105));
         CorreoTxt.setText("Correo (email):");
         CorreoTxt.setBounds(54, 48, 90, 20);
         contentPane.add(CorreoTxt);
 
         JTextPane ContrasenaTxt = new JTextPane();
         ContrasenaTxt.setFocusable(false);
-        ContrasenaTxt.setForeground(new Color(0, 0, 0));
-        ContrasenaTxt.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
+        ContrasenaTxt.setForeground(new Color(240, 89, 68));
+        ContrasenaTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
         ContrasenaTxt.setEditable(false);
         ContrasenaTxt.setText("Contraseña:");
-        ContrasenaTxt.setBackground(new Color(228, 228, 228));
+        ContrasenaTxt.setBackground(new Color(53, 48, 105));
         ContrasenaTxt.setBounds(77, 79, 67, 20);
         contentPane.add(ContrasenaTxt);
 
         JCheckBox RecordarTxt = new JCheckBox("Recordar Usuario");
-        RecordarTxt.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
-        RecordarTxt.setBackground(new Color(228, 228, 228));
+        RecordarTxt.setForeground(new Color(240, 89, 68));
+        RecordarTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
+        RecordarTxt.setBackground(new Color(53, 48, 105));
         RecordarTxt.setBounds(157, 106, 129, 22);
         contentPane.add(RecordarTxt);
 
         botonIS = new JButton("Iniciar Sesión");
+        botonIS.setForeground(new Color(240, 89, 68));
         botonIS.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		
@@ -116,14 +120,15 @@ public class VentanaLogin extends JFrame {
         		}
         	}
         });
-        botonIS.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
-        botonIS.setBackground(new Color(178, 178, 178));
+        botonIS.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
+        botonIS.setBackground(new Color(166, 171, 252));
         botonIS.setBounds(147, 135, 119, 22);
         contentPane.add(botonIS);
 
         getRootPane().setDefaultButton(botonIS);
 
         InputContrasena = new JPasswordField();
+        InputContrasena.setBackground(new Color(187, 190, 253));
         InputContrasena.setBounds(147, 79, 175, 20);
         contentPane.add(InputContrasena);
     }

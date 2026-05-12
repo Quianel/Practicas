@@ -38,47 +38,56 @@ public class VentanaControlTiempo extends JPanel {
 	 */
 	public VentanaControlTiempo() {
 		ControlTiempoDAO dao = new ControlTiempoDAO();
-		setBackground(new Color(180, 180, 180));
+		setBackground(new Color(53, 48, 105));
 		setLayout(null);
 		
 		JTextPane ProyectoTxt = new JTextPane();
+		ProyectoTxt.setForeground(new Color(240, 89, 68));
 		ProyectoTxt.setText("Proyecto:");
-		ProyectoTxt.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
+		ProyectoTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
 		ProyectoTxt.setEditable(false);
-		ProyectoTxt.setBackground(new Color(180, 180, 180));
-		ProyectoTxt.setBounds(24, 31, 54, 20);
+		ProyectoTxt.setBackground(new Color(53, 48, 105));
+		ProyectoTxt.setBounds(47, 67, 54, 20);
 		add(ProyectoTxt);
 		
 		inputProyecto = new JComboBox();
-		inputProyecto.setBounds(85, 31, 317, 22);
+		inputProyecto.setForeground(new Color(240, 89, 68));
+		inputProyecto.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
+		inputProyecto.setBounds(108, 67, 317, 22);
 		add(inputProyecto);
 		dao.cargarProyecto(inputProyecto);
 		
 		JTextPane TareaTxt = new JTextPane();
+		TareaTxt.setForeground(new Color(240, 89, 68));
 		TareaTxt.setText("Tarea:");
-		TareaTxt.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
+		TareaTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
 		TareaTxt.setEditable(false);
-		TareaTxt.setBackground(UIManager.getColor("InternalFrame.activeBorderColor"));
-		TareaTxt.setBounds(24, 66, 54, 20);
+		TareaTxt.setBackground(new Color(53, 48, 105));
+		TareaTxt.setBounds(47, 102, 54, 20);
 		add(TareaTxt);
 		
 	    inputTarea = new JComboBox();
-		inputTarea.setBounds(85, 64, 317, 22);
+	    inputTarea.setForeground(new Color(240, 89, 68));
+	    inputTarea.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
+		inputTarea.setBounds(108, 100, 317, 22);
 		add(inputTarea);
 		dao.cargarTarea(inputTarea);
 		
 		table = new JTable();
-		table.setBounds(401, 114, 317, 125);
+		table.setBounds(489, 66, 317, 169);
 		add(table);
 		
 		labelTiempo = new JLabel("00:00:00");
-		labelTiempo.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 25));
-		labelTiempo.setBounds(120, 128, 95, 61);
+		labelTiempo.setForeground(new Color(240, 89, 68));
+		labelTiempo.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 28));
+		labelTiempo.setBounds(172, 189, 154, 61);
 		add(labelTiempo);
 		
 		btnIniciar = new JButton("Iniciar");
-		btnIniciar.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
-		btnIniciar.setBounds(85, 200, 69, 22);
+		btnIniciar.setForeground(new Color(240, 89, 68));
+		btnIniciar.setBackground(new Color(187, 190, 253));
+		btnIniciar.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
+		btnIniciar.setBounds(159, 276, 69, 22);
 		btnIniciar.addActionListener(new ActionListener() {
 			
 			@Override
@@ -95,8 +104,10 @@ public class VentanaControlTiempo extends JPanel {
 		add(btnIniciar);
 		
 		btnPausar = new JButton("Pausar");
-		btnPausar.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
-		btnPausar.setBounds(179, 200, 69, 22);
+		btnPausar.setForeground(new Color(240, 89, 68));
+		btnPausar.setBackground(new Color(187, 190, 253));
+		btnPausar.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
+		btnPausar.setBounds(238, 276, 69, 22);
 		btnPausar.addActionListener(new ActionListener() {
 		    @Override
 		    public void actionPerformed(ActionEvent e) {
@@ -108,15 +119,18 @@ public class VentanaControlTiempo extends JPanel {
 		add(btnPausar);
 		
 		JTextPane inputComentario = new JTextPane();
-		inputComentario.setBounds(63, 272, 267, 139);
+		inputComentario.setBackground(new Color(187, 190, 253));
+		inputComentario.setBounds(491, 301, 339, 184);
 		add(inputComentario);
 		
 		JTextPane ComentarioTxt = new JTextPane();
+		ComentarioTxt.setForeground(new Color(240, 89, 68));
+		ComentarioTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
 		ComentarioTxt.setFocusable(false);
 		ComentarioTxt.setEditable(false);
 		ComentarioTxt.setText("Comentario\r\n");
-		ComentarioTxt.setBackground(new Color(180, 180, 180));
-		ComentarioTxt.setBounds(61, 249, 69, 20);
+		ComentarioTxt.setBackground(new Color(53, 48, 105));
+		ComentarioTxt.setBounds(489, 278, 69, 20);
 		add(ComentarioTxt);
 
 	}

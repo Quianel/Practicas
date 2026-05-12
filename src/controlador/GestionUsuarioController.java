@@ -61,7 +61,7 @@ public class GestionUsuarioController {
 
             frame.setContentPane(ventana);
 
-            frame.setSize(500, 350);
+            frame.setSize(800, 400);
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);
 

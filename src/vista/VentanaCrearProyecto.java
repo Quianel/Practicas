@@ -43,103 +43,126 @@ public class VentanaCrearProyecto extends JPanel {
 	 * Create the panel.
 	 */
 	public VentanaCrearProyecto() {
-		setBackground(new Color(180, 180, 180));
+		setBackground(new Color(53, 48, 105));
 		setLayout(null);
 		
 		JTextPane NombreTxt = new JTextPane();
-		NombreTxt.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
-		NombreTxt.setBackground(new Color(180, 180, 180));
+		NombreTxt.setForeground(new Color(240, 89, 68));
+		NombreTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
+		NombreTxt.setBackground(new Color(53, 48, 105));
 		NombreTxt.setEditable(false);
 		NombreTxt.setText("Nombre:");
 		NombreTxt.setBounds(29, 37, 48, 20);
 		add(NombreTxt);
 		
 		InputNombre = new JTextField();
-		InputNombre.setBounds(133, 37, 143, 20);
+		InputNombre.setBackground(new Color(187, 190, 253));
+		InputNombre.setBounds(133, 37, 198, 20);
 		add(InputNombre);
 		InputNombre.setColumns(10);
 		
 		JTextPane CodigoTxt = new JTextPane();
-		CodigoTxt.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
+		CodigoTxt.setForeground(new Color(240, 89, 68));
+		CodigoTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
 		CodigoTxt.setText("Codigo Interno:");
 		CodigoTxt.setEditable(false);
-		CodigoTxt.setBackground(UIManager.getColor("InternalFrame.activeBorderColor"));
+		CodigoTxt.setBackground(new Color(53, 48, 105));
 		CodigoTxt.setBounds(29, 62, 94, 20);
 		add(CodigoTxt);
 		
 		InputCodigo = new JTextField();
-		InputCodigo.setBounds(133, 61, 143, 20);
+		InputCodigo.setBackground(new Color(187, 190, 253));
+		InputCodigo.setBounds(133, 61, 198, 20);
 		add(InputCodigo);
 		InputCodigo.setColumns(10);
 		
 		JTextPane TipoTxt = new JTextPane();
+		TipoTxt.setForeground(new Color(240, 89, 68));
 		TipoTxt.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
 		TipoTxt.setText("Tipo de Proyecto:");
 		TipoTxt.setEditable(false);
-		TipoTxt.setBackground(UIManager.getColor("InternalFrame.activeBorderColor"));
+		TipoTxt.setBackground(new Color(53, 48, 105));
 		TipoTxt.setBounds(29, 87, 96, 20);
 		add(TipoTxt);
 		
 		inputTipo = new JComboBox();
-		inputTipo.setBounds(133, 85, 143, 22);
+		inputTipo.setForeground(new Color(240, 89, 68));
+		inputTipo.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
+		inputTipo.setBackground(new Color(187, 190, 253));
+		inputTipo.setBounds(133, 85, 198, 22);
 		add(inputTipo);
 		
 		JTextPane EstadoTxt = new JTextPane();
-		EstadoTxt.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
+		EstadoTxt.setForeground(new Color(240, 89, 68));
+		EstadoTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
 		EstadoTxt.setText("Estado:");
 		EstadoTxt.setEditable(false);
-		EstadoTxt.setBackground(UIManager.getColor("InternalFrame.activeBorderColor"));
+		EstadoTxt.setBackground(new Color(53, 48, 105));
 		EstadoTxt.setBounds(29, 114, 48, 20);
 		add(EstadoTxt);
 		
 		inputEstado = new JComboBox();
-		inputEstado.setBounds(133, 112, 143, 22);
+		inputEstado.setForeground(new Color(240, 89, 68));
+		inputEstado.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
+		inputEstado.setBackground(new Color(187, 190, 253));
+		inputEstado.setBounds(133, 112, 198, 22);
 		add(inputEstado);
 		
 		JTextPane FechaInicioTxt = new JTextPane();
-		FechaInicioTxt.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
+		FechaInicioTxt.setForeground(new Color(240, 89, 68));
+		FechaInicioTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
 		FechaInicioTxt.setText("Fecha Inicio:");
 		FechaInicioTxt.setEditable(false);
-		FechaInicioTxt.setBackground(UIManager.getColor("InternalFrame.activeBorderColor"));
+		FechaInicioTxt.setBackground(new Color(53, 48, 105));
 		FechaInicioTxt.setBounds(29, 139, 75, 20);
 		add(FechaInicioTxt);
 		
 		dateChooser = new JDateChooser();
-		dateChooser.setBounds(133, 139, 96, 20);
+		dateChooser.setForeground(new Color(240, 89, 68));
+		dateChooser.setBackground(new Color(187, 190, 253));
+		dateChooser.setBounds(133, 139, 162, 20);
 		add(dateChooser);
 		
 		JTextPane FechaFinalTxt = new JTextPane();
-		FechaFinalTxt.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
+		FechaFinalTxt.setForeground(new Color(240, 89, 68));
+		FechaFinalTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
 		FechaFinalTxt.setText("Fecha Final:");
 		FechaFinalTxt.setEditable(false);
-		FechaFinalTxt.setBackground(UIManager.getColor("InternalFrame.activeBorderColor"));
+		FechaFinalTxt.setBackground(new Color(53, 48, 105));
 		FechaFinalTxt.setBounds(29, 164, 75, 20);
 		add(FechaFinalTxt);
 		
 		dateChooser_1 = new JDateChooser();
-		dateChooser_1.setBounds(133, 164, 96, 20);
+		dateChooser_1.setForeground(new Color(240, 89, 68));
+		dateChooser_1.setBackground(new Color(187, 190, 253));
+		dateChooser_1.setBounds(133, 164, 162, 20);
 		add(dateChooser_1);
 		
 		JTextPane DescripcionTxt = new JTextPane();
-		DescripcionTxt.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
+		DescripcionTxt.setForeground(new Color(240, 89, 68));
+		DescripcionTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
 		DescripcionTxt.setText("Descripcion:");
 		DescripcionTxt.setEditable(false);
-		DescripcionTxt.setBackground(UIManager.getColor("InternalFrame.activeBorderColor"));
+		DescripcionTxt.setBackground(new Color(53, 48, 105));
 		DescripcionTxt.setBounds(29, 199, 75, 20);
 		add(DescripcionTxt);
 		
 		textField = new JTextField();
+		textField.setBackground(new Color(187, 190, 253));
 		textField.setColumns(10);
-		textField.setBounds(133, 199, 184, 76);
+		textField.setBounds(133, 199, 350, 176);
 		add(textField);
 		
 		esGenericoBox = new JCheckBox("Es Generico");
-		esGenericoBox.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
-		esGenericoBox.setBackground(new Color(180, 180, 180));
-		esGenericoBox.setBounds(385, 62, 98, 22);
+		esGenericoBox.setForeground(new Color(240, 89, 68));
+		esGenericoBox.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
+		esGenericoBox.setBackground(new Color(53, 48, 105));
+		esGenericoBox.setBounds(525, 60, 98, 22);
 		add(esGenericoBox);
 		
 		JButton GuardarBoton = new JButton("Guardar");//Logica del boton de guardado
+		GuardarBoton.setForeground(new Color(240, 89, 68));
+		GuardarBoton.setBackground(new Color(187, 190, 253));
 		GuardarBoton.addActionListener(new ActionListener() {
 
 		    public void actionPerformed(ActionEvent e) {
@@ -236,8 +259,8 @@ public class VentanaCrearProyecto extends JPanel {
 		        }
 		    }
 		});
-		GuardarBoton.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
-		GuardarBoton.setBounds(420, 250, 75, 22);
+		GuardarBoton.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
+		GuardarBoton.setBounds(527, 353, 96, 22);
 		add(GuardarBoton);
 		
 		cargarCombosTipoyEstado();//cargo mis combobox

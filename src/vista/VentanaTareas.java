@@ -24,61 +24,83 @@ public class VentanaTareas extends JPanel {
 
     public VentanaTareas() {
 
-        setBackground(new Color(180, 180, 180));
+        setBackground(new Color(53, 48, 105));
         setLayout(null);
 
         JTextPane ProyectoTxt = new JTextPane();
+        ProyectoTxt.setForeground(new Color(240, 89, 68));
         ProyectoTxt.setText("Proyecto:");
-        ProyectoTxt.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
-        ProyectoTxt.setBackground(new Color(180, 180, 180));
+        ProyectoTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
+        ProyectoTxt.setBackground(new Color(53, 48, 105));
         ProyectoTxt.setBounds(38, 34, 54, 20);
         add(ProyectoTxt);
 
         inputProyecto = new JComboBox<>();
-        inputProyecto.setBounds(98, 34, 193, 22);
+        inputProyecto.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
+        inputProyecto.setForeground(new Color(240, 89, 68));
+        inputProyecto.setBackground(new Color(187, 190, 253));
+        inputProyecto.setBounds(98, 34, 265, 22);
         add(inputProyecto);
 
         table = new JTable();
+        table.setBackground(new Color(187, 190, 253));
+        table.setForeground(new Color(240, 89, 68));
+        table.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
 
         JScrollPane scroll = new JScrollPane(table);
-        scroll.setBounds(39, 119, 500, 170);
+        scroll.setBounds(39, 119, 574, 239);
         add(scroll);
 
         btnQuitarAsignado = new JButton("Quitar");
-        btnQuitarAsignado.setBounds(707, 175, 63, 22);
+        btnQuitarAsignado.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
+        btnQuitarAsignado.setForeground(new Color(240, 89, 68));
+        btnQuitarAsignado.setBackground(new Color(187, 190, 253));
+        btnQuitarAsignado.setBounds(873, 196, 79, 22);
         add(btnQuitarAsignado);
 
         btnQuitarSinAsignar = new JButton("Quitar");
-        btnQuitarSinAsignar.setBounds(707, 343, 63, 22);
+        btnQuitarSinAsignar.setForeground(new Color(240, 89, 68));
+        btnQuitarSinAsignar.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
+        btnQuitarSinAsignar.setBackground(new Color(187, 190, 253));
+        btnQuitarSinAsignar.setBounds(873, 429, 79, 22);
         add(btnQuitarSinAsignar);
 
         JTextPane txtpnTrabajadores = new JTextPane();
+        txtpnTrabajadores.setForeground(new Color(240, 89, 68));
+        txtpnTrabajadores.setBackground(new Color(187, 190, 253));
         txtpnTrabajadores.setText("Trabajadores Asignados al Proyecto");
-        txtpnTrabajadores.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
-        txtpnTrabajadores.setBounds(577, 66, 193, 20);
+        txtpnTrabajadores.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
+        txtpnTrabajadores.setBounds(701, 63, 251, 20);
         add(txtpnTrabajadores);
 
         listaAsignados = new JList<>();
+        listaAsignados.setForeground(new Color(240, 89, 68));
+        listaAsignados.setBackground(new Color(187, 190, 253));
 
         JScrollPane scrollAsignados =
                 new JScrollPane(listaAsignados);
 
-        scrollAsignados.setBounds(577, 83, 193, 114);
+        scrollAsignados.setBounds(701, 82, 251, 114);
 
         add(scrollAsignados);
 
         JTextPane txtpnTrabajadoresSinAsignar = new JTextPane();
+        txtpnTrabajadoresSinAsignar.setForeground(new Color(240, 89, 68));
+        txtpnTrabajadoresSinAsignar.setBackground(new Color(187, 190, 253));
         txtpnTrabajadoresSinAsignar.setText("Trabajadores sin asignar tareas");
-        txtpnTrabajadoresSinAsignar.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
-        txtpnTrabajadoresSinAsignar.setBounds(577, 231, 193, 20);
+        txtpnTrabajadoresSinAsignar.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
+        txtpnTrabajadoresSinAsignar.setBounds(701, 296, 251, 20);
         add(txtpnTrabajadoresSinAsignar);
 
         listaSinAsignar = new JList<>();
+        listaSinAsignar.setForeground(new Color(240, 89, 68));
+        listaSinAsignar.setBackground(new Color(187, 190, 253));
+        listaSinAsignar.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
 
         JScrollPane scrollSinAsignar =
                 new JScrollPane(listaSinAsignar);
 
-        scrollSinAsignar.setBounds(577, 251, 193, 114);
+        scrollSinAsignar.setBounds(701, 316, 251, 114);
 
         add(scrollSinAsignar);
     }

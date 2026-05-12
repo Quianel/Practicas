@@ -62,19 +62,21 @@ public class VentanaMenuPrincipal extends JFrame {
 		
 
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(180, 180, 180));
+		contentPane.setBackground(new Color(37, 33, 73));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
+		setBounds(200,200,1300,600);
 		
 		JMenuBar mnuPrincipal = new JMenuBar();
-		mnuPrincipal.setBackground(new Color(200, 200, 200));
+		mnuPrincipal.setBackground(new Color(103, 95, 182));
 		//setJMenuBar(menuBar);
 		mnuPrincipal.setLayout(new GridLayout(0,1));
 		mnuPrincipal.setPreferredSize(new Dimension(250, 0));
 		contentPane.add(mnuPrincipal,BorderLayout.WEST);
 		
 		JMenu mnDashboIni = new JMenu("Dashboard/Inicio");
+		mnDashboIni.setForeground(new Color(251, 123, 68));
 		mnDashboIni.addMouseListener(new MouseAdapter() {//Al tener JMENU les añado action mouse pressed
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -84,7 +86,7 @@ public class VentanaMenuPrincipal extends JFrame {
 		});
 	
 		mnDashboIni.setIcon(new ImageIcon("img/inicio.png"));
-		mnDashboIni.setBackground(new Color(180, 180, 180));
+		mnDashboIni.setBackground(new Color(53, 48, 105));
 		mnDashboIni.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 12));
 		mnuPrincipal.add(mnDashboIni);
 		
@@ -98,6 +100,7 @@ public class VentanaMenuPrincipal extends JFrame {
 				}
 			});
 			mnProyectos.setIcon(new ImageIcon("img/proyecto.png"));
+			mnProyectos.setForeground(new Color(251, 123, 68));
 			mnProyectos.setBackground(new Color(180, 180, 180));
 			mnProyectos.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 12));
 			mnuPrincipal.add(mnProyectos);
@@ -105,6 +108,7 @@ public class VentanaMenuPrincipal extends JFrame {
 		
 		if(usuario.equals("Administrador")) {
 			JMenu mnCatTareas = new JMenu("Catálogo de Tareas");
+			mnCatTareas.setForeground(new Color(251, 123, 68));
 			mnCatTareas.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mousePressed(MouseEvent e) {
@@ -119,6 +123,7 @@ public class VentanaMenuPrincipal extends JFrame {
 		
 		if(usuario.equals("Administrador")) {
 			JMenu mnTareasdelProy = new JMenu("Tareas del proyecto");
+			mnTareasdelProy.setForeground(new Color(251, 123, 68));
 			mnTareasdelProy.setIcon(new ImageIcon("img/tarea.png"));
 			mnTareasdelProy.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 12));
 	
@@ -135,6 +140,7 @@ public class VentanaMenuPrincipal extends JFrame {
 		
 		if(usuario.equals("Trabajador")) {
 			JMenu mnMistareas = new JMenu("Mis tareas");
+			mnMistareas.setForeground(new Color(251, 123, 68));
 			mnMistareas.setIcon(new ImageIcon("img/misTareas.png"));
 			mnMistareas.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 12));
 			mnuPrincipal.add(mnMistareas);
@@ -142,6 +148,7 @@ public class VentanaMenuPrincipal extends JFrame {
 		
 		if(usuario.equals("Trabajador")) {
 			JMenu mnControlTiempo = new JMenu("Control de tiempo");
+			mnControlTiempo.setForeground(new Color(251, 123, 68));
 			mnControlTiempo.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mousePressed(MouseEvent e) {
@@ -156,18 +163,22 @@ public class VentanaMenuPrincipal extends JFrame {
 		
 		if(usuario.equals("Trabajador")) {
 			JMenu mnRegistromanual = new JMenu("Registro manual");
+			mnRegistromanual.setForeground(new Color(251, 123, 68));
 			mnRegistromanual.setIcon(new ImageIcon("img/registroManual.png"));
 			mnRegistromanual.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 12));
 			mnuPrincipal.add(mnRegistromanual);
 		}
 		
 		JMenu mnReportes = new JMenu("Reportes");
+		mnReportes.setForeground(new Color(251, 123, 68));
+		mnReportes.setBackground(new Color(53, 48, 105));
 		mnReportes.setIcon(new ImageIcon("img/reportes.png"));
 		mnReportes.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 12));
 		mnuPrincipal.add(mnReportes);
 		
 		if(usuario.equals("Administrador")) {
 			JMenu mnUsuariosTrabajadores = new JMenu("Usuarios/Trabajadores");
+			mnUsuariosTrabajadores.setForeground(new Color(251, 123, 68));
 			mnUsuariosTrabajadores.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mousePressed(MouseEvent e) {
@@ -181,6 +192,8 @@ public class VentanaMenuPrincipal extends JFrame {
 		}
 		
 		JMenu mnCerrarSesion = new JMenu("Cerrar sesión");
+		mnCerrarSesion.setForeground(new Color(251, 123, 68));
+		mnCerrarSesion.setBackground(new Color(53, 48, 105));
 		mnCerrarSesion.setIcon(new ImageIcon("img/cerrarSesion.png"));
 		mnCerrarSesion.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 12));
 		mnuPrincipal.add(mnCerrarSesion);

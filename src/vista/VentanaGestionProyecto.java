@@ -26,46 +26,54 @@ public class VentanaGestionProyecto extends JPanel {
      */
     public VentanaGestionProyecto() {
 
-        setBackground(new Color(205, 205, 205));
+        setBackground(new Color(53, 48, 105));
         setForeground(new Color(180, 180, 180));
         setLayout(null);
 
         JTextPane BuscarTxt = new JTextPane();
-        BuscarTxt.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
+        BuscarTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
         BuscarTxt.setText("Buscar:");
         BuscarTxt.setEditable(false);
-        BuscarTxt.setBackground(new Color(205, 205, 205));
-        BuscarTxt.setForeground(new Color(0, 0, 0));
-        BuscarTxt.setBounds(10, 26, 49, 20);
+        BuscarTxt.setBackground(new Color(53, 48, 105));
+        BuscarTxt.setForeground(new Color(240, 89, 68));
+        BuscarTxt.setBounds(186, 104, 49, 20);
         add(BuscarTxt);
 
         inputBuscar = new JTextField();
-        inputBuscar.setBounds(55, 26, 163, 20);
+        inputBuscar.setBackground(new Color(211, 214, 254));
+        inputBuscar.setBounds(231, 104, 226, 20);
         add(inputBuscar);
         inputBuscar.setColumns(10);
 
         botonLupa = new JButton("");
+        botonLupa.setBackground(new Color(187, 190, 253));
         botonLupa.setIcon(new ImageIcon("img/lupa.png"));
-        botonLupa.setBounds(228, 26, 19, 20);
+        botonLupa.setBounds(467, 104, 41, 20);
         add(botonLupa);
 
         botonProyecto = new JButton("Crear Proyecto");
-        botonProyecto.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
-        botonProyecto.setBounds(424, 26, 122, 22);
+        botonProyecto.setForeground(new Color(240, 89, 68));
+        botonProyecto.setBackground(new Color(187, 190, 253));
+        botonProyecto.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
+        botonProyecto.setBounds(753, 104, 122, 22);
         add(botonProyecto);
 
         // =========================
         // TABLA
         // =========================
         tablaProyectos = new JTable() {
+        	
 
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
+        tablaProyectos.setBackground(new Color(187, 190, 253));
+        tablaProyectos.setForeground(new Color(240, 89, 68));
+        tablaProyectos.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
         JScrollPane scrollPane = new JScrollPane(tablaProyectos);
-        scrollPane.setBounds(10, 69, 650, 250);
+        scrollPane.setBounds(186, 147, 689, 250);
 
         add(scrollPane);
     }

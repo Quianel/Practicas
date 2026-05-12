@@ -40,109 +40,133 @@ public class VentanaCrearUsuario extends JPanel {
 	 * Create the panel.
 	 */
 	public VentanaCrearUsuario() {
-		setBackground(new Color(180, 180, 180));
+		setBackground(new Color(53, 48, 105));
 		setLayout(null);
+		
 
 		JTextPane NombreTxt = new JTextPane();
+		NombreTxt.setForeground(new Color(240, 89, 68));
 		NombreTxt.setText("Nombre:");
-		NombreTxt.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
+		NombreTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
 		NombreTxt.setEditable(false);
-		NombreTxt.setBackground(new Color(180, 180, 180));
-		NombreTxt.setBounds(46, 40, 52, 20);
+		NombreTxt.setBackground(new Color(53, 48, 105));
+		NombreTxt.setBounds(49, 68, 52, 20);
 		add(NombreTxt);
 
 		InputNombre = new JTextField();
-		InputNombre.setBounds(119, 40, 96, 20);
+		InputNombre.setBackground(new Color(187, 190, 253));
+		InputNombre.setBounds(122, 68, 205, 20);
 		add(InputNombre);
 		InputNombre.setColumns(10);
 
 		JTextPane CorreoTxt = new JTextPane();
+		CorreoTxt.setForeground(new Color(240, 89, 68));
 		CorreoTxt.setText("Correo:");
-		CorreoTxt.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
+		CorreoTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
 		CorreoTxt.setEditable(false);
-		CorreoTxt.setBackground(UIManager.getColor("InternalFrame.activeBorderColor"));
-		CorreoTxt.setBounds(46, 69, 52, 20);
+		CorreoTxt.setBackground(new Color(53, 48, 105));
+		CorreoTxt.setBounds(49, 97, 52, 20);
 		add(CorreoTxt);
 
 		InputCorreo = new JTextField();
-		InputCorreo.setBounds(119, 69, 96, 20);
+		InputCorreo.setBackground(new Color(187, 190, 253));
+		InputCorreo.setBounds(122, 97, 205, 20);
 		add(InputCorreo);
 		InputCorreo.setColumns(10);
 
 		JTextPane ContrasenaTxt = new JTextPane();
+		ContrasenaTxt.setForeground(new Color(240, 89, 68));
 		ContrasenaTxt.setText("Contraseña:");
-		ContrasenaTxt.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
+		ContrasenaTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
 		ContrasenaTxt.setEditable(false);
-		ContrasenaTxt.setBackground(UIManager.getColor("InternalFrame.activeBorderColor"));
-		ContrasenaTxt.setBounds(46, 100, 68, 20);
+		ContrasenaTxt.setBackground(new Color(53, 48, 105));
+		ContrasenaTxt.setBounds(49, 128, 68, 20);
 		add(ContrasenaTxt);
 
 		InputContrasena = new JPasswordField();
-		InputContrasena.setBounds(119, 100, 96, 20);
+		InputContrasena.setBackground(new Color(187, 190, 253));
+		InputContrasena.setBounds(122, 128, 205, 20);
 		add(InputContrasena);
 
 		JTextPane ConContrasenaTxt = new JTextPane();
+		ConContrasenaTxt.setForeground(new Color(240, 89, 68));
 		ConContrasenaTxt.setText("Confirmar\t\t\r\nContraseña:\r\n");
-		ConContrasenaTxt.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
+		ConContrasenaTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
 		ConContrasenaTxt.setEditable(false);
-		ConContrasenaTxt.setBackground(UIManager.getColor("InternalFrame.activeBorderColor"));
-		ConContrasenaTxt.setBounds(46, 133, 68, 37);
+		ConContrasenaTxt.setBackground(new Color(53, 48, 105));
+		ConContrasenaTxt.setBounds(49, 161, 68, 37);
 		add(ConContrasenaTxt);
 
 		InputConContrasena = new JPasswordField();
-		InputConContrasena.setBounds(119, 150, 96, 20);
+		InputConContrasena.setBackground(new Color(187, 190, 253));
+		InputConContrasena.setBounds(122, 171, 205, 20);
 		add(InputConContrasena);
 
 		JTextPane RolTxt = new JTextPane();
+		RolTxt.setForeground(new Color(240, 89, 68));
 		RolTxt.setText("Rol:");
-		RolTxt.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
+		RolTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
 		RolTxt.setEditable(false);
-		RolTxt.setBackground(UIManager.getColor("InternalFrame.activeBorderColor"));
-		RolTxt.setBounds(246, 40, 32, 20);
+		RolTxt.setBackground(new Color(53, 48, 105));
+		RolTxt.setBounds(428, 68, 32, 20);
 		add(RolTxt);
 
 		InputRol = new JComboBox();
-		InputRol.setBounds(344, 40, 96, 22);
+		InputRol.setForeground(new Color(240, 89, 68));
+		InputRol.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
+		InputRol.setBackground(new Color(187, 190, 253));
+		InputRol.setBounds(526, 68, 217, 22);
 		add(InputRol);
 
 		JTextPane txtpnPerfilLaboral = new JTextPane();
+		txtpnPerfilLaboral.setForeground(new Color(240, 89, 68));
 		txtpnPerfilLaboral.setText("Perfil Laboral:");
-		txtpnPerfilLaboral.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
+		txtpnPerfilLaboral.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
 		txtpnPerfilLaboral.setEditable(false);
-		txtpnPerfilLaboral.setBackground(UIManager.getColor("InternalFrame.activeBorderColor"));
-		txtpnPerfilLaboral.setBounds(246, 69, 76, 20);
+		txtpnPerfilLaboral.setBackground(new Color(53, 48, 105));
+		txtpnPerfilLaboral.setBounds(428, 97, 76, 20);
 		add(txtpnPerfilLaboral);
 
 		InputPerfil = new JComboBox();
-		InputPerfil.setBounds(344, 69, 96, 22);
+		InputPerfil.setForeground(new Color(240, 89, 68));
+		InputPerfil.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
+		InputPerfil.setBackground(new Color(187, 190, 253));
+		InputPerfil.setBounds(526, 97, 217, 22);
 		add(InputPerfil);
 
 		JTextPane NivelTxt = new JTextPane();
+		NivelTxt.setForeground(new Color(240, 89, 68));
 		NivelTxt.setText("Nivel Experiencia:");
-		NivelTxt.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
+		NivelTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
 		NivelTxt.setEditable(false);
-		NivelTxt.setBackground(UIManager.getColor("InternalFrame.activeBorderColor"));
-		NivelTxt.setBounds(246, 100, 96, 20);
+		NivelTxt.setBackground(new Color(53, 48, 105));
+		NivelTxt.setBounds(428, 128, 96, 20);
 		add(NivelTxt);
 
 		InputNivel = new JComboBox();
-		InputNivel.setBounds(344, 98, 96, 22);
+		InputNivel.setForeground(new Color(240, 89, 68));
+		InputNivel.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
+		InputNivel.setBackground(new Color(187, 190, 253));
+		InputNivel.setBounds(526, 126, 217, 22);
 		add(InputNivel);
 
 		JTextPane ActivoTxt = new JTextPane();
+		ActivoTxt.setForeground(new Color(240, 89, 68));
 		ActivoTxt.setText("Activo");
-		ActivoTxt.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
+		ActivoTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
 		ActivoTxt.setEditable(false);
-		ActivoTxt.setBackground(UIManager.getColor("InternalFrame.activeBorderColor"));
-		ActivoTxt.setBounds(246, 133, 43, 20);
+		ActivoTxt.setBackground(new Color(53, 48, 105));
+		ActivoTxt.setBounds(428, 161, 43, 20);
 		add(ActivoTxt);
 
 		activoCheckBox = new JCheckBox("");
-		activoCheckBox.setBackground(new Color(180, 180, 180));
-		activoCheckBox.setBounds(295, 131, 21, 22);
+		activoCheckBox.setBackground(new Color(53, 48, 105));
+		activoCheckBox.setBounds(483, 159, 21, 22);
 		add(activoCheckBox);
 
 		JButton GuardarBoton = new JButton("Guardar");
+		GuardarBoton.setForeground(new Color(240, 89, 68));
+		GuardarBoton.setBackground(new Color(187, 190, 253));
 		GuardarBoton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -202,13 +226,15 @@ public class VentanaCrearUsuario extends JPanel {
 
 			}
 		});
-		GuardarBoton.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
-		GuardarBoton.setBounds(277, 182, 76, 22);
+		GuardarBoton.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
+		GuardarBoton.setBounds(274, 257, 86, 22);
 		add(GuardarBoton);
 
 		JButton CancelarBoton = new JButton("Cancelar");
-		CancelarBoton.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 11));
-		CancelarBoton.setBounds(363, 182, 76, 22);
+		CancelarBoton.setForeground(new Color(240, 89, 68));
+		CancelarBoton.setBackground(new Color(187, 190, 253));
+		CancelarBoton.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
+		CancelarBoton.setBounds(385, 257, 86, 22);
 		add(CancelarBoton);
 
 	}
