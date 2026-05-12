@@ -14,9 +14,11 @@ import java.awt.Dimension;
 import controlador.ControlTiempoController;
 import controlador.GestionProyectoController;
 import controlador.GestionUsuarioController;
+import controlador.LoginController;
 import controlador.TareaProyectoController;
 
 import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
 import javax.swing.JMenu;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -193,6 +195,22 @@ public class VentanaMenuPrincipal extends JFrame {
 		}
 		
 		JMenu mnCerrarSesion = new JMenu("Cerrar sesión");
+		mnCerrarSesion.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int opcion = JOptionPane.showConfirmDialog(null,"¿Estas seguro de que deseas cerrar sesión?","CERRAR SESION",JOptionPane.YES_NO_OPTION);
+				if(opcion==JOptionPane.YES_OPTION) {
+					java.util.prefs.Preferences prefs = java.util.prefs.Preferences.userNodeForPackage(VentanaLogin.class);
+					prefs.remove("usuario_recordado");
+					prefs.remove("usuario_rol");
+					
+					VentanaLogin loginvista = new VentanaLogin();
+					new LoginController(loginvista); 
+					loginvista.setVisible(true);
+					dispose();
+				}
+			}
+		});
 		mnCerrarSesion.setForeground(new Color(251, 123, 68));
 		mnCerrarSesion.setBackground(new Color(53, 48, 105));
 		mnCerrarSesion.setIcon(new ImageIcon("img/cerrarSesion.png"));
