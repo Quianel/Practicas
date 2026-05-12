@@ -29,6 +29,7 @@ public class VentanaLogin extends JFrame {
     private JTextField inputCorreo;
     private JPasswordField InputContrasena;
     private JButton botonIS;
+    private JCheckBox recordarTxt;
 
     /**
      * Launch the application.
@@ -37,7 +38,18 @@ public class VentanaLogin extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    frame.setVisible(true);
+                	
+                	java.util.prefs.Preferences prefs = java.util.prefs.Preferences.userNodeForPackage(VentanaLogin.class);
+                	String rolGuardado = prefs.get("usuario_rol",null);
+                	if(rolGuardado != null) {
+                		VentanaMenuPrincipal menu = new VentanaMenuPrincipal(rolGuardado);
+                		menu.setVisible(true);
+                		
+                		frame.dispose();
+                	}else {
+                		frame.setVisible(true);
+                	}
+                	
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -49,6 +61,7 @@ public class VentanaLogin extends JFrame {
      * Create the frame.
      */
     public VentanaLogin() {
+    	
         setTitle("Login");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(700, 400, 418, 245);
@@ -84,45 +97,15 @@ public class VentanaLogin extends JFrame {
         ContrasenaTxt.setBounds(77, 79, 67, 20);
         contentPane.add(ContrasenaTxt);
 
-        JCheckBox RecordarTxt = new JCheckBox("Recordar Usuario");
-        RecordarTxt.setForeground(new Color(240, 89, 68));
-        RecordarTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
-        RecordarTxt.setBackground(new Color(53, 48, 105));
-        RecordarTxt.setBounds(147, 106, 129, 22);
-        contentPane.add(RecordarTxt);
+        recordarTxt = new JCheckBox("Recordar Usuario");
+        recordarTxt.setForeground(new Color(240, 89, 68));
+        recordarTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
+        recordarTxt.setBackground(new Color(53, 48, 105));
+        recordarTxt.setBounds(147, 106, 129, 22);
+        contentPane.add(recordarTxt);
 
         botonIS = new JButton("Iniciar Sesión");
         botonIS.setForeground(new Color(240, 89, 68));
-        botonIS.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		
-        		String correo = inputCorreo.getText().trim();
-        		String contrasenia = new String(InputContrasena.getPassword());
-        		
-        		if(correo.isEmpty() || contrasenia.isEmpty()) {
-        			JOptionPane.showMessageDialog(null, "Por favor rellene los campos","ADVERTENCIA",JOptionPane.WARNING_MESSAGE);
-        			
-        		}else {
-        			UsuarioDAO dao = new UsuarioDAO();
-        			
-        			try {
-						boolean correcto = dao.validarUsuario(correo, contrasenia);
-						
-						if(correcto) {
-							JOptionPane.showMessageDialog(null, "Bienvenido al sistema", "CORRECTO",JOptionPane.INFORMATION_MESSAGE);
-							
-							//dispose();
-						}else {
-							JOptionPane.showMessageDialog(null, "Correo o contraseña incorrectos","ERROR",JOptionPane.ERROR_MESSAGE);
-						}
-					} catch (Exception e1) {
-						
-						JOptionPane.showMessageDialog(null, "Error del sistema","ERROR",JOptionPane.ERROR_MESSAGE);
-					}
-        			
-        		}
-        	}
-        });
         botonIS.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
         botonIS.setBackground(new Color(166, 171, 252));
         botonIS.setBounds(147, 135, 119, 22);
@@ -139,7 +122,7 @@ public class VentanaLogin extends JFrame {
         lblOlvidarContra.addMouseListener(new MouseAdapter() {
         	@Override
         	public void mouseClicked(MouseEvent e) {
-        		ejecutarRecuperacion();
+        		JOptionPane.showMessageDialog(null,"Notifique a un administrador para recuperar su contraseña","RECUPERACION",JOptionPane.INFORMATION_MESSAGE);
         	}
         });
         lblOlvidarContra.setForeground(new Color(240, 89, 40));
@@ -163,11 +146,14 @@ public class VentanaLogin extends JFrame {
     public JButton getBotonLogin() {
         return botonIS;
     }
+    public boolean esRecordarSeleccionado() {
+    	return recordarTxt.isSelected();
+    }
     // =========================
     // RECUPERAR CONTRASEÑA
     // =========================
     
-    public void ejecutarRecuperacion() {
+   /* public void ejecutarRecuperacion() {
     	String correo = JOptionPane.showInputDialog(null,"Introduzca su correo electronico: ","RECUPERAR CONTRASEÑA",JOptionPane.QUESTION_MESSAGE);
     	if(correo != null && !correo.trim().isEmpty()) {
     		
@@ -182,5 +168,5 @@ public class VentanaLogin extends JFrame {
     		}
     	}
     }
-    
+    */
 }
