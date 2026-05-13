@@ -62,7 +62,7 @@ public class VentanaMenuPrincipal extends JFrame {
 		setFont(new Font("Liberation Mono", Font.BOLD, 14));
 		setTitle("Menú principal / Aside");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 731, 414);
+		setBounds(50, 50, 731, 414);
 		
 
 		contentPane = new JPanel();
@@ -70,7 +70,7 @@ public class VentanaMenuPrincipal extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
-		setBounds(200,200,1300,600);
+		setBounds(0,50,1280,600);
 		
 		JMenuBar mnuPrincipal = new JMenuBar();
 		mnuPrincipal.setBackground(new Color(103, 95, 182));
