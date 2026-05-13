@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import javax.swing.JComboBox;
+import javax.swing.JTextPane;
 
 public class ControlTiempoDAO {
 	public void cargarProyecto(JComboBox<String> combo) {
@@ -170,19 +171,19 @@ public class ControlTiempoDAO {
 
         return listaRegistroTiempo;
     }
-	public void actualizarRegistroTiempo(LocalDateTime fechaInicio,LocalDateTime fechaFin, long minutosTotales, String comentario) {
+	public void actualizarRegistroTiempo(LocalDateTime fechaInicio,LocalDateTime fechaFin, long minutosTotales,JTextPane comentario) {
 
-	    String sql = "UPDATE registro_tiempo "
-	               + "SET fecha_hora_inicio = " + fechaInicio + ", minutos_totales = " + minutosTotales +" ,fecha_hora_fin= " + fechaFin; 
-	               
+	    String sql = "INSERT INTO registro_tiempo (fecha_hora_inicio, fecha_hora_fin, minutos_totales, comentario) "
+	               + "VALUES (?, ?, ?, ?)"; 
 
 	    try (Connection con = ConexionBD.getConexion();
 	             PreparedStatement ps = con.prepareStatement(sql);
 	             ResultSet rs = ps.executeQuery()) {	
+	    	String textoComentario = comentario.getText();
 	    	ps.setTimestamp(1, Timestamp.valueOf(fechaInicio));
 	        ps.setTimestamp(2, Timestamp.valueOf(fechaFin));
 	        ps.setLong(3, minutosTotales);
-	        
+	        ps.setString(4, textoComentario);
 
 	        ps.executeUpdate();
 

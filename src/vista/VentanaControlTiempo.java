@@ -30,8 +30,11 @@ public class VentanaControlTiempo extends JPanel {
 	private JTable table;
 	private Timer timer;
 	private JTextPane inputComentario;
+	private LocalDateTime fechaInicioTramo;
 	private LocalDateTime fechaInicio;
 	private LocalDateTime fechaFinal;
+	private LocalDateTime fechaFinalTramo;
+	private long minutosTotales;
 	private JComboBox inputTarea;
 	private JComboBox inputProyecto;
 	private int segundos = 0, minutos = 0, horas = 0;
@@ -83,6 +86,7 @@ public class VentanaControlTiempo extends JPanel {
 		
 		table = new JTable();
 		table.setBounds(489, 66, 452, 169);
+		
 		add(table);
 		
 		labelTiempo = new JLabel("00:00:00");
@@ -101,10 +105,12 @@ public class VentanaControlTiempo extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(!activo) {
-					fechaInicio = LocalDateTime.now();
+				
 					iniciarCronometro();
 					btnIniciar.setEnabled(false);
 					btnPausar.setEnabled(true);
+					fechaInicio = LocalDateTime.now();
+					
 					
 				}
 				
@@ -124,8 +130,9 @@ public class VentanaControlTiempo extends JPanel {
 		        btnPausar.setEnabled(false); 
 		        btnIniciar.setEnabled(true);
 		        fechaFinal = LocalDateTime.now();
-		        long minutosTotales = ChronoUnit.MINUTES.between(fechaInicio, fechaFinal);
-		        dao.actualizarRegistroTiempo(fechaInicio, fechaFinal, minutosTotales, TOOL_TIP_TEXT_KEY);
+		        
+		        minutosTotales = ChronoUnit.MINUTES.between(fechaInicio, fechaFinal);
+		        dao.actualizarRegistroTiempo(fechaInicio, fechaFinal, minutosTotales,inputComentario);
 		    }
 		});
 		add(btnPausar);
