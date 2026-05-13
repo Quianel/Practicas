@@ -18,6 +18,7 @@ import modelo.Tarea_proyecto;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
 
 public class Ventana_MisTareas extends JPanel {
 
@@ -34,27 +35,37 @@ public class Ventana_MisTareas extends JPanel {
 	 * Create the panel.
 	 */
 	public Ventana_MisTareas(String correo) {
+		setBackground(new Color(53, 48, 105));
 		MisTareasDAO mt = new MisTareasDAO();
 		setLayout(null);
 		
+		
 		JLabel lblMisTareas = new JLabel("Mis Tareas / Seleccion de trabajo");
+		lblMisTareas.setForeground(new Color(240, 89, 68));
 		lblMisTareas.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 14));
-		lblMisTareas.setBounds(36, 11, 226, 26);
+		lblMisTareas.setBounds(230, 65, 226, 26);
 		add(lblMisTareas);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(24, 60, 403, 186);
+		scrollPane.setBounds(230, 114, 403, 186);
 		add(scrollPane);
 		
 		tblMisTareas = new JTable();
+		tblMisTareas.setBackground(new Color(187, 190, 253));
+		tblMisTareas.setForeground(new Color(240, 89, 68));
+		tblMisTareas.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
 		scrollPane.setViewportView(tblMisTareas);
 		
 		JLabel lblTareasAsignadas = new JLabel("Tareas asignadas a:");
+		lblTareasAsignadas.setForeground(new Color(240, 89, 68));
 		lblTareasAsignadas.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
-		lblTareasAsignadas.setBounds(24, 36, 309, 19);
+		lblTareasAsignadas.setBounds(230, 90, 309, 19);
 		add(lblTareasAsignadas);
 		
 		JButton btnNewButton = new JButton("Refrescar Tareas");
+		btnNewButton.setForeground(new Color(240, 89, 68));
+		btnNewButton.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
+		btnNewButton.setBackground(new Color(187, 190, 253));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				modeloTabla.setRowCount(0);
@@ -67,12 +78,14 @@ public class Ventana_MisTareas extends JPanel {
                         JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
-		btnNewButton.setBounds(147, 257, 167, 32);
+		btnNewButton.setBounds(353, 311, 167, 32);
 		add(btnNewButton);
 		
 		JLabel nombre = new JLabel();
+		nombre.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
+		nombre.setForeground(new Color(240, 89, 68));
 		nombre.setText(mt.obtenerNombre(correo) + " " + mt.obtenerPerfil(correo) + " " + "(" + correo + ")");
-		nombre.setBounds(136, 36, 291, 14);
+		nombre.setBounds(340, 92, 349, 14);
 		add(nombre);
 		
 		modeloTabla.setColumnIdentifiers(new Object[] {"Proyecto","Tarea","Estado","Comentario"});
