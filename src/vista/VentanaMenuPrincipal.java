@@ -181,6 +181,13 @@ public class VentanaMenuPrincipal extends JFrame {
 		}
 		
 		JMenu mnReportes = new JMenu("Reportes");
+		mnReportes.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				CardLayout cl = (CardLayout)(panelCardLCarga.getLayout());
+				cl.show(panelCardLCarga, "ventReportes");
+			}
+		});
 		mnReportes.setForeground(new Color(251, 123, 68));
 		mnReportes.setBackground(new Color(53, 48, 105));
 		mnReportes.setIcon(new ImageIcon("img/reportes.png"));
@@ -254,6 +261,9 @@ public class VentanaMenuPrincipal extends JFrame {
 		
 		Ventana_MisTareas vMisTareas = new Ventana_MisTareas(correo);
 		panelCardLCarga.add(vMisTareas, "ventMisTareas");
+		
+		VentanaCentroReportes vCentroReports = new VentanaCentroReportes();
+		panelCardLCarga.add(vCentroReports, "ventReportes");
 		
 		VentanaTareas vt = new VentanaTareas();
 		new TareaProyectoController(vt);
