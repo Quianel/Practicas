@@ -145,52 +145,83 @@ public class TareaYsubtareasController {
 
         vista.getBtnGuardar().addActionListener(e -> {
 
-            Tarea_proyecto nuevaTarea =
-                    new Tarea_proyecto();
+            try {
 
-            nuevaTarea.setProyec(
-                (Proyecto) vista.getCmbProyectos().getSelectedItem()
-            );
+                Proyecto proyecto =
+                        (Proyecto) vista.getCmbProyectos().getSelectedItem();
 
-            nuevaTarea.setCatalog(
-                (Catalogo_tareas) vista.getInputTipo().getSelectedItem()
-            );
+                Catalogo_tareas tipo =
+                        (Catalogo_tareas) vista.getInputTipo().getSelectedItem();
 
-            Tarea_proyecto padre =
-                    (Tarea_proyecto)
-                    vista.getInputTareaPadre().getSelectedItem();
+                Estado_tarea estado =
+                        (Estado_tarea) vista.getInputEstado().getSelectedItem();
 
-            nuevaTarea.setId_tarea_padre(
-                padre.getId_tarea_proyecto()
-            );
+                Tarea_proyecto padre =
+                        (Tarea_proyecto) vista.getInputTareaPadre().getSelectedItem();
 
-            nuevaTarea.setEstadotar(
-                (Estado_tarea)
-                vista.getInputEstado().getSelectedItem()
-            );
+                if (proyecto == null || tipo == null || estado == null) {
 
-            nuevaTarea.setNombre_visible(
-                vista.getTxtNombre().getText()
-            );
+                    JOptionPane.showMessageDialog(
+                            null,
+                            "Debes seleccionar proyecto, tipo y estado"
+                    );
+                    return;
+                }
 
-            boolean exito =
-                    modelo.insertarTarea(nuevaTarea);
+                Tarea_proyecto nuevaTarea = new Tarea_proyecto();
 
-            if (exito) {
+                nuevaTarea.setProyec(proyecto);
+                nuevaTarea.setCatalog(tipo);
+                nuevaTarea.setEstadotar(estado);
 
-                JOptionPane.showMessageDialog(
-                    null,
-                    "Tarea guardada correctamente"
+                if (padre != null && padre.getId_tarea_proyecto() != 0) {
+                    nuevaTarea.setId_tarea_padre(padre.getId_tarea_proyecto());
+                } else {
+                    nuevaTarea.setId_tarea_padre(0);
+                }
+
+                nuevaTarea.setNombre_visible(
+                        vista.getTxtNombre().getText().trim()
                 );
 
-                alGuardar.run();
+                if (nuevaTarea.getNombre_visible().isEmpty()) {
 
-            } else {
+                    JOptionPane.showMessageDialog(
+                            null,
+                            "El nombre es obligatorio"
+                    );
+                    return;
+                }
+
+                boolean exito = modelo.insertarTarea(nuevaTarea);
+
+                if (exito) {
+
+                    JOptionPane.showMessageDialog(
+                            null,
+                            "Tarea guardada correctamente"
+                    );
+
+                    if (alGuardar != null) {
+                        alGuardar.run();
+                    }
+
+                } else {
+
+                    JOptionPane.showMessageDialog(
+                            null,
+                            "Error al guardar tarea"
+                    );
+                }
+
+            } catch (Exception ex) {
 
                 JOptionPane.showMessageDialog(
-                    null,
-                    "Error al guardar tarea"
+                        null,
+                        "Error: " + ex.getMessage()
                 );
+
+                ex.printStackTrace();
             }
         });
     }
