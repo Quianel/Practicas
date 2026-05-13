@@ -28,7 +28,6 @@ import javax.swing.JButton;
 public class VentanaControlTiempo extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private JTable table;
 	private Timer timer;
 	private JTextPane inputComentario;
 
@@ -44,6 +43,7 @@ public class VentanaControlTiempo extends JPanel {
 	private JButton btnIniciar;
 	private JButton btnPausar;
 	private ControlTiempoController controlador;
+	private JTable table;
 
 
 	/**
@@ -87,11 +87,6 @@ public class VentanaControlTiempo extends JPanel {
 		inputTarea.setBounds(108, 100, 317, 22);
 		add(inputTarea);
 		dao.cargarTarea(inputTarea);
-		
-		table = new JTable();
-		table.setBounds(489, 66, 452, 224);
-		
-		add(table);
 		
 		labelTiempo = new JLabel("00:00:00");
 		labelTiempo.setForeground(new Color(240, 89, 68));
@@ -173,6 +168,13 @@ public class VentanaControlTiempo extends JPanel {
 		HistorialHoyTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
 		HistorialHoyTxt.setBounds(489, 46, 452, 20);
 		add(HistorialHoyTxt);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(491, 67, 450, 200);
+		add(scrollPane);
+		
+		table = new JTable();
+		scrollPane.setViewportView(table);
 
 	}
 	private void iniciarCronometro() {
