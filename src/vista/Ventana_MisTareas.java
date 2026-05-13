@@ -2,6 +2,8 @@ package vista;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.security.PrivateKey;
 
@@ -22,7 +24,11 @@ public class Ventana_MisTareas extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JTable tblMisTareas;
 	
-	DefaultTableModel modeloTabla = new DefaultTableModel();
+	DefaultTableModel modeloTabla = new DefaultTableModel() {
+    	public boolean isCellEditable(int fila, int columna) {
+    		return false;
+    	}
+	};
 
 	/**
 	 * Create the panel.
@@ -54,6 +60,11 @@ public class Ventana_MisTareas extends JPanel {
 				modeloTabla.setRowCount(0);
 				cargaTabla(correo);
 				System.out.println("La tabla se ha refrescado correctamente");
+                JOptionPane.showMessageDialog(
+                        null,
+                        "La tabla se ha recargado correctamente",
+                        null,
+                        JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		btnNewButton.setBounds(147, 257, 167, 32);
