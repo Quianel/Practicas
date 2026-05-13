@@ -10,6 +10,7 @@ import vista.VentanaGestionProyecto;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class GestionProyectoController {
@@ -24,57 +25,45 @@ public class GestionProyectoController {
 
         cargarTabla();
 
-        // =========================
         // DOBLE CLICK PARA EDITAR
-        // =========================
-
         this.vista.getTablaProyectos().addMouseListener(
             new java.awt.event.MouseAdapter() {
-
                 @Override
                 public void mouseClicked(java.awt.event.MouseEvent e) {
-
                     if (e.getClickCount() == 2) {
                         editarProyecto();
                     }
                 }
             }
         );
-        
-        // =========================
-        // BOTON BUSCAR
-        // =========================
-        
+
+        // BOTÓN BUSCAR
         vista.getBotonLupa().addActionListener(e -> {
-        	cargarTablaConFiltro(vista.getInputBuscarValue());
+
+            String filtro = vista.getInputBuscarValue();
+
+            if (filtro == null || filtro.trim().isEmpty()) {
+                cargarTabla();
+            } else {
+                cargarTablaConFiltro(filtro.trim());
+            }
         });
 
-        // =========================
         // BOTÓN CREAR
-        // =========================
-
         vista.getBotonProyecto().addActionListener(e -> {
 
             JFrame frame = new JFrame("Crear Proyecto");
-
-            VentanaCrearProyecto ventana =
-                    new VentanaCrearProyecto();
+            VentanaCrearProyecto ventana = new VentanaCrearProyecto();
 
             frame.setContentPane(ventana);
-
             frame.setSize(700, 500);
             frame.setLocationRelativeTo(null);
-
-            // FALTA ESTO
             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
             frame.setVisible(true);
 
             frame.addWindowListener(new java.awt.event.WindowAdapter() {
-
                 @Override
                 public void windowClosed(java.awt.event.WindowEvent e) {
-
                     vista.setInputBuscarValue("");
                     cargarTabla();
                 }
@@ -85,51 +74,59 @@ public class GestionProyectoController {
     // =========================
     // EDITAR PROYECTO
     // =========================
-
     private void editarProyecto() {
 
         try {
 
             int fila = vista.getTablaProyectos().getSelectedRow();
 
-            if (fila == -1) return;
-
-            int idProyecto = (int) vista
-                    .getTablaProyectos()
-                    .getValueAt(fila, 0);
-
-            CrearProyectoDAO dao = new CrearProyectoDAO();
-
-            Proyecto proyecto = dao.obtenerProyectoPorId(idProyecto);
-
-            if (proyecto != null) {
-
-                JFrame frame = new JFrame("Editar Proyecto");
-
-                VentanaCrearProyecto ventanaEditar =
-                        new VentanaCrearProyecto();
-
-                ventanaEditar.mostrarCargaProyecto(proyecto);
-
-                frame.setContentPane(ventanaEditar);
-
-                frame.setSize(700, 500);
-                frame.setLocationRelativeTo(null);
-                frame.setVisible(true);
-
-                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
-                frame.addWindowListener(new java.awt.event.WindowAdapter() {
-
-                    @Override
-                    public void windowClosed(java.awt.event.WindowEvent e) {
-                    	vista.setInputBuscarValue("");
-                        cargarTabla();
-                    }
-                });
+            if (fila < 0) {
+                JOptionPane.showMessageDialog(vista,
+                        "Selecciona un proyecto primero.");
+                return;
             }
 
+            Object valor = vista.getTablaProyectos().getValueAt(fila, 0);
+
+            if (valor == null) {
+                JOptionPane.showMessageDialog(vista,
+                        "No se pudo obtener el ID del proyecto.");
+                return;
+            }
+
+            int idProyecto = ((Number) valor).intValue();
+
+            CrearProyectoDAO dao = new CrearProyectoDAO();
+            Proyecto proyecto = dao.obtenerProyectoPorId(idProyecto);
+
+            if (proyecto == null) {
+                JOptionPane.showMessageDialog(vista,
+                        "No se encontró el proyecto.");
+                return;
+            }
+
+            JFrame frame = new JFrame("Editar Proyecto");
+            VentanaCrearProyecto ventanaEditar = new VentanaCrearProyecto();
+
+            ventanaEditar.mostrarCargaProyecto(proyecto);
+
+            frame.setContentPane(ventanaEditar);
+            frame.setSize(700, 500);
+            frame.setLocationRelativeTo(null);
+            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            frame.setVisible(true);
+
+            frame.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
+                public void windowClosed(java.awt.event.WindowEvent e) {
+                    vista.setInputBuscarValue("");
+                    cargarTabla();
+                }
+            });
+
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(vista,
+                    "Error al editar proyecto: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -137,15 +134,19 @@ public class GestionProyectoController {
     // =========================
     // CARGAR TABLA
     // =========================
-
     public void cargarTabla() {
 
         try {
 
             ArrayList<Proyecto> lista = modelo.traerTodos();
 
-            DefaultTableModel modeloTabla = new DefaultTableModel() {
+            if (lista == null) {
+                JOptionPane.showMessageDialog(vista,
+                        "No se pudieron cargar los proyectos.");
+                return;
+            }
 
+            DefaultTableModel modeloTabla = new DefaultTableModel() {
                 @Override
                 public boolean isCellEditable(int row, int column) {
                     return false;
@@ -159,50 +160,54 @@ public class GestionProyectoController {
             modeloTabla.addColumn("Estado");
             modeloTabla.addColumn("Fecha Inicio");
             modeloTabla.addColumn("Fecha Límite");
-            //modeloTabla.addColumn("Acciones");
 
             for (Proyecto p : lista) {
 
-                modeloTabla.addRow(new Object[] {
+                String tipo = (p.getTipoproyec() != null)
+                        ? p.getTipoproyec().getNombre()
+                        : "Sin tipo";
 
+                String estado = (p.getEstadoproyec() != null)
+                        ? p.getEstadoproyec().getNombre()
+                        : "Sin estado";
+
+                modeloTabla.addRow(new Object[]{
                         p.getId_proyecto(),
                         p.getCodigo_interno(),
                         p.getNombre(),
-                        p.getTipoproyec().getNombre(),
-                        p.getEstadoproyec().getNombre(),
+                        tipo,
+                        estado,
                         p.getFecha_inicio(),
                         p.getFecha_limite()
-                        //"Editar | Ver | Del"
                 });
             }
 
             vista.getTablaProyectos().setModel(modeloTabla);
 
-            // ocultar ID
-            vista.getTablaProyectos()
-                    .getColumnModel().getColumn(0).setMinWidth(0);
-            vista.getTablaProyectos()
-                    .getColumnModel().getColumn(0).setMaxWidth(0);
-            vista.getTablaProyectos()
-                    .getColumnModel().getColumn(0).setWidth(0);
+            ocultarID();
 
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(vista,
+                    "Error cargando proyectos: " + e.getMessage());
             e.printStackTrace();
         }
     }
-    
+
     // =========================
-    // CARGAR TABLA CON FILTROS
+    // FILTRO
     // =========================
-    
     public void cargarTablaConFiltro(String busqueda) {
 
         try {
 
             ArrayList<Proyecto> lista = modelo.traerConFiltro(busqueda);
 
-            DefaultTableModel modeloTabla = new DefaultTableModel() {
+            if (lista == null || lista.isEmpty()) {
+                cargarTabla();
+                return;
+            }
 
+            DefaultTableModel modeloTabla = new DefaultTableModel() {
                 @Override
                 public boolean isCellEditable(int row, int column) {
                     return false;
@@ -216,35 +221,38 @@ public class GestionProyectoController {
             modeloTabla.addColumn("Estado");
             modeloTabla.addColumn("Fecha Inicio");
             modeloTabla.addColumn("Fecha Límite");
-            //modeloTabla.addColumn("Acciones");
 
             for (Proyecto p : lista) {
 
-                modeloTabla.addRow(new Object[] {
-
+                modeloTabla.addRow(new Object[]{
                         p.getId_proyecto(),
                         p.getCodigo_interno(),
                         p.getNombre(),
-                        p.getTipoproyec().getNombre(),
-                        p.getEstadoproyec().getNombre(),
+                        p.getTipoproyec() != null ? p.getTipoproyec().getNombre() : "",
+                        p.getEstadoproyec() != null ? p.getEstadoproyec().getNombre() : "",
                         p.getFecha_inicio(),
                         p.getFecha_limite()
-                        //"Editar | Ver | Del"
                 });
             }
 
             vista.getTablaProyectos().setModel(modeloTabla);
 
-            // ocultar ID
-            vista.getTablaProyectos()
-                    .getColumnModel().getColumn(0).setMinWidth(0);
-            vista.getTablaProyectos()
-                    .getColumnModel().getColumn(0).setMaxWidth(0);
-            vista.getTablaProyectos()
-                    .getColumnModel().getColumn(0).setWidth(0);
+            ocultarID();
 
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(vista,
+                    "Error en filtro: " + e.getMessage());
             e.printStackTrace();
+        }
+    }
+
+    private void ocultarID() {
+
+        try {
+            vista.getTablaProyectos().getColumnModel().getColumn(0).setMinWidth(0);
+            vista.getTablaProyectos().getColumnModel().getColumn(0).setMaxWidth(0);
+            vista.getTablaProyectos().getColumnModel().getColumn(0).setWidth(0);
+        } catch (Exception ignored) {
         }
     }
 }
