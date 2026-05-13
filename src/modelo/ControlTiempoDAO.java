@@ -172,24 +172,29 @@ public class ControlTiempoDAO {
         return listaRegistroTiempo;
     }
 	public void actualizarRegistroTiempo(LocalDateTime fechaInicio,LocalDateTime fechaFin, long minutosTotales,JTextPane comentario) {
-
+		
+		
 	    String sql = "INSERT INTO registro_tiempo (fecha_hora_inicio, fecha_hora_fin, minutos_totales, comentario) "
 	               + "VALUES (?, ?, ?, ?)"; 
 
 	    try (Connection con = ConexionBD.getConexion();
-	             PreparedStatement ps = con.prepareStatement(sql);
-	             ResultSet rs = ps.executeQuery()) {	
+	             PreparedStatement ps = con.prepareStatement(sql)) {	
+	    	
+	    	
 	    	String textoComentario = comentario.getText();
 	    	ps.setTimestamp(1, Timestamp.valueOf(fechaInicio));
 	        ps.setTimestamp(2, Timestamp.valueOf(fechaFin));
 	        ps.setLong(3, minutosTotales);
 	        ps.setString(4, textoComentario);
-
 	        ps.executeUpdate();
+	        
+	        
 
 	    } catch (SQLException ex) {
 	        ex.printStackTrace();
 	    }
+
+
 	}
 	
 }

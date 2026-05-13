@@ -17,6 +17,7 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
+import controlador.ControlTiempoController;
 import modelo.ControlTiempoDAO;
 
 import javax.swing.JScrollPane;
@@ -30,10 +31,10 @@ public class VentanaControlTiempo extends JPanel {
 	private JTable table;
 	private Timer timer;
 	private JTextPane inputComentario;
-	private LocalDateTime fechaInicioTramo;
+
 	private LocalDateTime fechaInicio;
 	private LocalDateTime fechaFinal;
-	private LocalDateTime fechaFinalTramo;
+	
 	private long minutosTotales;
 	private JComboBox inputTarea;
 	private JComboBox inputProyecto;
@@ -42,15 +43,18 @@ public class VentanaControlTiempo extends JPanel {
 	private JLabel labelTiempo;
 	private JButton btnIniciar;
 	private JButton btnPausar;
+	private ControlTiempoController controlador;
 
 
 	/**
 	 * Create the panel.
 	 */
 	public VentanaControlTiempo() {
+		
 		ControlTiempoDAO dao = new ControlTiempoDAO();
 		setBackground(new Color(53, 48, 105));
 		setLayout(null);
+		
 		
 		JTextPane ProyectoTxt = new JTextPane();
 		ProyectoTxt.setForeground(new Color(240, 89, 68));
@@ -85,7 +89,7 @@ public class VentanaControlTiempo extends JPanel {
 		dao.cargarTarea(inputTarea);
 		
 		table = new JTable();
-		table.setBounds(489, 66, 452, 169);
+		table.setBounds(489, 66, 452, 224);
 		
 		add(table);
 		
@@ -110,6 +114,9 @@ public class VentanaControlTiempo extends JPanel {
 					btnIniciar.setEnabled(false);
 					btnPausar.setEnabled(true);
 					fechaInicio = LocalDateTime.now();
+					activo = true;
+					
+					
 					
 					
 				}
@@ -130,9 +137,12 @@ public class VentanaControlTiempo extends JPanel {
 		        btnPausar.setEnabled(false); 
 		        btnIniciar.setEnabled(true);
 		        fechaFinal = LocalDateTime.now();
+		        activo = false;
+		        
 		        
 		        minutosTotales = ChronoUnit.MINUTES.between(fechaInicio, fechaFinal);
 		        dao.actualizarRegistroTiempo(fechaInicio, fechaFinal, minutosTotales,inputComentario);
+		        controlador.cargarTabla();
 		    }
 		});
 		add(btnPausar);
@@ -191,4 +201,8 @@ public class VentanaControlTiempo extends JPanel {
 	 public JTable getTabla() {
 	        return table;
 	    }
+	 public void setControlador(ControlTiempoController controlador) {
+		    this.controlador = controlador;
+		    
+		}
 }
