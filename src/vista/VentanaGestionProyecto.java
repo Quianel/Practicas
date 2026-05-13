@@ -203,11 +203,15 @@ public class VentanaGestionProyecto extends JPanel {
         tablaProyectos.addFocusListener(new java.awt.event.FocusAdapter() {
             @Override
             public void focusGained(java.awt.event.FocusEvent e) {
-
                 if (tablaProyectos.getRowCount() > 0) {
                     tablaProyectos.setRowSelectionInterval(0, 0);
                 }
+                tablaProyectos.repaint();
+            }
 
+            @Override
+            public void focusLost(java.awt.event.FocusEvent e) {
+                tablaProyectos.clearSelection(); // <-- esto es lo que faltaba
                 tablaProyectos.repaint();
             }
         });
