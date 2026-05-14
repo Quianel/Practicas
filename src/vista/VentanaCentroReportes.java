@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import com.toedter.calendar.JDateChooser;
 
 import controlador.ExportarComoCSV;
+import controlador.ExportarComoXLSX;
 
 import java.awt.Color;
 
@@ -210,6 +211,33 @@ public class VentanaCentroReportes extends JPanel {
 		});
 		btnExpoCSV.setBounds(205, 329, 150, 20);
 		add(btnExpoCSV);
+		
+		JButton btnExpoXLSX = new JButton("Exportar como Excel");
+		btnExpoXLSX.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int respuesta = JOptionPane.showConfirmDialog(
+						null,
+						"¿Desea exportar la tabla actual como XSLX (excel)?",
+						"Confirmación",
+						JOptionPane.YES_NO_OPTION
+				);
+				if(respuesta == JOptionPane.YES_OPTION) {
+					ExportarComoXLSX expXLSX = new ExportarComoXLSX(modelotabla);
+					JOptionPane.showMessageDialog(null,
+						"Se ha exportado la tabla como XSLX (excel) correctamente");
+				}else {
+					JOptionPane.showMessageDialog(
+							null, 
+							"No se ha exportado la tabla"
+					);
+				}
+			}
+		});
+		btnExpoXLSX.setForeground(new Color(240, 89, 68));
+		btnExpoXLSX.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
+		btnExpoXLSX.setBackground(new Color(187, 190, 253));
+		btnExpoXLSX.setBounds(405, 329, 150, 20);
+		add(btnExpoXLSX);
 		
 		
 		modelotabla.setRowCount(0);
