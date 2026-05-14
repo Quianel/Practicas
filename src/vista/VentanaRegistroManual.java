@@ -8,6 +8,8 @@ import javax.swing.JComboBox;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class VentanaRegistroManual extends JPanel {
 
@@ -15,6 +17,10 @@ public class VentanaRegistroManual extends JPanel {
 	private JTextField txtHorainicio;
 	private JTextField txtHorafin;
 	private JTextField txtComentario;
+	private JComboBox cmbProyecto;
+	private JComboBox cmbTarea;
+	private JDateChooser dteFecha;
+	private JButton btnGuardar;
 
 	/**
 	 * Create the panel.
@@ -65,15 +71,15 @@ public class VentanaRegistroManual extends JPanel {
 		lblComentario.setBounds(33, 202, 84, 23);
 		add(lblComentario);
 		
-		JComboBox cmbProyecto = new JComboBox();
+		cmbProyecto = new JComboBox();
 		cmbProyecto.setBounds(117, 32, 239, 23);
 		add(cmbProyecto);
 		
-		JComboBox cmbTarea = new JComboBox();
+		cmbTarea = new JComboBox();
 		cmbTarea.setBounds(117, 66, 239, 23);
 		add(cmbTarea);
 		
-		JDateChooser dteFecha = new JDateChooser();
+		dteFecha = new JDateChooser();
 		dteFecha.setBounds(117, 100, 157, 23);
 		add(dteFecha);
 		
@@ -92,9 +98,41 @@ public class VentanaRegistroManual extends JPanel {
 		txtComentario.setBounds(117, 203, 219, 86);
 		add(txtComentario);
 		
-		JButton btnGuardar = new JButton("Guardar");
+		btnGuardar = new JButton("Guardar");
+		btnGuardar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnGuardar.setBounds(346, 235, 94, 28);
 		add(btnGuardar);
 
 	}
+	
+	public void setDatosOriginales(java.util.Date fecha, String inicio, String fin, String comentario) {
+		dteFecha.setDate(fecha);
+		txtHorainicio.setText(inicio);
+		txtHorafin.setText(fin);
+		txtComentario.setText(comentario != null ? comentario : "");
+	}
+	public JButton getBtnGuardar() { 
+		return btnGuardar; 
+		}
+	public String getTxtHoraInicio() { 
+		return txtHorainicio.getText().trim(); 
+		}
+	public String getTxtHoraFin() { 
+		return txtHorafin.getText().trim(); 
+		}
+	public String getTxtComentario() { 
+		return txtComentario.getText().trim(); 
+		}
+	public JDateChooser getDteFecha() {
+		return dteFecha; 
+		}
+	public JComboBox getCmbProyecto() { 
+		return cmbProyecto; 
+		}
+	public JComboBox getCmbTarea() { 
+		return cmbTarea; 
+		}
 }
