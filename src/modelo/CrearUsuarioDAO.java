@@ -1,6 +1,11 @@
 package modelo;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 public class CrearUsuarioDAO {
@@ -9,10 +14,6 @@ public class CrearUsuarioDAO {
 
 		if (t == null) return false;
 		if (t.getRol() == null || t.getPerfil() == null || t.getNivel() == null) return false;
-
-		if (!t.isActivo()) {
-			return false;
-		}
 
 		boolean correcto = true;
 
@@ -86,6 +87,7 @@ public class CrearUsuarioDAO {
 	}
 
 	public ArrayList<Rol_sistema> cargarRol() {
+
 		ArrayList<Rol_sistema> lista = new ArrayList<>();
 
 		try (Connection conexion = DriverManager.getConnection(
@@ -94,9 +96,11 @@ public class CrearUsuarioDAO {
 		     ResultSet rs = st.executeQuery("SELECT * FROM rol_sistema")) {
 
 			while (rs.next()) {
+
 				Rol_sistema r = new Rol_sistema();
 				r.setId_rol(rs.getInt("id_rol"));
 				r.setNombre(rs.getString("nombre"));
+
 				lista.add(r);
 			}
 
@@ -110,6 +114,7 @@ public class CrearUsuarioDAO {
 	}
 
 	public ArrayList<Perfil_laboral> cargarPerfil() {
+
 		ArrayList<Perfil_laboral> lista = new ArrayList<>();
 
 		try (Connection conexion = DriverManager.getConnection(
@@ -118,9 +123,11 @@ public class CrearUsuarioDAO {
 		     ResultSet rs = st.executeQuery("SELECT * FROM perfil_laboral")) {
 
 			while (rs.next()) {
+
 				Perfil_laboral p = new Perfil_laboral();
 				p.setId_perfil(rs.getInt("id_perfil"));
 				p.setNombre(rs.getString("nombre"));
+
 				lista.add(p);
 			}
 
@@ -134,6 +141,7 @@ public class CrearUsuarioDAO {
 	}
 
 	public ArrayList<Nivel_experiencia> cargarNivel() {
+
 		ArrayList<Nivel_experiencia> lista = new ArrayList<>();
 
 		try (Connection conexion = DriverManager.getConnection(
@@ -142,9 +150,11 @@ public class CrearUsuarioDAO {
 		     ResultSet rs = st.executeQuery("SELECT * FROM nivel_experiencia")) {
 
 			while (rs.next()) {
+
 				Nivel_experiencia n = new Nivel_experiencia();
 				n.setId_nivel(rs.getInt("id_nivel"));
 				n.setNombre(rs.getString("nombre"));
+
 				lista.add(n);
 			}
 
@@ -161,7 +171,13 @@ public class CrearUsuarioDAO {
 
 		Trabajador t = null;
 
-		String sql = "SELECT * FROM trabajador WHERE id_trabajador=?";
+		String sql =
+				"SELECT tra.*, rl.nombre as nombre_rol, pr.nombre as nombre_perfil, ne.nombre as nombre_nivel " +
+				"FROM trabajador tra, rol_sistema rl, perfil_laboral pr, nivel_experiencia ne " +
+				"WHERE tra.id_rol = rl.id_rol " +
+				"AND tra.id_perfil = pr.id_perfil " +
+				"AND tra.id_nivel = ne.id_nivel " +
+				"AND tra.id_trabajador = ?";
 
 		try (Connection conexion = DriverManager.getConnection(
 				"jdbc:mysql://localhost/time_order", "root", "");
@@ -174,6 +190,7 @@ public class CrearUsuarioDAO {
 			if (rs.next()) {
 
 				t = new Trabajador();
+
 				t.setId_trabajador(rs.getInt("id_trabajador"));
 				t.setNombre(rs.getString("nombre"));
 				t.setCorreo(rs.getString("correo"));
@@ -182,12 +199,15 @@ public class CrearUsuarioDAO {
 
 				Rol_sistema r = new Rol_sistema();
 				r.setId_rol(rs.getInt("id_rol"));
+				r.setNombre(rs.getString("nombre_rol"));
 
 				Perfil_laboral p = new Perfil_laboral();
 				p.setId_perfil(rs.getInt("id_perfil"));
+				p.setNombre(rs.getString("nombre_perfil"));
 
 				Nivel_experiencia n = new Nivel_experiencia();
 				n.setId_nivel(rs.getInt("id_nivel"));
+				n.setNombre(rs.getString("nombre_nivel"));
 
 				t.setRol(r);
 				t.setPerfil(p);

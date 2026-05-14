@@ -158,72 +158,109 @@ public class VentanaCrearUsuario extends JPanel {
 		GuardarBoton.addActionListener(e -> {
 
 			if (InputNombre.getText().trim().isEmpty() || InputCorreo.getText().trim().isEmpty()) {
-				JOptionPane.showMessageDialog(null, "El nombre y el correo son obligatorios",
-						"ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+
+				JOptionPane.showMessageDialog(null, "El nombre y el correo son obligatorios", "ADVERTENCIA",
+						JOptionPane.WARNING_MESSAGE);
+
+				return;
+			}
+
+			if (InputRol.getSelectedItem() == null || InputPerfil.getSelectedItem() == null
+					|| InputNivel.getSelectedItem() == null) {
+
+				JOptionPane.showMessageDialog(null, "Debes seleccionar rol, perfil y nivel", "ERROR",
+						JOptionPane.ERROR_MESSAGE);
+
 				return;
 			}
 
 			String pass = new String(InputContrasena.getPassword());
 			String passConfirm = new String(InputConContrasena.getPassword());
 
-			if (pass.trim().isEmpty()) {
-				JOptionPane.showMessageDialog(null, "La contraseña no puede estar vacía",
-						"ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-				return;
-			}
-
-			if (!pass.equals(passConfirm)) {
-				JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden",
-						"ERROR", JOptionPane.ERROR_MESSAGE);
-				return;
-			}
-
-			if (InputRol.getSelectedItem() == null ||
-				InputPerfil.getSelectedItem() == null ||
-				InputNivel.getSelectedItem() == null) {
-
-				JOptionPane.showMessageDialog(null, "Debes seleccionar rol, perfil y nivel",
-						"ERROR", JOptionPane.ERROR_MESSAGE);
-				return;
-			}
-
-			Trabajador nuevoTrab = new Trabajador();
-			nuevoTrab.setNombre(InputNombre.getText().trim());
-			nuevoTrab.setCorreo(InputCorreo.getText().trim());
-			nuevoTrab.setPassword_hash(pass);
-			nuevoTrab.setRol((Rol_sistema) InputRol.getSelectedItem());
-			nuevoTrab.setPerfil((Perfil_laboral) InputPerfil.getSelectedItem());
-			nuevoTrab.setNivel((Nivel_experiencia) InputNivel.getSelectedItem());
-			nuevoTrab.setActivo(activoCheckBox.isSelected());
-
 			CrearUsuarioDAO cu = new CrearUsuarioDAO();
-			boolean correcto = cu.CrearUsuario(nuevoTrab);
+
+			boolean correcto = false;
+
+			// =========================
+			// MODIFICAR
+			// =========================
+
+			if (trabajadorEditando != null) {
+
+				String passwordFinal = trabajadorEditando.getPassword_hash();
+
+				// si escribió nueva contraseña
+				if (!pass.trim().isEmpty() || !passConfirm.trim().isEmpty()) {
+
+					if (!pass.equals(passConfirm)) {
+
+						JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden", "ERROR",
+								JOptionPane.ERROR_MESSAGE);
+
+						return;
+					}
+
+					passwordFinal = org.mindrot.jbcrypt.BCrypt.hashpw(pass, org.mindrot.jbcrypt.BCrypt.gensalt());
+				}
+
+				correcto = cu.modificarUsuario(trabajadorEditando.getId_trabajador(), InputNombre.getText().trim(),
+						InputCorreo.getText().trim(), passwordFinal, (Rol_sistema) InputRol.getSelectedItem(),
+						(Perfil_laboral) InputPerfil.getSelectedItem(),
+						(Nivel_experiencia) InputNivel.getSelectedItem(), activoCheckBox.isSelected());
+
+			} else {
+
+				// =========================
+				// CREAR
+				// =========================
+
+				if (pass.trim().isEmpty()) {
+
+					JOptionPane.showMessageDialog(null, "La contraseña no puede estar vacía", "ADVERTENCIA",
+							JOptionPane.WARNING_MESSAGE);
+
+					return;
+				}
+
+				if (!pass.equals(passConfirm)) {
+
+					JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden", "ERROR",
+							JOptionPane.ERROR_MESSAGE);
+
+					return;
+				}
+
+				Trabajador nuevoTrab = new Trabajador();
+
+				nuevoTrab.setNombre(InputNombre.getText().trim());
+				nuevoTrab.setCorreo(InputCorreo.getText().trim());
+
+				// SOLO texto plano aquí
+				nuevoTrab.setPassword_hash(pass);
+
+				nuevoTrab.setRol((Rol_sistema) InputRol.getSelectedItem());
+				nuevoTrab.setPerfil((Perfil_laboral) InputPerfil.getSelectedItem());
+				nuevoTrab.setNivel((Nivel_experiencia) InputNivel.getSelectedItem());
+				nuevoTrab.setActivo(activoCheckBox.isSelected());
+
+				correcto = cu.CrearUsuario(nuevoTrab);
+			}
 
 			if (correcto) {
 
-				JOptionPane.showMessageDialog(null, "Usuario registrado correctamente",
-						"EXITO", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Usuario guardado correctamente", "EXITO",
+						JOptionPane.INFORMATION_MESSAGE);
 
-				InputNombre.setText("");
-				InputCorreo.setText("");
-				InputContrasena.setText("");
-				InputConContrasena.setText("");
-				activoCheckBox.setSelected(false);
-
-				if (InputRol.getItemCount() > 0) InputRol.setSelectedIndex(0);
-				if (InputPerfil.getItemCount() > 0) InputPerfil.setSelectedIndex(0);
-				if (InputNivel.getItemCount() > 0) InputNivel.setSelectedIndex(0);
-
-				trabajadorEditando = null;
-				
 				java.awt.Window ventana = javax.swing.SwingUtilities.getWindowAncestor(this);
+
 				if (ventana != null) {
-				    ventana.dispose();
+					ventana.dispose();
 				}
 
 			} else {
-				JOptionPane.showMessageDialog(null, "No se pudo registrar al usuario",
-						"ERROR", JOptionPane.ERROR_MESSAGE);
+
+				JOptionPane.showMessageDialog(null, "No se pudo guardar el usuario", "ERROR",
+						JOptionPane.ERROR_MESSAGE);
 			}
 		});
 
@@ -236,7 +273,8 @@ public class VentanaCrearUsuario extends JPanel {
 			trabajadorEditando = null;
 
 			java.awt.Window w = javax.swing.SwingUtilities.getWindowAncestor(this);
-			if (w != null) w.dispose();
+			if (w != null)
+				w.dispose();
 		});
 
 		CancelarBoton.setBackground(new Color(187, 190, 253));
@@ -255,15 +293,18 @@ public class VentanaCrearUsuario extends JPanel {
 		ArrayList<Nivel_experiencia> listaNiveles = cu.cargarNivel();
 
 		if (listaRoles != null) {
-			for (Rol_sistema r : listaRoles) InputRol.addItem(r);
+			for (Rol_sistema r : listaRoles)
+				InputRol.addItem(r);
 		}
 
 		if (listaPerfiles != null) {
-			for (Perfil_laboral pl : listaPerfiles) InputPerfil.addItem(pl);
+			for (Perfil_laboral pl : listaPerfiles)
+				InputPerfil.addItem(pl);
 		}
 
 		if (listaNiveles != null) {
-			for (Nivel_experiencia n : listaNiveles) InputNivel.addItem(n);
+			for (Nivel_experiencia n : listaNiveles)
+				InputNivel.addItem(n);
 		}
 	}
 
@@ -275,9 +316,13 @@ public class VentanaCrearUsuario extends JPanel {
 
 			InputNombre.setText(t.getNombre());
 			InputCorreo.setText(t.getCorreo());
+
+			// nunca mostrar hashes
+			InputContrasena.setText("");
+			InputConContrasena.setText("");
+
 			activoCheckBox.setSelected(t.isActivo());
 
-			// IMPORTANTE: evitar mismatch de objetos vs String
 			InputRol.setSelectedItem(t.getRol());
 			InputPerfil.setSelectedItem(t.getPerfil());
 			InputNivel.setSelectedItem(t.getNivel());
