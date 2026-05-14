@@ -1,4 +1,3 @@
-
 package modelo;
 
 import java.sql.Connection;
@@ -21,53 +20,66 @@ public class GestionUsuarioDAO {
 
         try (Connection con = ConexionBD.getConexion();
              PreparedStatement ps = con.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {	
+             ResultSet rs = ps.executeQuery()) {
+
+            if (con == null) {
+                throw new Exception("No se pudo establecer conexión con la base de datos");
+            }
 
             while (rs.next()) {
-            	
-            	Perfil_laboral pl = new Perfil_laboral(
-            			rs.getInt("id_perfil"),
-            			rs.getString("nombre_perfil")
-            			);
-            	Nivel_experiencia ne = new Nivel_experiencia(
-            			rs.getInt("id_nivel"),
-            			rs.getString("nombre_nivel")
-            			);
-            	Rol_sistema rp = new Rol_sistema(
-            			rs.getInt("id_rol"),
-            			rs.getString("nombre_rol")
-            			);
-            	Trabajador t = new Trabajador(
-            			rs.getInt("id_trabajador"),
-            			rs.getString("nombre_tra"),
-            			rs.getString("correo"),
-            			rs.getString("password_hash"),
-            			rs.getBoolean("activo"),
-            			rp,
-            			pl,
-            			ne
-            			);
-            	listaTrabajadores.add(t);       
+
+                Perfil_laboral pl = new Perfil_laboral(
+                        rs.getInt("id_perfil"),
+                        rs.getString("nombre_perfil")
+                );
+
+                Nivel_experiencia ne = new Nivel_experiencia(
+                        rs.getInt("id_nivel"),
+                        rs.getString("nombre_nivel")
+                );
+
+                Rol_sistema rp = new Rol_sistema(
+                        rs.getInt("id_rol"),
+                        rs.getString("nombre_rol")
+                );
+
+                Trabajador t = new Trabajador(
+                        rs.getInt("id_trabajador"),
+                        rs.getString("nombre_tra"),
+                        rs.getString("correo"),
+                        rs.getString("password_hash"),
+                        rs.getBoolean("activo"),
+                        rp,
+                        pl,
+                        ne
+                );
+
+                listaTrabajadores.add(t);
             }
-           
 
         } catch (Exception e) {
-        	e.printStackTrace();
-
+            e.printStackTrace();
             throw new Exception("Error al obtener trabajadores: " + e.getMessage());
         }
 
         return listaTrabajadores;
     }
+
     public ArrayList<Trabajador> traerConFiltro(String busqueda) throws Exception {
 
         ArrayList<Trabajador> listaTrabajadores = new ArrayList<>();
 
+        if (busqueda == null) {
+            busqueda = "";
+        }
+
+        busqueda = busqueda.trim();
+
         String sql =
             "SELECT DISTINCT tra.id_trabajador, " +
-            "rl.id_rol, "  +
-            "prl.id_perfil, "  +
-            "n.id_nivel,"  +
+            "rl.id_rol, " +
+            "prl.id_perfil, " +
+            "n.id_nivel," +
             "tra.nombre AS nombre_tra, " +
             "tra.correo, " +
             "tra.password_hash, " +
@@ -75,10 +87,10 @@ public class GestionUsuarioDAO {
             "rl.nombre AS nombre_rol, " +
             "prl.nombre AS nombre_perfil, " +
             "n.nombre AS nombre_nivel " +
-            "FROM trabajador tra, perfil_laboral prl, nivel_experiencia n, rol_sistema rl  " +
+            "FROM trabajador tra, perfil_laboral prl, nivel_experiencia n, rol_sistema rl " +
             "where tra.id_rol=rl.id_rol " +
             "and tra.id_perfil=prl.id_perfil " +
-            "and tra.id_nivel=n.id_nivel " + 
+            "and tra.id_nivel=n.id_nivel " +
             "AND ( " +
             "tra.nombre LIKE ? " +
             "OR rl.nombre LIKE ? " +
@@ -91,6 +103,10 @@ public class GestionUsuarioDAO {
             PreparedStatement ps = con.prepareStatement(sql)
         ) {
 
+            if (con == null) {
+                throw new Exception("No se pudo establecer conexión con la base de datos");
+            }
+
             String filtro = "%" + busqueda + "%";
 
             ps.setString(1, filtro);
@@ -102,39 +118,37 @@ public class GestionUsuarioDAO {
 
             while (rs.next()) {
 
-            	Perfil_laboral pl = new Perfil_laboral(
-            			rs.getInt("id_perfil"),
-            			rs.getString("nombre_perfil")
-            			);
-            	Nivel_experiencia ne = new Nivel_experiencia(
-            			rs.getInt("id_nivel"),
-            			rs.getString("nombre_nivel")
-            			);
-            	Rol_sistema rp = new Rol_sistema(
-            			rs.getInt("id_rol"),
-            			rs.getString("nombre_rol")
-            			);
-            	Trabajador t = new Trabajador(
-            			rs.getInt("id_trabajador"),
-            			rs.getString("nombre_tra"),
-            			rs.getString("correo"),
-            			rs.getString("password_hash"),
-            			rs.getBoolean("activo"),
-            			rp,
-            			pl,
-            			ne
-            			);
-            	listaTrabajadores.add(t);      
+                Perfil_laboral pl = new Perfil_laboral(
+                        rs.getInt("id_perfil"),
+                        rs.getString("nombre_perfil")
+                );
 
-                
+                Nivel_experiencia ne = new Nivel_experiencia(
+                        rs.getInt("id_nivel"),
+                        rs.getString("nombre_nivel")
+                );
+
+                Rol_sistema rp = new Rol_sistema(
+                        rs.getInt("id_rol"),
+                        rs.getString("nombre_rol")
+                );
+
+                Trabajador t = new Trabajador(
+                        rs.getInt("id_trabajador"),
+                        rs.getString("nombre_tra"),
+                        rs.getString("correo"),
+                        rs.getString("password_hash"),
+                        rs.getBoolean("activo"),
+                        rp,
+                        pl,
+                        ne
+                );
+
+                listaTrabajadores.add(t);
             }
 
         } catch (Exception e) {
-
-            throw new Exception(
-                    "Error al obtener proyectos filtrados: "
-                    + e.getMessage()
-            );
+            throw new Exception("Error al obtener proyectos filtrados: " + e.getMessage());
         }
 
         return listaTrabajadores;
