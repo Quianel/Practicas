@@ -1,194 +1,203 @@
 package modelo;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.time.LocalDate;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class CrearUsuarioDAO {
 
 	public boolean CrearUsuario(Trabajador t) {
-		boolean correcto = true;
-		if (t.isActivo() == false) {
+
+		if (t == null) return false;
+		if (t.getRol() == null || t.getPerfil() == null || t.getNivel() == null) return false;
+
+		if (!t.isActivo()) {
 			return false;
 		}
-		
-		String hashearContra = org.mindrot.jbcrypt.BCrypt.hashpw(t.getPassword_hash(), org.mindrot.jbcrypt.BCrypt.gensalt());
-		
-		String query = "insert into trabajador (nombre,correo,password_hash,activo,"
-				+ "id_rol,id_perfil,id_nivel) values(?,?,?,?,?,?,?)";
-		try {
-			Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/time_order", "root", "");
-			
-			PreparedStatement consulta = conexion.prepareStatement(query);
-			
-			consulta.setString(1, t.getNombre());
-			consulta.setString(2, t.getCorreo());
-			consulta.setString(3, hashearContra);
-			consulta.setInt(4, t.isActivo() ? 1: 0);
-			consulta.setInt(5, t.getRol().getId_rol());
-			consulta.setInt(6, t.getPerfil().getId_perfil());
-			consulta.setInt(7, t.getNivel().getId_nivel());
-			
-			consulta.executeUpdate();
-			conexion.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			correcto = false;
-		}
-		return correcto;
 
-	}
-
-	public boolean modificarUsuario(int id_trabajador, String nombre, String correo, String password_hash,
-			Rol_sistema rol, Perfil_laboral perfil, Nivel_experiencia nivel, boolean activo) {
 		boolean correcto = true;
 
-		try {
-			Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/time_order", "root", "");
-			Statement consulta = conexion.createStatement();
-			ResultSet registro = consulta
-					.executeQuery("select * from trabajador where id_trabajador= " + id_trabajador);
-			if (!registro.next()) {
-				correcto = false;
-			} else {
-				int valor = consulta.executeUpdate("update trabajador set nombre = '" + nombre + "', correo = '"
-						+ correo + "', password_hash = '" + password_hash
-						+ "', id_rol = " + rol.getId_rol() + ", id_perfil = "
-						+ perfil.getId_perfil() + ", id_nivel = " + nivel.getId_nivel() 
-						+ ", activo = " + (activo ? 1 : 0) + " where id_trabajador= " + id_trabajador);
-				if (valor == 0) {
-					correcto = false;
-				}
-			}
-			conexion.close();
+		String hash = org.mindrot.jbcrypt.BCrypt.hashpw(
+				t.getPassword_hash(),
+				org.mindrot.jbcrypt.BCrypt.gensalt()
+		);
+
+		String sql = "INSERT INTO trabajador (nombre,correo,password_hash,activo,id_rol,id_perfil,id_nivel) "
+				+ "VALUES (?,?,?,?,?,?,?)";
+
+		try (Connection conexion = DriverManager.getConnection(
+				"jdbc:mysql://localhost/time_order", "root", "");
+		     PreparedStatement ps = conexion.prepareStatement(sql)) {
+
+			ps.setString(1, t.getNombre());
+			ps.setString(2, t.getCorreo());
+			ps.setString(3, hash);
+			ps.setInt(4, t.isActivo() ? 1 : 0);
+			ps.setInt(5, t.getRol().getId_rol());
+			ps.setInt(6, t.getPerfil().getId_perfil());
+			ps.setInt(7, t.getNivel().getId_nivel());
+
+			ps.executeUpdate();
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			correcto = false;
 		}
-		return correcto;
 
+		return correcto;
 	}
-	
-	public ArrayList<Rol_sistema> cargarRol(){
+
+	public boolean modificarUsuario(int id_trabajador, String nombre, String correo,
+			String password_hash, Rol_sistema rol, Perfil_laboral perfil,
+			Nivel_experiencia nivel, boolean activo) {
+
+		boolean correcto = true;
+
+		String sqlCheck = "SELECT 1 FROM trabajador WHERE id_trabajador = ?";
+		String sqlUpdate = "UPDATE trabajador SET nombre=?, correo=?, password_hash=?, id_rol=?, id_perfil=?, id_nivel=?, activo=? "
+				+ "WHERE id_trabajador=?";
+
+		try (Connection conexion = DriverManager.getConnection(
+				"jdbc:mysql://localhost/time_order", "root", "");
+		     PreparedStatement check = conexion.prepareStatement(sqlCheck);
+		     PreparedStatement update = conexion.prepareStatement(sqlUpdate)) {
+
+			check.setInt(1, id_trabajador);
+			ResultSet rs = check.executeQuery();
+
+			if (!rs.next()) return false;
+
+			update.setString(1, nombre);
+			update.setString(2, correo);
+			update.setString(3, password_hash);
+			update.setInt(4, rol.getId_rol());
+			update.setInt(5, perfil.getId_perfil());
+			update.setInt(6, nivel.getId_nivel());
+			update.setInt(7, activo ? 1 : 0);
+			update.setInt(8, id_trabajador);
+
+			correcto = update.executeUpdate() > 0;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			correcto = false;
+		}
+
+		return correcto;
+	}
+
+	public ArrayList<Rol_sistema> cargarRol() {
 		ArrayList<Rol_sistema> lista = new ArrayList<>();
-		try {
-			Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/time_order", "root", "");
-			Statement consulta = conexion.createStatement();
-			ResultSet registro = consulta.executeQuery("select * from rol_sistema");
-			
-			while(registro.next()) {
-				Rol_sistema rs = new Rol_sistema();
-				rs.setId_rol(registro.getInt("id_rol"));
-				rs.setNombre(registro.getString("nombre"));
-				
-				lista.add(rs);
+
+		try (Connection conexion = DriverManager.getConnection(
+				"jdbc:mysql://localhost/time_order", "root", "");
+		     Statement st = conexion.createStatement();
+		     ResultSet rs = st.executeQuery("SELECT * FROM rol_sistema")) {
+
+			while (rs.next()) {
+				Rol_sistema r = new Rol_sistema();
+				r.setId_rol(rs.getInt("id_rol"));
+				r.setNombre(rs.getString("nombre"));
+				lista.add(r);
 			}
-			conexion.close();
+
 			return lista;
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+
 		return null;
 	}
-	
-	public ArrayList<Perfil_laboral> cargarPerfil(){
+
+	public ArrayList<Perfil_laboral> cargarPerfil() {
 		ArrayList<Perfil_laboral> lista = new ArrayList<>();
-		try {
-			Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/time_order", "root", "");
-			Statement consulta = conexion.createStatement();
-			ResultSet registro = consulta.executeQuery("select * from perfil_laboral");
-			
-			while(registro.next()) {
-				Perfil_laboral pl = new Perfil_laboral();
-				pl.setId_perfil(registro.getInt("id_perfil"));
-				pl.setNombre(registro.getString("nombre"));
-				
-				lista.add(pl);
+
+		try (Connection conexion = DriverManager.getConnection(
+				"jdbc:mysql://localhost/time_order", "root", "");
+		     Statement st = conexion.createStatement();
+		     ResultSet rs = st.executeQuery("SELECT * FROM perfil_laboral")) {
+
+			while (rs.next()) {
+				Perfil_laboral p = new Perfil_laboral();
+				p.setId_perfil(rs.getInt("id_perfil"));
+				p.setNombre(rs.getString("nombre"));
+				lista.add(p);
 			}
-			conexion.close();
+
 			return lista;
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+
 		return null;
 	}
-	
-	public ArrayList<Nivel_experiencia> cargarNivel(){
+
+	public ArrayList<Nivel_experiencia> cargarNivel() {
 		ArrayList<Nivel_experiencia> lista = new ArrayList<>();
-		try {
-			Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/time_order", "root", "");
-			Statement consulta = conexion.createStatement();
-			ResultSet registro = consulta.executeQuery("select * from nivel_experiencia");
-			
-			while(registro.next()) {
-				Nivel_experiencia ne = new Nivel_experiencia();
-				ne.setId_nivel(registro.getInt("id_nivel"));
-				ne.setNombre(registro.getString("nombre"));
-				
-				lista.add(ne);
+
+		try (Connection conexion = DriverManager.getConnection(
+				"jdbc:mysql://localhost/time_order", "root", "");
+		     Statement st = conexion.createStatement();
+		     ResultSet rs = st.executeQuery("SELECT * FROM nivel_experiencia")) {
+
+			while (rs.next()) {
+				Nivel_experiencia n = new Nivel_experiencia();
+				n.setId_nivel(rs.getInt("id_nivel"));
+				n.setNombre(rs.getString("nombre"));
+				lista.add(n);
 			}
-			conexion.close();
+
 			return lista;
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+
 		return null;
 	}
-	
+
 	public Trabajador obtenerTrabajadorPorId(int idTrabajador) {
 
-	    Trabajador t = null;
+		Trabajador t = null;
 
-	    try {
+		String sql = "SELECT * FROM trabajador WHERE id_trabajador=?";
 
-	        Connection conexion = DriverManager.getConnection(
-	                "jdbc:mysql://localhost/time_order",
-	                "root",
-	                "");
+		try (Connection conexion = DriverManager.getConnection(
+				"jdbc:mysql://localhost/time_order", "root", "");
+		     PreparedStatement ps = conexion.prepareStatement(sql)) {
 
-	        Statement consulta = conexion.createStatement();
+			ps.setInt(1, idTrabajador);
 
-	        ResultSet registro = consulta.executeQuery(
-	                "SELECT * FROM trabajador WHERE id_trabajador = " + idTrabajador);
+			ResultSet rs = ps.executeQuery();
 
-	        if (registro.next()) {
+			if (rs.next()) {
 
-	            t = new Trabajador();
+				t = new Trabajador();
+				t.setId_trabajador(rs.getInt("id_trabajador"));
+				t.setNombre(rs.getString("nombre"));
+				t.setCorreo(rs.getString("correo"));
+				t.setPassword_hash(rs.getString("password_hash"));
+				t.setActivo(rs.getBoolean("activo"));
 
-	            t.setId_trabajador(registro.getInt("id_trabajador"));
-	            t.setNombre(registro.getString("nombre"));
-	            t.setCorreo(registro.getString("correo"));
-	            t.setPassword_hash(registro.getString("password_hash"));
-	            t.setActivo(registro.getBoolean("activo"));
+				Rol_sistema r = new Rol_sistema();
+				r.setId_rol(rs.getInt("id_rol"));
 
-	            Rol_sistema rol = new Rol_sistema();
-	            rol.setId_rol(registro.getInt("id_rol"));
-	            
-	            Perfil_laboral per = new Perfil_laboral();
-	            per.setId_perfil(registro.getInt("id_perfil"));
+				Perfil_laboral p = new Perfil_laboral();
+				p.setId_perfil(rs.getInt("id_perfil"));
 
-	            Nivel_experiencia nivel = new Nivel_experiencia();
-	            nivel.setId_nivel(registro.getInt("id_nivel"));
+				Nivel_experiencia n = new Nivel_experiencia();
+				n.setId_nivel(rs.getInt("id_nivel"));
 
-	            t.setRol(rol);
-	            t.setPerfil(per);
-	            t.setNivel(nivel);
-	        }
+				t.setRol(r);
+				t.setPerfil(p);
+				t.setNivel(n);
+			}
 
-	        conexion.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
-	    } catch (SQLException e) {
-
-	        e.printStackTrace();
-	    }
-
-	    return t;
+		return t;
 	}
-	
-
 }

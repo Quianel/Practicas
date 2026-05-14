@@ -1,250 +1,193 @@
 package controlador;
 
 import java.util.ArrayList;
-
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 
 import modelo.CrearUsuarioDAO;
 import modelo.GestionUsuarioDAO;
-import modelo.Proyecto;
 import modelo.Trabajador;
 import vista.VentanaCrearUsuario;
 import vista.VentanaGestionUsuario;
 
 public class GestionUsuarioController {
-	
+
 	private VentanaGestionUsuario vista;
-	private GestionUsuarioDAO modelo; 
+	private GestionUsuarioDAO modelo;
+
 	public GestionUsuarioController(VentanaGestionUsuario vista) {
-		
 
-        this.vista = vista;
-        this.modelo = new GestionUsuarioDAO();
-        
-        cargarTabla();
+		this.vista = vista;
+		this.modelo = new GestionUsuarioDAO();
 
-        // =========================
-        // DOBLE CLICK PARA EDITAR
-        // =========================
+		cargarTabla();
 
-        this.vista.getTabla().addMouseListener(
-            new java.awt.event.MouseAdapter() {
+		this.vista.getTabla().addMouseListener(
+			new java.awt.event.MouseAdapter() {
+				@Override
+				public void mouseClicked(java.awt.event.MouseEvent e) {
+					if (e.getClickCount() == 2) {
+						editarUsuario();
+					}
+				}
+			}
+		);
 
-                @Override
-                public void mouseClicked(java.awt.event.MouseEvent e) {
+		vista.getBotonLupa().addActionListener(e -> {
+			cargarTablaConFiltro(vista.getInputBuscarValue());
+		});
 
-                    if (e.getClickCount() == 2) {
-                        editarUsuario();
-                    }
-                }
-            }
-        );
-     // =========================
-        // BOTON BUSCAR
-        // =========================
-        
-        vista.getBotonLupa().addActionListener(e -> {
-        	cargarTablaConFiltro(vista.getInputBuscarValue());
-        });
+		vista.getBoton().addActionListener(e -> {
 
-        // =========================
-        // BOTÓN CREAR USUARIO
-        // =========================
+			JFrame frame = new JFrame("Crear Usuario");
+			VentanaCrearUsuario ventana = new VentanaCrearUsuario();
 
-        vista.getBoton().addActionListener(e -> {
+			frame.setContentPane(ventana);
+			frame.setSize(800, 400);
+			frame.setLocationRelativeTo(null);
+			frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			frame.setVisible(true);
 
-            JFrame frame = new JFrame("Crear Usuario");
+			frame.addWindowListener(new java.awt.event.WindowAdapter() {
+				@Override
+				public void windowClosed(java.awt.event.WindowEvent e) {
+					vista.setInputBuscarValue("");
+					cargarTabla();
+				}
+			});
+		});
+	}
 
-            VentanaCrearUsuario ventana =
-                    new VentanaCrearUsuario();
+	private void editarUsuario() {
+		try {
 
-            frame.setContentPane(ventana);
+			int fila = vista.getTabla().getSelectedRow();
+			if (fila == -1) return;
 
-            frame.setSize(800, 400);
-            frame.setLocationRelativeTo(null);
-            frame.setVisible(true);
+			int idTrabajador = (int) vista.getTabla().getValueAt(fila, 0);
 
-            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			CrearUsuarioDAO dao = new CrearUsuarioDAO();
+			Trabajador trabajador = dao.obtenerTrabajadorPorId(idTrabajador);
 
-            frame.setVisible(true);
+			if (trabajador != null) {
 
-            frame.addWindowListener(new java.awt.event.WindowAdapter() {
+				JFrame frame = new JFrame("Editar Usuario");
+				VentanaCrearUsuario ventanaEditar = new VentanaCrearUsuario();
 
-                @Override
-                public void windowClosed(java.awt.event.WindowEvent e) {
+				ventanaEditar.mostrarCargaTrabajador(trabajador);
 
-                    vista.setInputBuscarValue("");
-                    cargarTabla();
-                }
-            });
-        });
-    }
+				frame.setContentPane(ventanaEditar);
+				frame.setSize(700, 500);
+				frame.setLocationRelativeTo(null);
+				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				frame.setVisible(true);
 
-    // =========================
-    // EDITAR USUARIO
-    // =========================
+				frame.addWindowListener(new java.awt.event.WindowAdapter() {
+					@Override
+					public void windowClosed(java.awt.event.WindowEvent e) {
+						cargarTabla();
+					}
+				});
+			}
 
-    private void editarUsuario() {
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-        try {
+	public void cargarTabla() {
 
-            int fila = vista.getTabla().getSelectedRow();
+		try {
 
-            if (fila == -1) return;
+			ArrayList<Trabajador> lista = modelo.traerTodos();
 
-            int idTrabajador = (int) vista
-                    .getTabla()
-                    .getValueAt(fila, 0);
+			DefaultTableModel modeloTabla = new DefaultTableModel() {
 
-            CrearUsuarioDAO dao = new CrearUsuarioDAO();
+				@Override
+				public boolean isCellEditable(int row, int column) {
+					return false;
+				}
+			};
 
-            Trabajador trabajador = dao.obtenerTrabajadorPorId(idTrabajador);
+			modeloTabla.addColumn("ID");
+			modeloTabla.addColumn("Nombre");
+			modeloTabla.addColumn("Correo");
+			modeloTabla.addColumn("Rol");
+			modeloTabla.addColumn("Perfil");
+			modeloTabla.addColumn("Nivel");
+			modeloTabla.addColumn("Activo");
 
-            if (trabajador != null) {
+			for (Trabajador t : lista) {
 
-                JFrame frame = new JFrame("Editar Usuario");
+				modeloTabla.addRow(new Object[] {
+					t.getId_trabajador(),
+					t.getNombre(),
+					t.getCorreo(),
+					t.getRol().getNombre(),
+					t.getPerfil().getNombre(),
+					t.getNivel().getNombre(),
 
-                VentanaCrearUsuario ventanaEditar =
-                        new VentanaCrearUsuario();
+					// CAMBIO IMPORTANTE
+					t.isActivo() ? "Sí" : "No"
+				});
+			}
 
-                ventanaEditar.mostrarCargaTrabajador(trabajador);
+			vista.getTabla().setModel(modeloTabla);
 
-                frame.setContentPane(ventanaEditar);
+			vista.getTabla().getColumnModel().getColumn(0).setMinWidth(0);
+			vista.getTabla().getColumnModel().getColumn(0).setMaxWidth(0);
+			vista.getTabla().getColumnModel().getColumn(0).setWidth(0);
 
-                frame.setSize(700, 500);
-                frame.setLocationRelativeTo(null);
-                frame.setVisible(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	public void cargarTablaConFiltro(String busqueda) {
 
-                frame.addWindowListener(new java.awt.event.WindowAdapter() {
+		try {
 
-                    @Override
-                    public void windowClosed(java.awt.event.WindowEvent e) {
-                        cargarTabla();
-                    }
-                });
-            }
+			ArrayList<Trabajador> lista = modelo.traerConFiltro(busqueda);
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+			DefaultTableModel modeloTabla = new DefaultTableModel() {
 
-    // =========================
-    // CARGAR TABLA
-    // =========================
+				@Override
+				public boolean isCellEditable(int row, int column) {
+					return false;
+				}
+			};
 
-    public void cargarTabla() {
+			modeloTabla.addColumn("ID");
+			modeloTabla.addColumn("Nombre");
+			modeloTabla.addColumn("Correo");
+			modeloTabla.addColumn("Rol");
+			modeloTabla.addColumn("Perfil");
+			modeloTabla.addColumn("Nivel");
+			modeloTabla.addColumn("Activo");
 
-        try {
+			for (Trabajador t : lista) {
 
-            ArrayList<Trabajador> lista = modelo.traerTodos();
-            
+				modeloTabla.addRow(new Object[] {
+					t.getId_trabajador(),
+					t.getNombre(),
+					t.getCorreo(),
+					t.getRol().getNombre(),
+					t.getPerfil().getNombre(),
+					t.getNivel().getNombre(),
 
-            DefaultTableModel modeloTabla = new DefaultTableModel() {
+					// CAMBIO IMPORTANTE
+					t.isActivo() ? "Sí" : "No"
+				});
+			}
 
-                @Override
-                public boolean isCellEditable(int row, int column) {
-                    return false;
-                }
-            };
-            modeloTabla.addColumn("ID");
-            modeloTabla.addColumn("Nombre");
-            modeloTabla.addColumn("Correo");
-            modeloTabla.addColumn("Rol");
-            modeloTabla.addColumn("Perfil");
-            modeloTabla.addColumn("Nivel");
-            modeloTabla.addColumn("Activo");
-            //modeloTabla.addColumn("Acciones");
-            
+			vista.getTabla().setModel(modeloTabla);
 
-            for (Trabajador t : lista) {
+			vista.getTabla().getColumnModel().getColumn(0).setMinWidth(0);
+			vista.getTabla().getColumnModel().getColumn(0).setMaxWidth(0);
+			vista.getTabla().getColumnModel().getColumn(0).setWidth(0);
 
-                modeloTabla.addRow(new Object[] {
-                		t.getId_trabajador(),
-                		t.getNombre(),
-                        t.getCorreo(),
-                        t.getRol().getNombre(),
-                        t.getPerfil().getNombre(),
-                        t.getNivel().getNombre(),
-                        t.isActivo()
-                        
-                        
-                        //"Editar | Ver | Del"
-                });
-            }
-
-            vista.getTabla().setModel(modeloTabla);
-            // ocultar ID
-            vista.getTabla()
-                    .getColumnModel().getColumn(0).setMinWidth(0);
-            vista.getTabla()
-                    .getColumnModel().getColumn(0).setMaxWidth(0);
-            vista.getTabla()
-                    .getColumnModel().getColumn(0).setWidth(0);
-          
-
-            
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    public void cargarTablaConFiltro(String busqueda) {
-
-        try {
-
-            ArrayList<Trabajador> lista = modelo.traerConFiltro(busqueda);
-
-            DefaultTableModel modeloTabla = new DefaultTableModel() {
-
-                @Override
-                public boolean isCellEditable(int row, int column) {
-                    return false;
-                }
-            };
-
-            modeloTabla.addColumn("ID");
-            modeloTabla.addColumn("Nombre");
-            modeloTabla.addColumn("Correo");
-            modeloTabla.addColumn("Rol");
-            modeloTabla.addColumn("Perfil");
-            modeloTabla.addColumn("Nivel");
-            modeloTabla.addColumn("Activo");
-            //modeloTabla.addColumn("Acciones");
-
-            for (Trabajador t : lista) {
-
-                modeloTabla.addRow(new Object[] {
-
-                		t.getId_trabajador(),
-                		t.getNombre(),
-                        t.getCorreo(),
-                        t.getRol().getNombre(),
-                        t.getPerfil().getNombre(),
-                        t.getNivel().getNombre(),
-                        t.isActivo()
-                        //"Editar | Ver | Del"
-                });
-            }
-
-            vista.getTabla().setModel(modeloTabla);
-
-            // ocultar ID
-            vista.getTabla()
-                    .getColumnModel().getColumn(0).setMinWidth(0);
-            vista.getTabla()
-                    .getColumnModel().getColumn(0).setMaxWidth(0);
-            vista.getTabla()
-                    .getColumnModel().getColumn(0).setWidth(0);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }
-	
-
-//}

@@ -22,9 +22,6 @@ public class VentanaGestionUsuario extends JPanel {
 	private JButton botonLupa;
 	private JTable table;
 
-	/**
-	 * Create the panel.
-	 */
 	public VentanaGestionUsuario() {
 		setBackground(new Color(53, 48, 105));
 		setLayout(null);

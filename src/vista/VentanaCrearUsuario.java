@@ -5,13 +5,10 @@ import javax.swing.JTextPane;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JTextField;
-import javax.swing.UIManager;
 
 import modelo.CrearUsuarioDAO;
 import modelo.Nivel_experiencia;
 import modelo.Perfil_laboral;
-import modelo.Proyecto;
-import modelo.Rol_permiso;
 import modelo.Rol_sistema;
 import modelo.Trabajador;
 
@@ -37,13 +34,9 @@ public class VentanaCrearUsuario extends JPanel {
 	private JCheckBox activoCheckBox;
 	private Trabajador trabajadorEditando = null;
 
-	/**
-	 * Create the panel.
-	 */
 	public VentanaCrearUsuario() {
 		setBackground(new Color(53, 48, 105));
 		setLayout(null);
-		
 
 		JTextPane NombreTxt = new JTextPane();
 		NombreTxt.setForeground(new Color(240, 89, 68));
@@ -113,8 +106,6 @@ public class VentanaCrearUsuario extends JPanel {
 		add(RolTxt);
 
 		InputRol = new JComboBox();
-		InputRol.setForeground(new Color(240, 89, 68));
-		InputRol.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
 		InputRol.setBackground(new Color(187, 190, 253));
 		InputRol.setBounds(526, 68, 217, 22);
 		add(InputRol);
@@ -129,8 +120,6 @@ public class VentanaCrearUsuario extends JPanel {
 		add(txtpnPerfilLaboral);
 
 		InputPerfil = new JComboBox();
-		InputPerfil.setForeground(new Color(240, 89, 68));
-		InputPerfil.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
 		InputPerfil.setBackground(new Color(187, 190, 253));
 		InputPerfil.setBounds(526, 97, 217, 22);
 		add(InputPerfil);
@@ -145,8 +134,6 @@ public class VentanaCrearUsuario extends JPanel {
 		add(NivelTxt);
 
 		InputNivel = new JComboBox();
-		InputNivel.setForeground(new Color(240, 89, 68));
-		InputNivel.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
 		InputNivel.setBackground(new Color(187, 190, 253));
 		InputNivel.setBounds(526, 126, 217, 22);
 		add(InputNivel);
@@ -166,122 +153,117 @@ public class VentanaCrearUsuario extends JPanel {
 		add(activoCheckBox);
 
 		JButton GuardarBoton = new JButton("Guardar");
-		GuardarBoton.setForeground(new Color(240, 89, 68));
 		GuardarBoton.setBackground(new Color(187, 190, 253));
-		GuardarBoton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
 
-				if (InputNombre.getText().trim().isEmpty() || InputCorreo.getText().trim().isEmpty()) {
-					JOptionPane.showMessageDialog(null, "El nombre y el correo son obligatorios", "ADVERTENCIA",
-							JOptionPane.WARNING_MESSAGE);
-				} else {
-					String pass = new String(InputContrasena.getPassword());
-					String passConfirm = new String(InputConContrasena.getPassword());
+		GuardarBoton.addActionListener(e -> {
 
-					if (pass.isEmpty()) {
-						JOptionPane.showMessageDialog(null, "La contraseña no puede estar vacia", "ADVERTENCIA",
-								JOptionPane.WARNING_MESSAGE);
-					} else {
-						if (!pass.equals(passConfirm)) {
-							JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden", "ERROR",
-									JOptionPane.ERROR_MESSAGE);
-						} else {
-							Trabajador nuevoTrab = new Trabajador();
-							nuevoTrab.setNombre(InputNombre.getText().trim());
-							nuevoTrab.setCorreo(InputCorreo.getText().trim());
-							nuevoTrab.setPassword_hash(pass);
-							nuevoTrab.setRol((Rol_sistema) InputRol.getSelectedItem());
-							nuevoTrab.setPerfil((Perfil_laboral) InputPerfil.getSelectedItem());
-							nuevoTrab.setNivel((Nivel_experiencia) InputNivel.getSelectedItem());
-							nuevoTrab.setActivo(activoCheckBox.isSelected());
+			if (InputNombre.getText().trim().isEmpty() || InputCorreo.getText().trim().isEmpty()) {
+				JOptionPane.showMessageDialog(null, "El nombre y el correo son obligatorios",
+						"ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+				return;
+			}
 
-							CrearUsuarioDAO cu = new CrearUsuarioDAO();
-							boolean correcto = cu.CrearUsuario(nuevoTrab);
+			String pass = new String(InputContrasena.getPassword());
+			String passConfirm = new String(InputConContrasena.getPassword());
 
-							if (correcto) {
-								JOptionPane.showMessageDialog(null, "Usuario registrado correctamente", "EXITO",
-										JOptionPane.INFORMATION_MESSAGE);
-								InputNombre.setText("");
-								InputCorreo.setText("");
-								InputContrasena.setText("");
-								InputConContrasena.setText("");
-								activoCheckBox.setSelected(false);
-								if(InputRol.getItemCount()>0) {
-									InputRol.setSelectedIndex(0);
-								}
-								if(InputPerfil.getItemCount()>0) {
-									InputPerfil.setSelectedIndex(0);
-								}
-								if(InputNivel.getItemCount()>0){
-									InputNivel.setSelectedIndex(0);
-								}
-								trabajadorEditando = null;
-							} else {
-								JOptionPane.showMessageDialog(null, "No se pudo registrar al usuario", "ERROR",
-										JOptionPane.ERROR_MESSAGE);
-							}
+			if (pass.trim().isEmpty()) {
+				JOptionPane.showMessageDialog(null, "La contraseña no puede estar vacía",
+						"ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+				return;
+			}
 
-						}
-					}
+			if (!pass.equals(passConfirm)) {
+				JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden",
+						"ERROR", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+
+			if (InputRol.getSelectedItem() == null ||
+				InputPerfil.getSelectedItem() == null ||
+				InputNivel.getSelectedItem() == null) {
+
+				JOptionPane.showMessageDialog(null, "Debes seleccionar rol, perfil y nivel",
+						"ERROR", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+
+			Trabajador nuevoTrab = new Trabajador();
+			nuevoTrab.setNombre(InputNombre.getText().trim());
+			nuevoTrab.setCorreo(InputCorreo.getText().trim());
+			nuevoTrab.setPassword_hash(pass);
+			nuevoTrab.setRol((Rol_sistema) InputRol.getSelectedItem());
+			nuevoTrab.setPerfil((Perfil_laboral) InputPerfil.getSelectedItem());
+			nuevoTrab.setNivel((Nivel_experiencia) InputNivel.getSelectedItem());
+			nuevoTrab.setActivo(activoCheckBox.isSelected());
+
+			CrearUsuarioDAO cu = new CrearUsuarioDAO();
+			boolean correcto = cu.CrearUsuario(nuevoTrab);
+
+			if (correcto) {
+
+				JOptionPane.showMessageDialog(null, "Usuario registrado correctamente",
+						"EXITO", JOptionPane.INFORMATION_MESSAGE);
+
+				InputNombre.setText("");
+				InputCorreo.setText("");
+				InputContrasena.setText("");
+				InputConContrasena.setText("");
+				activoCheckBox.setSelected(false);
+
+				if (InputRol.getItemCount() > 0) InputRol.setSelectedIndex(0);
+				if (InputPerfil.getItemCount() > 0) InputPerfil.setSelectedIndex(0);
+				if (InputNivel.getItemCount() > 0) InputNivel.setSelectedIndex(0);
+
+				trabajadorEditando = null;
+				
+				java.awt.Window ventana = javax.swing.SwingUtilities.getWindowAncestor(this);
+				if (ventana != null) {
+				    ventana.dispose();
 				}
 
+			} else {
+				JOptionPane.showMessageDialog(null, "No se pudo registrar al usuario",
+						"ERROR", JOptionPane.ERROR_MESSAGE);
 			}
 		});
-		GuardarBoton.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
+
 		GuardarBoton.setBounds(274, 257, 86, 22);
 		add(GuardarBoton);
 
 		JButton CancelarBoton = new JButton("Cancelar");
-		CancelarBoton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				trabajadorEditando = null;
-				java.awt.Window ventanaFlotante = javax.swing.SwingUtilities.getWindowAncestor(VentanaCrearUsuario.this);
-				
-				if(ventanaFlotante != null) {
-					ventanaFlotante.dispose();
-				}
-				
-			}
+		CancelarBoton.addActionListener(e -> {
+
+			trabajadorEditando = null;
+
+			java.awt.Window w = javax.swing.SwingUtilities.getWindowAncestor(this);
+			if (w != null) w.dispose();
 		});
-		CancelarBoton.setForeground(new Color(240, 89, 68));
+
 		CancelarBoton.setBackground(new Color(187, 190, 253));
-		CancelarBoton.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
 		CancelarBoton.setBounds(385, 257, 86, 22);
 		add(CancelarBoton);
-		
-		cargarCombosUsuario();
 
+		cargarCombosUsuario();
 	}
-	
+
 	public void cargarCombosUsuario() {
+
 		CrearUsuarioDAO cu = new CrearUsuarioDAO();
+
 		ArrayList<Rol_sistema> listaRoles = cu.cargarRol();
 		ArrayList<Perfil_laboral> listaPerfiles = cu.cargarPerfil();
 		ArrayList<Nivel_experiencia> listaNiveles = cu.cargarNivel();
-		
-		if(listaRoles != null) {
-			for(Rol_sistema r : listaRoles) {
-				InputRol.addItem(r);
-			}
-		}else {
-			JOptionPane.showMessageDialog(null, "No se han podido cargar los roles","ERROR",JOptionPane.ERROR_MESSAGE);
+
+		if (listaRoles != null) {
+			for (Rol_sistema r : listaRoles) InputRol.addItem(r);
 		}
-		
-		if(listaPerfiles != null) {
-			for(Perfil_laboral pl : listaPerfiles) {
-				InputPerfil.addItem(pl);
-			}
-		}else {
-			JOptionPane.showMessageDialog(null, "No se han podido cargar los perfiles","ERROR",JOptionPane.ERROR_MESSAGE);
+
+		if (listaPerfiles != null) {
+			for (Perfil_laboral pl : listaPerfiles) InputPerfil.addItem(pl);
 		}
-		
-		if(listaNiveles != null) {
-			for(Nivel_experiencia n : listaNiveles) {
-				InputNivel.addItem(n);
-			}
-		}else {
-			JOptionPane.showMessageDialog(null, "No se han podido cargar los niveles","ERROR",JOptionPane.ERROR_MESSAGE);
+
+		if (listaNiveles != null) {
+			for (Nivel_experiencia n : listaNiveles) InputNivel.addItem(n);
 		}
 	}
 
@@ -294,11 +276,11 @@ public class VentanaCrearUsuario extends JPanel {
 			InputNombre.setText(t.getNombre());
 			InputCorreo.setText(t.getCorreo());
 			activoCheckBox.setSelected(t.isActivo());
-			InputRol.setSelectedItem(t.getRol().getNombre());
-			InputPerfil.setSelectedItem(t.getPerfil().getNombre());
-			InputNivel.setSelectedItem(t.getNivel().getNombre());
+
+			// IMPORTANTE: evitar mismatch de objetos vs String
+			InputRol.setSelectedItem(t.getRol());
+			InputPerfil.setSelectedItem(t.getPerfil());
+			InputNivel.setSelectedItem(t.getNivel());
 		}
 	}
-	
-
 }
