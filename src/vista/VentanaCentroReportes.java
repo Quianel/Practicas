@@ -6,7 +6,12 @@ import modelo.CentroReportesDAO;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import com.toedter.calendar.JDateChooser;
+
+import controlador.ExportarComoCSV;
+
 import java.awt.Color;
 
 import javax.swing.JScrollPane;
@@ -18,6 +23,7 @@ import java.beans.PropertyChangeListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.beans.PropertyChangeEvent;
+import javax.swing.JButton;
 
 public class VentanaCentroReportes extends JPanel {
 
@@ -147,7 +153,7 @@ public class VentanaCentroReportes extends JPanel {
 		add(lblFecha2);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 100, 340, 190);
+		scrollPane.setBounds(10, 100, 350, 150);
 		add(scrollPane);
 		
 		tblHoras = new JTable();
@@ -155,6 +161,32 @@ public class VentanaCentroReportes extends JPanel {
 		
 		modelotabla.setColumnIdentifiers(new Object[] {"Resumen","Datos"});
 		tblHoras.setModel(modelotabla);
+		
+		JButton btnExpoCSV = new JButton("Exportar como CSV");
+		btnExpoCSV.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int respuesta = JOptionPane.showConfirmDialog(
+						null,
+						"¿Desea exportar la tabla actual como CSV?",
+						"Confirmación",
+						JOptionPane.YES_NO_OPTION
+				);
+				if(respuesta == JOptionPane.YES_OPTION) {
+					ExportarComoCSV expCSV = new ExportarComoCSV(modelotabla);
+					JOptionPane.showMessageDialog(null,
+						"Se ha exportado la tabla como CSV correctamente");
+				}else {
+					JOptionPane.showMessageDialog(
+							null, 
+							"No se ha exportado la tabla"
+					);
+				}
+			}
+		});
+		btnExpoCSV.setBounds(10, 260, 150, 20);
+		add(btnExpoCSV);
+		
+		
 		modelotabla.setRowCount(0);
 		
 		CargaDeComboBoxProyectos();
