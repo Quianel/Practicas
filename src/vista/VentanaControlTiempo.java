@@ -66,6 +66,7 @@ public class VentanaControlTiempo extends JPanel {
 		add(ProyectoTxt);
 		
 		inputProyecto = new JComboBox();
+		inputProyecto.setBackground(new Color(187, 190, 253));
 		inputProyecto.setForeground(new Color(240, 89, 68));
 		inputProyecto.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
 		inputProyecto.setBounds(108, 67, 317, 22);
@@ -82,6 +83,7 @@ public class VentanaControlTiempo extends JPanel {
 		add(TareaTxt);
 		
 	    inputTarea = new JComboBox();
+	    inputTarea.setBackground(new Color(187, 190, 253));
 	    inputTarea.setForeground(new Color(240, 89, 68));
 	    inputTarea.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
 		inputTarea.setBounds(108, 100, 317, 22);

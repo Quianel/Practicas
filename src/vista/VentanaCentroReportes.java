@@ -24,6 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.beans.PropertyChangeEvent;
 import javax.swing.JButton;
+import java.awt.Font;
 
 public class VentanaCentroReportes extends JPanel {
 
@@ -41,9 +42,13 @@ public class VentanaCentroReportes extends JPanel {
 	 * Create the panel.
 	 */
 	public VentanaCentroReportes() {
+		setBackground(new Color(53, 48, 105));
 		setLayout(null);
 		
 		cmbProyecto = new JComboBox();
+		cmbProyecto.setForeground(new Color(240, 89, 68));
+		cmbProyecto.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
+		cmbProyecto.setBackground(new Color(187, 190, 253));
 		cmbProyecto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String proyectoSeleccionado = (String) cmbProyecto.getSelectedItem();
@@ -59,10 +64,13 @@ public class VentanaCentroReportes extends JPanel {
 				centRepBD.TablaTrabajadoresActivosPorProyecto(modelotabla, proyectoSeleccionado);
 			}
 		});
-		cmbProyecto.setBounds(100, 10, 225, 20);
+		cmbProyecto.setBounds(295, 79, 225, 20);
 		add(cmbProyecto);
 		
 		cmbTipoProyecto = new JComboBox();
+		cmbTipoProyecto.setForeground(new Color(240, 89, 68));
+		cmbTipoProyecto.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
+		cmbTipoProyecto.setBackground(new Color(187, 190, 253));
 		cmbTipoProyecto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String tipoProyectoSeleccionado = (String) cmbTipoProyecto.getSelectedItem();
@@ -78,15 +86,20 @@ public class VentanaCentroReportes extends JPanel {
 				centRepBD.TablaTrabajadoresActivosPorTipoProyecto(modelotabla, tipoProyectoSeleccionado);
 			}
 		});
-		cmbTipoProyecto.setBounds(300, 40, 150, 20);
+		cmbTipoProyecto.setBounds(295, 108, 225, 20);
 		add(cmbTipoProyecto);
 		
 		JLabel lblProyecto = new JLabel("Proyecto:");
-		lblProyecto.setBounds(10, 14, 80, 12);
+		lblProyecto.setForeground(new Color(240, 89, 68));
+		lblProyecto.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
+		lblProyecto.setBounds(205, 83, 80, 12);
 		add(lblProyecto);
 		
 		JLabel lblTipo = new JLabel("Tipo:");
-		lblTipo.setBounds(246, 44, 54, 12);
+		lblTipo.setForeground(new Color(240, 89, 68));
+		lblTipo.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
+		lblTipo.setBackground(new Color(53, 48, 105));
+		lblTipo.setBounds(205, 112, 54, 12);
 		add(lblTipo);
 		
 		JDateChooser dtFechaInicio = new JDateChooser();
@@ -114,11 +127,14 @@ public class VentanaCentroReportes extends JPanel {
 		});
 		dtFechaInicio.setForeground(new Color(240, 89, 68));
 		dtFechaInicio.setBackground(new Color(187, 190, 253));
-		dtFechaInicio.setBounds(100, 70, 100, 20);
+		dtFechaInicio.setBounds(295, 139, 100, 20);
 		add(dtFechaInicio);
 		
 		JLabel lblFecha1 = new JLabel("Fecha de:");
-		lblFecha1.setBounds(10, 70, 80, 20);
+		lblFecha1.setForeground(new Color(240, 89, 68));
+		lblFecha1.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
+		lblFecha1.setBackground(new Color(53, 48, 105));
+		lblFecha1.setBounds(205, 139, 80, 20);
 		add(lblFecha1);
 		
 		JDateChooser dtFechaFin = new JDateChooser();
@@ -145,24 +161,33 @@ public class VentanaCentroReportes extends JPanel {
 		});
 		dtFechaFin.setForeground(new Color(240, 89, 68));
 		dtFechaFin.setBackground(new Color(187, 190, 253));
-		dtFechaFin.setBounds(250, 70, 100, 20);
+		dtFechaFin.setBounds(445, 139, 100, 20);
 		add(dtFechaFin);
 		
 		JLabel lblFecha2 = new JLabel("Hasta:");
-		lblFecha2.setBounds(210, 70, 50, 20);
+		lblFecha2.setForeground(new Color(240, 89, 68));
+		lblFecha2.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
+		lblFecha2.setBackground(new Color(53, 48, 105));
+		lblFecha2.setBounds(405, 139, 50, 20);
 		add(lblFecha2);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 100, 350, 150);
+		scrollPane.setBounds(205, 169, 350, 150);
 		add(scrollPane);
 		
 		tblHoras = new JTable();
+		tblHoras.setBackground(new Color(187, 190, 253));
+		tblHoras.setForeground(new Color(240, 89, 68));
+		tblHoras.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
 		scrollPane.setViewportView(tblHoras);
 		
 		modelotabla.setColumnIdentifiers(new Object[] {"Resumen","Datos"});
 		tblHoras.setModel(modelotabla);
 		
 		JButton btnExpoCSV = new JButton("Exportar como CSV");
+		btnExpoCSV.setForeground(new Color(240, 89, 68));
+		btnExpoCSV.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
+		btnExpoCSV.setBackground(new Color(187, 190, 253));
 		btnExpoCSV.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int respuesta = JOptionPane.showConfirmDialog(
@@ -183,7 +208,7 @@ public class VentanaCentroReportes extends JPanel {
 				}
 			}
 		});
-		btnExpoCSV.setBounds(10, 260, 150, 20);
+		btnExpoCSV.setBounds(205, 329, 150, 20);
 		add(btnExpoCSV);
 		
 		
