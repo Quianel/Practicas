@@ -265,7 +265,7 @@ public class VentanaMenuPrincipal extends JFrame {
 		Ventana_MisTareas vMisTareas = new Ventana_MisTareas(correo);
 		panelCardLCarga.add(vMisTareas, "ventMisTareas");
 		
-		VentanaCentroReportes vCentroReports = new VentanaCentroReportes();
+		VentanaCentroReportes vCentroReports = new VentanaCentroReportes(usuario, correo);
 		panelCardLCarga.add(vCentroReports, "ventReportes");
 		
 		VentanaTareas vt = new VentanaTareas();

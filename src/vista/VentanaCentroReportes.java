@@ -41,8 +41,9 @@ public class VentanaCentroReportes extends JPanel {
 	DefaultTableModel modelotabla = new DefaultTableModel();
 	/**
 	 * Create the panel.
+	 * @param usuario 
 	 */
-	public VentanaCentroReportes() {
+	public VentanaCentroReportes(String usuario, String correo) {
 		setBackground(new Color(53, 48, 105));
 		setLayout(null);
 		
@@ -56,13 +57,15 @@ public class VentanaCentroReportes extends JPanel {
 				CentroReportesDAO centRepBD = new CentroReportesDAO();
 				modelotabla.setRowCount(0);
 				
-				int horasTotales = centRepBD.obtenerHorasTotalesPorProyecto(proyectoSeleccionado);
+				int horasTotales = centRepBD.obtenerHorasTotalesPorProyecto(proyectoSeleccionado, usuario, correo);
 				centRepBD.TablaHorasTotales(modelotabla, horasTotales);
-				int horasAsignadas = centRepBD.obtenerHorasAsignadasPorProyecto(proyectoSeleccionado);
+				int horasAsignadas = centRepBD.obtenerHorasAsignadasPorProyecto(proyectoSeleccionado, usuario, correo);
 				centRepBD.TablaHorasAsignadas(modelotabla, horasAsignadas);
 				centRepBD.TablaCumplimiento(modelotabla, horasTotales, horasAsignadas);
-				centRepBD.TablaProyectosActivosPorProyecto(modelotabla, proyectoSeleccionado);
-				centRepBD.TablaTrabajadoresActivosPorProyecto(modelotabla, proyectoSeleccionado);
+				centRepBD.TablaProyectosActivosPorProyecto(modelotabla, proyectoSeleccionado, usuario, correo);
+				if(usuario.equals("Admnistrador")) {
+					centRepBD.TablaTrabajadoresActivosPorProyecto(modelotabla, proyectoSeleccionado);
+				}
 			}
 		});
 		cmbProyecto.setBounds(295, 79, 225, 20);
@@ -78,13 +81,15 @@ public class VentanaCentroReportes extends JPanel {
 				CentroReportesDAO centRepBD = new CentroReportesDAO();
 				modelotabla.setRowCount(0);
 				
-				int horasTotales = centRepBD.obtenerHorasTotalesPorTipoProyecto(tipoProyectoSeleccionado);
+				int horasTotales = centRepBD.obtenerHorasTotalesPorTipoProyecto(tipoProyectoSeleccionado, usuario, correo);
 				centRepBD.TablaHorasTotales(modelotabla, horasTotales);
-				int horasAsignadas = centRepBD.obtenerHorasAsignadasPorTipoProyecto(tipoProyectoSeleccionado);
+				int horasAsignadas = centRepBD.obtenerHorasAsignadasPorTipoProyecto(tipoProyectoSeleccionado, usuario, correo);
 				centRepBD.TablaHorasAsignadas(modelotabla, horasAsignadas);
 				centRepBD.TablaCumplimiento(modelotabla, horasTotales, horasAsignadas);
-				centRepBD.TablaProyectosActivosPorTipoProyecto(modelotabla, tipoProyectoSeleccionado);
-				centRepBD.TablaTrabajadoresActivosPorTipoProyecto(modelotabla, tipoProyectoSeleccionado);
+				centRepBD.TablaProyectosActivosPorTipoProyecto(modelotabla, tipoProyectoSeleccionado, usuario, correo);
+				if(usuario.equals("Admnistrador")) {
+					centRepBD.TablaTrabajadoresActivosPorTipoProyecto(modelotabla, tipoProyectoSeleccionado);
+				}
 			}
 		});
 		cmbTipoProyecto.setBounds(295, 108, 225, 20);
@@ -114,13 +119,15 @@ public class VentanaCentroReportes extends JPanel {
 					if(fechaFormateadaFin != null) {
 						modelotabla.setRowCount(0);
 						CentroReportesDAO centRepBD = new CentroReportesDAO();
-						int horasTotales = centRepBD.obtenerHorasTotalesPorFechas(fechaFormateadaInicio, fechaFormateadaFin);
+						int horasTotales = centRepBD.obtenerHorasTotalesPorFechas(fechaFormateadaInicio, fechaFormateadaFin, usuario, correo);
 						centRepBD.TablaHorasTotales(modelotabla, horasTotales);
-						int horasAsignadas = centRepBD.obtenerHorasAsignadasPorFechas(fechaFormateadaInicio, fechaFormateadaFin);
+						int horasAsignadas = centRepBD.obtenerHorasAsignadasPorFechas(fechaFormateadaInicio, fechaFormateadaFin, usuario, correo);
 						centRepBD.TablaHorasAsignadas(modelotabla, horasAsignadas);
 						centRepBD.TablaCumplimiento(modelotabla, horasTotales, horasAsignadas);
-						centRepBD.TablaProyectosActivosPorFechas(modelotabla, fechaFormateadaInicio, fechaFormateadaFin);
-						centRepBD.TablaTrabajadoresActivosPorFechas(modelotabla, fechaFormateadaInicio, fechaFormateadaFin);
+						centRepBD.TablaProyectosActivosPorFechas(modelotabla, fechaFormateadaInicio, fechaFormateadaFin, usuario, correo);
+						if(usuario.equals("Admnistrador")) {
+							centRepBD.TablaTrabajadoresActivosPorFechas(modelotabla, fechaFormateadaInicio, fechaFormateadaFin);
+						}
 					}
 					
 				}
@@ -149,13 +156,15 @@ public class VentanaCentroReportes extends JPanel {
 					if(fechaFormateadaInicio != null) {
 						modelotabla.setRowCount(0);
 						CentroReportesDAO centRepBD = new CentroReportesDAO();
-						int horasTotales = centRepBD.obtenerHorasTotalesPorFechas(fechaFormateadaInicio, fechaFormateadaFin);
+						int horasTotales = centRepBD.obtenerHorasTotalesPorFechas(fechaFormateadaInicio, fechaFormateadaFin, usuario, correo);
 						centRepBD.TablaHorasTotales(modelotabla, horasTotales);
-						int horasAsignadas = centRepBD.obtenerHorasAsignadasPorFechas(fechaFormateadaInicio, fechaFormateadaFin);
+						int horasAsignadas = centRepBD.obtenerHorasAsignadasPorFechas(fechaFormateadaInicio, fechaFormateadaFin, usuario, correo);
 						centRepBD.TablaHorasAsignadas(modelotabla, horasAsignadas);
 						centRepBD.TablaCumplimiento(modelotabla, horasTotales, horasAsignadas);
-						centRepBD.TablaProyectosActivosPorFechas(modelotabla, fechaFormateadaInicio, fechaFormateadaFin);
-						centRepBD.TablaTrabajadoresActivosPorFechas(modelotabla, fechaFormateadaInicio, fechaFormateadaFin);
+						centRepBD.TablaProyectosActivosPorFechas(modelotabla, fechaFormateadaInicio, fechaFormateadaFin, usuario, correo);
+						if(usuario.equals("Admnistrador")) {
+							centRepBD.TablaTrabajadoresActivosPorFechas(modelotabla, fechaFormateadaInicio, fechaFormateadaFin);
+						}
 					}
 				}
 			}
@@ -242,24 +251,13 @@ public class VentanaCentroReportes extends JPanel {
 		
 		modelotabla.setRowCount(0);
 		
-		CargaDeComboBoxProyectos();
+		CargaDeComboBoxProyectos(usuario, correo);
 		//cargaTabla();
 	}
 	
-	private void CargaDeComboBoxProyectos() {
+	private void CargaDeComboBoxProyectos(String usuario, String correo) {
 		CentroReportesDAO centRepBD = new CentroReportesDAO();
-		centRepBD.Combobox1(cmbProyecto);
-		centRepBD.Combobox2(cmbTipoProyecto);
-	}
-	
-	private void cargaTabla() {
-		CentroReportesDAO centRepBD = new CentroReportesDAO();
-		int horasTotales = centRepBD.obtenerHorasTotales();
-		centRepBD.TablaHorasTotales(modelotabla, horasTotales);
-		int horasAsignadas = centRepBD.obtenerHorasAsignadas();
-		centRepBD.TablaHorasAsignadas(modelotabla, horasAsignadas);
-		centRepBD.TablaCumplimiento(modelotabla, horasTotales, horasAsignadas);
-		centRepBD.TablaProyectosActivos(modelotabla);
-		centRepBD.TablaTrabajadoresActivos(modelotabla);
+		centRepBD.Combobox1(cmbProyecto, usuario, correo);
+		centRepBD.Combobox2(cmbTipoProyecto, usuario, correo);
 	}
 }
