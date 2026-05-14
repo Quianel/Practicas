@@ -253,7 +253,10 @@ public class VentanaMenuPrincipal extends JFrame {
 
 		panelCardLCarga.add(vGtPro,"vGtnPro");
 		
+		
 		VentanaControlTiempo vCntTiem = new VentanaControlTiempo();
+		ControlTiempoController controlador = new ControlTiempoController(vCntTiem);
+		vCntTiem.setControlador(controlador);
 		panelCardLCarga.add(vCntTiem,"ventContTiem");
 		
 		VentanaCatalogoDeTareas vCatTareas = new VentanaCatalogoDeTareas();
@@ -282,9 +285,6 @@ public class VentanaMenuPrincipal extends JFrame {
 		VentanaCrearTarea ventCrearTar = new VentanaCrearTarea();
 		
 		panelCardLCarga.add(ventCrearTar, "ventCrearTarea");
-		
-		
-		new ControlTiempoController(vCntTiem);
 			
 	}
 	public void nuevoPanel(JPanel panelActual) {//Este metodo no es necesario en este caso, pero lo dejo por si tuvieramos que cambiar por no funcionamiento
