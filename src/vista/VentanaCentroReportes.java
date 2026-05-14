@@ -8,13 +8,16 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
-import java.awt.DefaultFocusTraversalPolicy;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.beans.PropertyChangeListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.beans.PropertyChangeEvent;
 
 public class VentanaCentroReportes extends JPanel {
 
@@ -24,6 +27,8 @@ public class VentanaCentroReportes extends JPanel {
 	private JTable tblHoras;
 	private JScrollPane scrollPane;
 
+	String fechaFormateadaInicio;
+	String fechaFormateadaFin;
 	
 	DefaultTableModel modelotabla = new DefaultTableModel();
 	/**
@@ -39,19 +44,34 @@ public class VentanaCentroReportes extends JPanel {
 				CentroReportesDAO centRepBD = new CentroReportesDAO();
 				modelotabla.setRowCount(0);
 				
-				int horasTotales = centRepBD.obtenerHorasTotalesConFiltro(proyectoSeleccionado);
+				int horasTotales = centRepBD.obtenerHorasTotalesPorProyecto(proyectoSeleccionado);
 				centRepBD.TablaHorasTotales(modelotabla, horasTotales);
-				int horasAsignadas = centRepBD.obtenerHorasAsignadasConFiltro(proyectoSeleccionado);
+				int horasAsignadas = centRepBD.obtenerHorasAsignadasPorProyecto(proyectoSeleccionado);
 				centRepBD.TablaHorasAsignadas(modelotabla, horasAsignadas);
 				centRepBD.TablaCumplimiento(modelotabla, horasTotales, horasAsignadas);
-				centRepBD.TablaProyectosActivosConFiltro(modelotabla, proyectoSeleccionado);
-				centRepBD.TablaTrabajadoresActivosConFiltro(modelotabla, proyectoSeleccionado);
+				centRepBD.TablaProyectosActivosPorProyecto(modelotabla, proyectoSeleccionado);
+				centRepBD.TablaTrabajadoresActivosPorProyecto(modelotabla, proyectoSeleccionado);
 			}
 		});
 		cmbProyecto.setBounds(100, 10, 225, 20);
 		add(cmbProyecto);
 		
 		cmbTipoProyecto = new JComboBox();
+		cmbTipoProyecto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String tipoProyectoSeleccionado = (String) cmbTipoProyecto.getSelectedItem();
+				CentroReportesDAO centRepBD = new CentroReportesDAO();
+				modelotabla.setRowCount(0);
+				
+				int horasTotales = centRepBD.obtenerHorasTotalesPorTipoProyecto(tipoProyectoSeleccionado);
+				centRepBD.TablaHorasTotales(modelotabla, horasTotales);
+				int horasAsignadas = centRepBD.obtenerHorasAsignadasPorTipoProyecto(tipoProyectoSeleccionado);
+				centRepBD.TablaHorasAsignadas(modelotabla, horasAsignadas);
+				centRepBD.TablaCumplimiento(modelotabla, horasTotales, horasAsignadas);
+				centRepBD.TablaProyectosActivosPorTipoProyecto(modelotabla, tipoProyectoSeleccionado);
+				centRepBD.TablaTrabajadoresActivosPorTipoProyecto(modelotabla, tipoProyectoSeleccionado);
+			}
+		});
 		cmbTipoProyecto.setBounds(300, 40, 150, 20);
 		add(cmbTipoProyecto);
 		
@@ -63,21 +83,64 @@ public class VentanaCentroReportes extends JPanel {
 		lblTipo.setBounds(246, 44, 54, 12);
 		add(lblTipo);
 		
-		JDateChooser dateChooser = new JDateChooser();
-		dateChooser.setForeground(new Color(240, 89, 68));
-		dateChooser.setBackground(new Color(187, 190, 253));
-		dateChooser.setBounds(100, 70, 100, 20);
-		add(dateChooser);
+		JDateChooser dtFechaInicio = new JDateChooser();
+		dtFechaInicio.addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt) {
+				Date fechaInicio = dtFechaInicio.getDate();
+				if(fechaInicio != null){
+			        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+					fechaFormateadaInicio = formato.format(fechaInicio);
+					
+					if(fechaFormateadaFin != null) {
+						modelotabla.setRowCount(0);
+						CentroReportesDAO centRepBD = new CentroReportesDAO();
+						int horasTotales = centRepBD.obtenerHorasTotalesPorFechas(fechaFormateadaInicio, fechaFormateadaFin);
+						centRepBD.TablaHorasTotales(modelotabla, horasTotales);
+						int horasAsignadas = centRepBD.obtenerHorasAsignadasPorFechas(fechaFormateadaInicio, fechaFormateadaFin);
+						centRepBD.TablaHorasAsignadas(modelotabla, horasAsignadas);
+						centRepBD.TablaCumplimiento(modelotabla, horasTotales, horasAsignadas);
+						centRepBD.TablaProyectosActivosPorFechas(modelotabla, fechaFormateadaInicio, fechaFormateadaFin);
+						centRepBD.TablaTrabajadoresActivosPorFechas(modelotabla, fechaFormateadaInicio, fechaFormateadaFin);
+					}
+					
+				}
+			}
+		});
+		dtFechaInicio.setForeground(new Color(240, 89, 68));
+		dtFechaInicio.setBackground(new Color(187, 190, 253));
+		dtFechaInicio.setBounds(100, 70, 100, 20);
+		add(dtFechaInicio);
 		
 		JLabel lblFecha1 = new JLabel("Fecha de:");
 		lblFecha1.setBounds(10, 70, 80, 20);
 		add(lblFecha1);
 		
-		JDateChooser dateChooser_1 = new JDateChooser();
-		dateChooser_1.setForeground(new Color(240, 89, 68));
-		dateChooser_1.setBackground(new Color(187, 190, 253));
-		dateChooser_1.setBounds(250, 70, 100, 20);
-		add(dateChooser_1);
+		JDateChooser dtFechaFin = new JDateChooser();
+		dtFechaFin.addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt) {
+				Date fechaFin = dtFechaFin.getDate();
+				if(fechaFin != null){
+					SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+					fechaFormateadaFin = formato.format(fechaFin);
+					
+					if(fechaFormateadaInicio != null) {
+						modelotabla.setRowCount(0);
+						CentroReportesDAO centRepBD = new CentroReportesDAO();
+						int horasTotales = centRepBD.obtenerHorasTotalesPorFechas(fechaFormateadaInicio, fechaFormateadaFin);
+						centRepBD.TablaHorasTotales(modelotabla, horasTotales);
+						int horasAsignadas = centRepBD.obtenerHorasAsignadasPorFechas(fechaFormateadaInicio, fechaFormateadaFin);
+						centRepBD.TablaHorasAsignadas(modelotabla, horasAsignadas);
+						centRepBD.TablaCumplimiento(modelotabla, horasTotales, horasAsignadas);
+						centRepBD.TablaProyectosActivosPorFechas(modelotabla, fechaFormateadaInicio, fechaFormateadaFin);
+						centRepBD.TablaTrabajadoresActivosPorFechas(modelotabla, fechaFormateadaInicio, fechaFormateadaFin);
+					}
+				}
+			}
+		});
+		dtFechaFin.setForeground(new Color(240, 89, 68));
+		dtFechaFin.setBackground(new Color(187, 190, 253));
+		dtFechaFin.setBounds(250, 70, 100, 20);
+		add(dtFechaFin);
 		
 		JLabel lblFecha2 = new JLabel("Hasta:");
 		lblFecha2.setBounds(210, 70, 50, 20);
