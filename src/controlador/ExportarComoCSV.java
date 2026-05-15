@@ -1,15 +1,18 @@
 package controlador;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
+import java.io.IOException;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class ExportarComoCSV {
 
-	public ExportarComoCSV(DefaultTableModel modelotabla) {
+	public boolean ExportarComoCSV(DefaultTableModel modelotabla) {
 		File archivo = new File("Registros.csv");
-		
+		boolean exito = false;
 		try {
 			FileWriter csv = new FileWriter(archivo);
 			
@@ -42,10 +45,14 @@ public class ExportarComoCSV {
 			}
 			
 			csv.close();
+			exito = true;
 			
-		}catch (Exception e) {
+		}catch (FileNotFoundException e) {
+			JOptionPane.showMessageDialog(null, "No se ha podido exportar porque hay alguien usando el CSV", "Operación canelada", JOptionPane.ERROR_MESSAGE);
+		}catch (IOException e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 
 }

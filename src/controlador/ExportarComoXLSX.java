@@ -1,8 +1,12 @@
 package controlador;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
 import org.apache.poi.xssf.usermodel.XSSFCell;
@@ -12,7 +16,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class ExportarComoXLSX {
 
-	public ExportarComoXLSX(DefaultTableModel modelotabla) {
+	public boolean ExportarComoXLSX(DefaultTableModel modelotabla) {
+		boolean exito = false;
 		File archivo = new File("Registros.xlsx");
 		try {
 			XSSFWorkbook libro = new XSSFWorkbook();
@@ -47,10 +52,14 @@ public class ExportarComoXLSX {
 			
 			out.close();
 			libro.close();
+			exito = true;
 			
-		}catch (Exception e) {
+		}catch (FileNotFoundException e) {
+			JOptionPane.showMessageDialog(null, "No se ha podido exportar porque hay alguien usando el excel", "Operación canelada", JOptionPane.ERROR_MESSAGE);
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 
 }
