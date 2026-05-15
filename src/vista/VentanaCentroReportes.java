@@ -185,7 +185,14 @@ public class VentanaCentroReportes extends JPanel {
 		scrollPane.setBounds(205, 169, 350, 150);
 		add(scrollPane);
 		
-		tblHoras = new JTable();
+		tblHoras = new JTable(){
+
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+		};
+            
 		tblHoras.setBackground(new Color(187, 190, 253));
 		tblHoras.setForeground(new Color(240, 89, 68));
 		tblHoras.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 11));
