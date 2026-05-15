@@ -14,11 +14,16 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import modelo.CentroReportesDAO;
+
 public class ExportarComoXLSX {
 
 	public boolean ExportarComoXLSX(DefaultTableModel modelotabla) {
+		
+		CentroReportesDAO bd = new CentroReportesDAO();
+		String fecha = bd.obtenerFechaActual();
+		File archivo = new File("Registro " + fecha + ".xlsx");
 		boolean exito = false;
-		File archivo = new File("Registros.xlsx");
 		try {
 			XSSFWorkbook libro = new XSSFWorkbook();
 			XSSFSheet hoja = libro.createSheet("Resultados");

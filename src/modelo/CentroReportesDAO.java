@@ -635,4 +635,21 @@ public class CentroReportesDAO {
 		});	
 	}
 
+	public String obtenerFechaActual() {
+		String fechaActual = null;
+		Statement consulta;
+		ResultSet registro = null;
+		try {
+			Connection conexion = ConexionBD.getConexion();
+			consulta = conexion.createStatement();
+			registro = consulta.executeQuery("select current_date() as 'Fecha'");
+			if(registro.next()) {
+				fechaActual = registro.getString("Fecha");
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return fechaActual;
+	}
+
 }

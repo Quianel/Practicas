@@ -8,10 +8,15 @@ import java.io.IOException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
+import modelo.CentroReportesDAO;
+
 public class ExportarComoCSV {
 
 	public boolean ExportarComoCSV(DefaultTableModel modelotabla) {
-		File archivo = new File("Registros.csv");
+		
+		CentroReportesDAO bd = new CentroReportesDAO();
+		String fecha = bd.obtenerFechaActual();
+		File archivo = new File("Registro " + fecha + ".csv");
 		boolean exito = false;
 		try {
 			FileWriter csv = new FileWriter(archivo);
