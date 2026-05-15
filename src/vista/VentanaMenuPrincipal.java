@@ -172,13 +172,13 @@ public class VentanaMenuPrincipal extends JFrame {
 			mnuPrincipal.add(mnControlTiempo);
 		}
 		
-		if(usuario.equals("Trabajador")) {
+		/*if(usuario.equals("Trabajador")) {
 			JMenu mnRegistromanual = new JMenu("Registro manual");
 			mnRegistromanual.setForeground(new Color(251, 123, 68));
 			mnRegistromanual.setIcon(new ImageIcon("img/registroManual.png"));
 			mnRegistromanual.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 12));
 			mnuPrincipal.add(mnRegistromanual);
-		}
+		}*/
 		
 		JMenu mnReportes = new JMenu("Reportes");
 		mnReportes.addMouseListener(new MouseAdapter() {
