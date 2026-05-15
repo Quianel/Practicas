@@ -211,12 +211,12 @@ public class VentanaCentroReportes extends JPanel {
 					Boolean exito = expCSV.ExportarComoCSV(modelotabla);
 					if(exito) {
 						JOptionPane.showMessageDialog(null,
-							"Se ha exportado la tabla como CSV correctamente");
+							"Se ha exportado la tabla como CSV correctamente.");
 					}
 				}else {
 					JOptionPane.showMessageDialog(
 							null, 
-							"No se ha exportado la tabla"
+							"No se ha exportado la tabla."
 					);
 				}
 			}
@@ -239,13 +239,13 @@ public class VentanaCentroReportes extends JPanel {
 					
 					if(exito) {
 					JOptionPane.showMessageDialog(null,
-						"Se ha exportado la tabla como XSLX (excel) correctamente");
+						"Se ha exportado la tabla como XSLX (excel) correctamente.");
 					}
 					
 				}else {
 					JOptionPane.showMessageDialog(
 							null, 
-							"No se ha exportado la tabla"
+							"No se ha exportado la tabla."
 					);
 				}
 			}

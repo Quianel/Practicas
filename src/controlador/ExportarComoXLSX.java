@@ -55,11 +55,11 @@ public class ExportarComoXLSX {
 			exito = true;
 			
 		}catch (FileNotFoundException e) {
-			JOptionPane.showMessageDialog(null, "No se ha podido exportar porque hay alguien usando el excel", "Operación canelada", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "No se ha podido exportar porque hay alguien usando el XLSX (excel).", "Operación canelada", JOptionPane.ERROR_MESSAGE);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return false;
+		return exito;
 	}
 
 }
